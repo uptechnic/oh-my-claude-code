@@ -1,10 +1,7 @@
 import chalk from 'chalk'
 import { exec } from 'child_process'
 import { execa } from 'execa'
-import { mkdir, stat } from 'fs/promises'
 import memoize from 'lodash-es/memoize.js'
-import { join } from 'path'
-import { CLAUDE_AI_PROFILE_SCOPE } from 'src/constants/oauth.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
@@ -19,13 +16,30 @@ import {
   getMockSubscriptionType,
   shouldUseMockSubscription,
 } from '../services/mockRateLimits.js'
-import {
-  isOAuthTokenExpired,
-  refreshOAuthToken,
-  shouldUseClaudeAIAuth,
-} from '../services/oauth/client.js'
-import { getOauthProfileFromOauthToken } from '../services/oauth/getOauthProfile.js'
-import type { OAuthTokens, SubscriptionType } from '../services/oauth/types.js'
+// Stub types for OAuth interfaces (OAuth is disabled in offline mode)
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface OAuthTokens {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface SubscriptionType {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface BillingType {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ReferralEligibilityResponse {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ReferralRedemptionsResponse {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ReferrerRewardInfo {}
+
+export type {
+  OAuthTokens,
+  SubscriptionType,
+  BillingType,
+  ReferralEligibilityResponse,
+  ReferralRedemptionsResponse,
+  ReferrerRewardInfo,
+}
+
 import {
   getApiKeyFromFileDescriptor,
   getOAuthTokenFromFileDescriptor,
@@ -192,11 +206,6 @@ export function getAuthTokenSource() {
   const apiKeyHelper = getConfiguredApiKeyHelper()
   if (apiKeyHelper && !isManagedOAuthContext()) {
     return { source: 'apiKeyHelper' as const, hasToken: true }
-  }
-
-  const oauthTokens = getClaudeAIOAuthTokens()
-  if (shouldUseClaudeAIAuth(oauthTokens?.scopes) && oauthTokens?.accessToken) {
-    return { source: 'claude.ai' as const, hasToken: true }
   }
 
   return { source: 'none' as const, hasToken: false }
@@ -1187,14 +1196,6 @@ async function maybeRemoveApiKeyFromMacOSKeychain(): Promise<void> {
   }
 }
 
-// Function to store OAuth tokens in secure storage
-export function saveOAuthTokensIfNeeded(_tokens: OAuthTokens): {
-  success: boolean
-  warning?: string
-} {
-  return { success: true } // Offline mode — no OAuth tokens to save
-}
-
 export const getClaudeAIOAuthTokens = memoize((): OAuthTokens | null => {
   return null // Offline mode — no OAuth tokens
 })
@@ -1208,31 +1209,6 @@ export const getClaudeAIOAuthTokens = memoize((): OAuthTokens | null => {
 export function clearOAuthTokenCache(): void {
   getClaudeAIOAuthTokens.cache?.clear?.()
   clearKeychainCache()
-}
-
-let lastCredentialsMtimeMs = 0
-
-// Cross-process staleness: another CC instance may write fresh tokens to
-// disk (refresh or /login), but this process's memoize caches forever.
-// Without this, terminal 1's /login fixes terminal 1; terminal 2's /login
-// then revokes terminal 1 server-side, and terminal 1's memoize never
-// re-reads — infinite /login regress (CC-1096, GH#24317).
-async function invalidateOAuthCacheIfDiskChanged(): Promise<void> {
-  try {
-    const { mtimeMs } = await stat(
-      join(getClaudeConfigHomeDir(), '.credentials.json'),
-    )
-    if (mtimeMs !== lastCredentialsMtimeMs) {
-      lastCredentialsMtimeMs = mtimeMs
-      clearOAuthTokenCache()
-    }
-  } catch {
-    // ENOENT — macOS keychain path (file deleted on migration). Clear only
-    // the memoize so it delegates to the keychain cache's 30s TTL instead
-    // of caching forever on top. `security find-generic-password` is
-    // ~15ms; bounded to once per 30s by the keychain cache.
-    getClaudeAIOAuthTokens.cache?.clear?.()
-  }
 }
 
 // In-flight dedup: when N claude.ai proxy connectors hit 401 with the same
@@ -1270,6 +1246,28 @@ export async function handleOAuth401Error(
  */
 export async function getClaudeAIOAuthTokensAsync(): Promise<OAuthTokens | null> {
   return null // Offline mode — no OAuth tokens
+}
+
+/** Always returns null in offline mode. */
+export async function getOrganizationUUID(): Promise<null> {
+  return null
+}
+
+/** No-op — always returns false in offline mode. */
+export async function populateOAuthAccountInfoIfNeeded(): Promise<boolean> {
+  return false
+}
+
+/** Always returns undefined in offline mode. */
+export async function getOauthProfileFromApiKey(): Promise<undefined> {
+  return undefined
+}
+
+/** Always returns undefined in offline mode. */
+export async function getOauthProfileFromOauthToken(
+  _accessToken: string,
+): Promise<undefined> {
+  return undefined
 }
 
 export async function checkAndRefreshOAuthTokenIfNeeded(
@@ -1637,65 +1635,8 @@ export async function validateForceLoginOrg(): Promise<OrgValidationResult> {
     return { valid: true }
   }
 
-  // Ensure the access token is fresh before hitting the profile endpoint.
-  // No-op for env-var tokens (refreshToken is null).
-  await checkAndRefreshOAuthTokenIfNeeded()
-
-  const tokens = getClaudeAIOAuthTokens()
-  if (!tokens) {
-    return { valid: true }
-  }
-
-  // Always fetch the authoritative org UUID from the profile endpoint.
-  // Even keychain-sourced tokens verify server-side: the cached org UUID
-  // in ~/.claude.json is user-writable and cannot be trusted.
-  const { source } = getAuthTokenSource()
-  const isEnvVarToken =
-    source === 'CLAUDE_CODE_OAUTH_TOKEN' ||
-    source === 'CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR'
-
-  const profile = await getOauthProfileFromOauthToken(tokens.accessToken)
-  if (!profile) {
-    // Fail closed — we can't verify the org
-    return {
-      valid: false,
-      message:
-        `Unable to verify organization for the current authentication token.\n` +
-        `This machine requires organization ${requiredOrgUuid} but the profile could not be fetched.\n` +
-        `This may be a network error, or the token may lack the user:profile scope required for\n` +
-        `verification (tokens from 'claude setup-token' do not include this scope).\n` +
-        `Try again, or obtain a full-scope token via 'claude auth login'.`,
-    }
-  }
-
-  const tokenOrgUuid = profile.organization.uuid
-  if (tokenOrgUuid === requiredOrgUuid) {
-    return { valid: true }
-  }
-
-  if (isEnvVarToken) {
-    const envVarName =
-      source === 'CLAUDE_CODE_OAUTH_TOKEN'
-        ? 'CLAUDE_CODE_OAUTH_TOKEN'
-        : 'CLAUDE_CODE_OAUTH_TOKEN_FILE_DESCRIPTOR'
-    return {
-      valid: false,
-      message:
-        `The ${envVarName} environment variable provides a token for a\n` +
-        `different organization than required by this machine's managed settings.\n\n` +
-        `Required organization: ${requiredOrgUuid}\n` +
-        `Token organization:   ${tokenOrgUuid}\n\n` +
-        `Remove the environment variable or obtain a token for the correct organization.`,
-    }
-  }
-
-  return {
-    valid: false,
-    message:
-      `Your authentication token belongs to organization ${tokenOrgUuid},\n` +
-      `but this machine requires organization ${requiredOrgUuid}.\n\n` +
-      `Please log in with the correct organization: claude auth login`,
-  }
+  // Offline mode — no OAuth tokens to validate
+  return { valid: true }
 }
 
 class GcpCredentialsTimeoutError extends Error {}

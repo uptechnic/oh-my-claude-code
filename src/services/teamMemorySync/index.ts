@@ -28,12 +28,7 @@ import axios from 'axios'
 import { createHash } from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 import { join, relative, sep } from 'path'
-import {
-  CLAUDE_AI_INFERENCE_SCOPE,
-  CLAUDE_AI_PROFILE_SCOPE,
-  getOauthConfig,
-  OAUTH_BETA_HEADER,
-} from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import {
   getTeamMemPath,
   PathTraversalError,
@@ -162,7 +157,7 @@ function isUsingOAuth(): boolean {
 
 function getTeamMemorySyncEndpoint(repoSlug: string): string {
   const baseUrl =
-    process.env.TEAM_MEMORY_SYNC_URL || getOauthConfig().BASE_API_URL
+    process.env.TEAM_MEMORY_SYNC_URL || getBaseApiUrl()
   return `${baseUrl}/api/claude_code/team_memory?repo=${encodeURIComponent(repoSlug)}`
 }
 
@@ -175,7 +170,6 @@ function getAuthHeaders(): {
     return {
       headers: {
         Authorization: `Bearer ${oauthTokens.accessToken}`,
-        'anthropic-beta': OAUTH_BETA_HEADER,
         'User-Agent': getClaudeCodeUserAgent(),
       },
     }

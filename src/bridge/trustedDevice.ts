@@ -1,7 +1,7 @@
 import axios from 'axios'
 import memoize from 'lodash-es/memoize.js'
 import { hostname } from 'os'
-import { getOauthConfig } from '../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import {
   checkGate_CACHED_OR_BLOCKING,
   getFeatureValue_CACHED_MAY_BE_STALE,
@@ -139,7 +139,7 @@ export async function enrollTrustedDevice(): Promise<void> {
       return
     }
 
-    const baseUrl = getOauthConfig().BASE_API_URL
+    const baseUrl = getBaseApiUrl()
     let response
     try {
       response = await axios.post<{

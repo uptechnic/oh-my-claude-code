@@ -23,7 +23,7 @@
  * - Bedrock/Vertex/Foundry (different endpoints, different auth)
  */
 
-import { getOauthConfig } from '../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import { isEnvTruthy } from './envUtils.js'
 
 let fired = false
@@ -57,7 +57,7 @@ export function preconnectAnthropicApi(): void {
   // ANTHROPIC_BASE_URL env + USE_STAGING_OAUTH + USE_LOCAL_OAUTH in one lookup.
   // NODE_EXTRA_CA_CERTS no longer a skip — init.ts applied it before this fires.
   const baseUrl =
-    process.env.ANTHROPIC_BASE_URL || getOauthConfig().BASE_API_URL
+    process.env.ANTHROPIC_BASE_URL || getBaseApiUrl()
 
   // Fire and forget. HEAD means no response body — the connection is eligible
   // for keep-alive pool reuse immediately after headers arrive. 10s timeout

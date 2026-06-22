@@ -13,13 +13,12 @@ import { isRunningOnHomespace } from '../utils/envUtils.js';
 import { PreflightStep } from '../utils/preflightChecks.js';
 import type { ThemeSetting } from '../utils/theme.js';
 import { ApproveApiKey } from './ApproveApiKey.js';
-import { ConsoleOAuthFlow } from './ConsoleOAuthFlow.js';
 import { Select } from './CustomSelect/select.js';
 import { WelcomeV2 } from './LogoV2/WelcomeV2.js';
 import { PressEnterToContinue } from './PressEnterToContinue.js';
 import { ThemePicker } from './ThemePicker.js';
 import { OrderedList } from './ui/OrderedList.js';
-type StepId = 'preflight' | 'theme' | 'oauth' | 'api-key' | 'offline-setup' | 'security' | 'terminal-setup';
+type StepId = 'preflight' | 'theme' | 'api-key' | 'offline-setup' | 'security' | 'terminal-setup';
 interface OnboardingStep {
   id: StepId;
   component: React.ReactNode;
@@ -167,14 +166,6 @@ export function Onboarding({
     steps.push({
       id: 'offline-setup',
       component: offlineSetupStep
-    });
-  }
-  if (oauthEnabled) {
-    steps.push({
-      id: 'oauth',
-      component: <SkippableStep skip={skipOAuth} onSkip={goToNextStep}>
-          <ConsoleOAuthFlow onDone={goToNextStep} />
-        </SkippableStep>
     });
   }
   steps.push({

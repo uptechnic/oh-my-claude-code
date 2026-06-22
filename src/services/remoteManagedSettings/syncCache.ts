@@ -7,7 +7,6 @@
  * mirror alongside the leaf's state.
  */
 
-import { CLAUDE_AI_INFERENCE_SCOPE } from '../../constants/oauth.js'
 import {
   getAnthropicApiKeyWithSource,
   getClaudeAIOAuthTokens,

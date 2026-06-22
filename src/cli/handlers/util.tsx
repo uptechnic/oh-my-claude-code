@@ -17,36 +17,13 @@ import { MCPConnectionManager } from '../../services/mcp/MCPConnectionManager.js
 import { AppStateProvider } from '../../state/AppState.js';
 import { onChangeAppState } from '../../state/onChangeAppState.js';
 import { isAnthropicAuthEnabled } from '../../utils/auth.js';
-export async function setupTokenHandler(root: Root): Promise<void> {
-  logEvent('tengu_setup_token_command', {});
-  const showAuthWarning = !isAnthropicAuthEnabled();
-  const {
-    ConsoleOAuthFlow
-  } = await import('../../components/ConsoleOAuthFlow.js');
-  await new Promise<void>(resolve => {
-    root.render(<AppStateProvider onChangeAppState={onChangeAppState}>
-        <KeybindingSetup>
-          <Box flexDirection="column" gap={1}>
-            <WelcomeV2 />
-            {showAuthWarning && <Box flexDirection="column">
-                <Text color="warning">
-                  Warning: You already have authentication configured via
-                  environment variable or API key helper.
-                </Text>
-                <Text color="warning">
-                  The setup-token command will create a new OAuth token which
-                  you can use instead.
-                </Text>
-              </Box>}
-            <ConsoleOAuthFlow onDone={() => {
-            void resolve();
-          }} mode="setup-token" startingMessage="This will guide you through long-lived (1-year) auth token setup for your Claude account. Claude subscription required." />
-          </Box>
-        </KeybindingSetup>
-      </AppStateProvider>);
-  });
-  root.unmount();
-  process.exit(0);
+export async function setupTokenHandler(_root: Root): Promise<void> {
+  // OAuth token setup is not available in offline mode
+  process.stderr.write(
+    'Error: setup-token is not available in offline mode.\n' +
+    'Use /login in the REPL or configure ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY instead.\n',
+  )
+  process.exit(1)
 }
 
 // DoctorWithPlugins wrapper + doctor handler

@@ -204,16 +204,3 @@ export async function authLogout(): Promise<void> {
   process.stdout.write('Successfully removed API Key.\n')
   process.exit(0)
 }
-
-/**
- * Stub — OAuth token installation is not supported in offline mode.
- * Kept for backward compatibility with ConsoleOAuthFlow and print.ts
- * which still reference this function (to be removed in a later cleanup).
- */
-export async function installOAuthTokens(_tokens: unknown): Promise<void> {
-  throw new Error(
-    'OAuth login is not available in offline mode. ' +
-    'Use claude auth login (with ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY set) ' +
-    'or /login in the REPL to configure an API key.',
-  )
-}

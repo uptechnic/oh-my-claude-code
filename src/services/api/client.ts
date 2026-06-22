@@ -21,7 +21,7 @@ import {
   getIsNonInteractiveSession,
   getSessionId,
 } from '../../bootstrap/state.js'
-import { getOauthConfig } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import { isDebugToStdErr, logForDebugging } from '../../utils/debug.js'
 import {
   getAWSRegion,
@@ -306,7 +306,7 @@ export async function getAnthropicClient({
     // Set baseURL from OAuth config when using staging OAuth
     ...(process.env.USER_TYPE === 'ant' &&
     isEnvTruthy(process.env.USE_STAGING_OAUTH)
-      ? { baseURL: getOauthConfig().BASE_API_URL }
+      ? { baseURL: getBaseApiUrl() }
       : {}),
     ...ARGS,
     ...(isDebugToStdErr() && { logger: createStderrLogger() }),

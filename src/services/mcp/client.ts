@@ -42,7 +42,6 @@ import zipObject from 'lodash-es/zipObject.js'
 import pMap from 'p-map'
 import { getOriginalCwd, getSessionId } from '../../bootstrap/state.js'
 import type { Command } from '../../commands.js'
-import { getOauthConfig } from '../../constants/oauth.js'
 import { PRODUCT_URL } from '../../constants/product.js'
 import type { AppState } from '../../state/AppState.js'
 import {
@@ -876,8 +875,7 @@ export const connectToServer = memoize(
           throw new Error('No claude.ai OAuth token found')
         }
 
-        const oauthConfig = getOauthConfig()
-        const proxyUrl = `${oauthConfig.MCP_PROXY_URL}${oauthConfig.MCP_PROXY_PATH.replace('{server_id}', serverRef.id)}`
+        const proxyUrl = `https://mcp-proxy.anthropic.com/v1/mcp/${serverRef.id}`
 
         logMCPDebug(name, `Using claude.ai proxy at ${proxyUrl}`)
 

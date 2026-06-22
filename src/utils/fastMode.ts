@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getOauthConfig, OAUTH_BETA_HEADER } from 'src/constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from 'src/services/analytics/growthbook.js'
 import {
   getIsNonInteractiveSession,
@@ -367,12 +367,11 @@ type FastModeResponse = {
 async function fetchFastModeStatus(
   auth: { accessToken: string } | { apiKey: string },
 ): Promise<FastModeResponse> {
-  const endpoint = `${getOauthConfig().BASE_API_URL}/api/claude_code_penguin_mode`
+  const endpoint = `${getBaseApiUrl()}/api/claude_code_penguin_mode`
   const headers: Record<string, string> =
     'accessToken' in auth
       ? {
           Authorization: `Bearer ${auth.accessToken}`,
-          'anthropic-beta': OAUTH_BETA_HEADER,
         }
       : { 'x-api-key': auth.apiKey }
 

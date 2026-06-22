@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getOauthProfileFromApiKey } from 'src/services/oauth/getOauthProfile.js';
+import { getOauthProfileFromApiKey } from 'src/utils/auth.js';
 import { isClaudeAISubscriber } from 'src/utils/auth.js';
 import { Text } from '../../ink.js';
 import { logEvent } from '../../services/analytics/index.js';
