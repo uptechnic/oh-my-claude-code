@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import type { LocalJSXCommandContext } from '../../commands.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import TextInput from '../../components/TextInput.js';
-import { Text } from '../../ink.js';
+import { Box, Text } from '../../ink.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import { saveApiKey } from '../../utils/auth.js';
+import {
+  configureEnvVars,
+  LOGIN_ENV_VAR_DEFS,
+} from '../../utils/envFile.js';
 
 export async function call(
   onDone: LocalJSXCommandOnDone,
@@ -20,7 +24,7 @@ export async function call(
             authVersion: prev.authVersion + 1,
           }));
         }
-        onDone(success ? 'API Key configured' : 'Login interrupted');
+        onDone(success ? 'Configuration saved — restart to apply all settings' : 'Setup interrupted');
       }}
     />
   );
@@ -31,55 +35,149 @@ type Props = {
   startingMessage?: string;
 };
 
-export function Login({ onDone, startingMessage }: Props): React.ReactNode {
-  const [apiKey, setApiKey] = useState('');
-  const [cursorOffset, setCursorOffset] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
+type Step = 'required' | 'advanced';
 
-  async function handleSubmit() {
-    const trimmed = apiKey.trim();
-    if (!trimmed) {
-      setError('API Key cannot be empty');
-      return;
+export function Login({ onDone, startingMessage }: Props): React.ReactNode {
+  const [step, setStep] = useState<Step>('required');
+  const [values, setValues] = useState<Record<string, string>>(() => {
+    // Pre-fill from current env
+    const initial: Record<string, string> = {};
+    for (const def of LOGIN_ENV_VAR_DEFS) {
+      const existing = process.env[def.key];
+      if (existing) initial[def.key] = existing;
     }
-    setSaving(true);
-    setError(null);
-    try {
-      await saveApiKey(trimmed);
-      onDone(true);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to save API Key');
-      setSaving(false);
-    }
+    return initial;
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const requiredDefs = LOGIN_ENV_VAR_DEFS.filter(d => !d.advanced);
+  const advancedDefs = LOGIN_ENV_VAR_DEFS.filter(d => d.advanced);
+  const currentDefs = step === 'required' ? requiredDefs : advancedDefs;
+
+  function setValue(key: string, value: string) {
+    setValues(prev => ({ ...prev, [key]: value }));
+    setErrors(prev => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
   }
 
+  async function handleRequiredDone() {
+    const newErrors: Record<string, string> = {};
+    for (const def of requiredDefs) {
+      if (def.required && !values[def.key]?.trim()) {
+        newErrors[def.key] = `${def.label} is required`;
+      }
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setStep('advanced');
+  }
+
+  async function handleSave() {
+    const newErrors: Record<string, string> = {};
+    for (const def of requiredDefs) {
+      if (def.required && !values[def.key]?.trim()) {
+        newErrors[def.key] = `${def.label} is required`;
+      }
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Collect non-empty values
+    const vars: Record<string, string> = {};
+    for (const def of LOGIN_ENV_VAR_DEFS) {
+      const v = values[def.key]?.trim();
+      if (v) vars[def.key] = v;
+    }
+
+    // Persist to .env and set on process.env
+    configureEnvVars(vars);
+
+    // Also save the auth token via the standard saveApiKey path
+    const authToken = values['ANTHROPIC_AUTH_TOKEN']?.trim();
+    if (authToken) {
+      try {
+        await saveApiKey(authToken);
+      } catch {
+        // Non-fatal — the .env file has the token regardless
+      }
+    }
+
+    onDone(true);
+  }
+
+  // Render a single-field input step
+  if (currentDefs.length === 1) {
+    const def = currentDefs[0];
+    const [cursorOffset, setCursorOffset] = useState(0);
+    return (
+      <Dialog
+        title={step === 'required' ? 'Configure API Connection' : 'Advanced Settings'}
+        onCancel={() => onDone(false)}
+        color="permission"
+      >
+        <Box flexDirection="column" gap={1}>
+          <Text bold={true}>{def.label}</Text>
+          <Text dimColor={true}>{def.required ? '(required)' : '(optional)'}</Text>
+          <TextInput
+            value={values[def.key] ?? ''}
+            onChange={v => setValue(def.key, v)}
+            onSubmit={step === 'required' ? handleRequiredDone : handleSave}
+            focus={true}
+            showCursor={true}
+            mask={def.key.includes('TOKEN') || def.key.includes('KEY') ? '*' : undefined}
+            placeholder={def.placeholder}
+            columns={70}
+            cursorOffset={cursorOffset}
+            onChangeCursorOffset={setCursorOffset}
+          />
+          {errors[def.key] && <Text color="red">{errors[def.key]}</Text>}
+        </Box>
+      </Dialog>
+    );
+  }
+
+  // Render multi-field step (show all fields in a form)
   return (
     <Dialog
-      title="Configure API Key"
-      onCancel={() => onDone(false)}
+      title={step === 'required' ? 'Configure API Connection' : 'Advanced Settings'}
+      onCancel={step === 'required' ? () => onDone(false) : () => setStep('required')}
       color="permission"
     >
-      <Text>
-        {startingMessage ?? 'Enter your API Key to authenticate:'}
-      </Text>
-      <TextInput
-        value={apiKey}
-        onChange={setApiKey}
-        onSubmit={handleSubmit}
-        focus={true}
-        showCursor={true}
-        mask="*"
-        placeholder="sk-..."
-        columns={60}
-        cursorOffset={cursorOffset}
-        onChangeCursorOffset={setCursorOffset}
-      />
-      {error && <Text color="red">{error}</Text>}
-      {saving && <Text>Saving API Key...</Text>}
+      <Box flexDirection="column" gap={1}>
+        {startingMessage && <Text>{startingMessage}</Text>}
+        {currentDefs.map(def => {
+          const [cursorOffset, setCursorOffset] = useState(0);
+          return (
+            <Box key={def.key} flexDirection="column">
+              <Text>{def.label}{def.required ? ' *' : ' (optional)'}</Text>
+              <TextInput
+                value={values[def.key] ?? ''}
+                onChange={v => setValue(def.key, v)}
+                focus={false}
+                showCursor={true}
+                mask={def.key.includes('TOKEN') || def.key.includes('KEY') ? '*' : undefined}
+                placeholder={def.placeholder}
+                columns={70}
+                cursorOffset={cursorOffset}
+                onChangeCursorOffset={setCursorOffset}
+              />
+              {errors[def.key] && <Text color="red">{errors[def.key]}</Text>}
+            </Box>
+          );
+        })}
+        <Text dimColor={true}>
+          {step === 'required'
+            ? 'Press Enter on any field to continue to advanced settings'
+            : 'Press Enter on any field to save and finish'}
+        </Text>
+      </Box>
     </Dialog>
   );
 }
-
-// Backward-compatible alias for components that import the old name
-export { Login as ApiKeyLogin };
