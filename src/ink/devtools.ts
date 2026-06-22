@@ -1,0 +1,2 @@
+// Stub: devtools
+export default {};

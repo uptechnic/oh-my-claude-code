@@ -1,0 +1,2 @@
+// Stub: contextCollapse
+export default {};

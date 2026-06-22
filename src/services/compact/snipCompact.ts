@@ -1,0 +1,2 @@
+// Stub: snipCompact
+export default {};

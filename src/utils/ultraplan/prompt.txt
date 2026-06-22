@@ -1,0 +1,3 @@
+[ultraplan]
+
+This is a stub placeholder for the ultraplan prompt.
