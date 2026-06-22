@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@alcalzone/ansi-tokenize": "^0.1.0",
-    "@ant/claude-for-chrome-mcp": "file:stubs/@ant/claude-for-chrome-mcp",
     "@ant/computer-use-input": "file:stubs/@ant/computer-use-input",
     "@ant/computer-use-mcp": "file:stubs/@ant/computer-use-mcp",
     "@ant/computer-use-swift": "file:stubs/@ant/computer-use-swift",

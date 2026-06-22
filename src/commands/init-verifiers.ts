@@ -53,8 +53,6 @@ Analyze the project to detect what's in different subdirectories. The project ma
    - Check if Playwright is installed (look in package.json dependencies/devDependencies)
    - Check MCP configuration (.mcp.json) for browser automation tools:
      - Playwright MCP server
-     - Chrome DevTools MCP server
-     - Claude Chrome Extension MCP (browser-use via Claude's Chrome extension)
    - For Python projects, check for playwright, pytest-playwright
 
 ## Phase 2: Verification Tool Setup
@@ -65,14 +63,12 @@ Based on what was detected in Phase 1, help the user set up appropriate verifica
 
 1. **If browser automation tools are already installed/configured**, ask the user which one they want to use:
    - Use AskUserQuestion to present the detected options
-   - Example: "I found Playwright and Chrome DevTools MCP configured. Which would you like to use for verification?"
+   - Example: "I found Playwright configured. Would you like to use it for verification?"
 
 2. **If NO browser automation tools are detected**, ask if they want to install/configure one:
    - Use AskUserQuestion: "No browser automation tools detected. Would you like to set one up for UI verification?"
    - Options to offer:
      - **Playwright** (Recommended) - Full browser automation library, works headless, great for CI
-     - **Chrome DevTools MCP** - Uses Chrome DevTools Protocol via MCP
-     - **Claude Chrome Extension** - Uses the Claude Chrome extension for browser interaction (requires the extension installed in Chrome)
      - **None** - Skip browser automation (will use basic HTTP checks only)
 
 3. **If user chooses to install Playwright**, run the appropriate command based on package manager:
@@ -81,12 +77,7 @@ Based on what was detected in Phase 1, help the user set up appropriate verifica
    - For pnpm: \`pnpm add -D @playwright/test && pnpm exec playwright install\`
    - For bun: \`bun add -D @playwright/test && bun playwright install\`
 
-4. **If user chooses Chrome DevTools MCP or Claude Chrome Extension**:
-   - These require MCP server configuration rather than package installation
-   - Ask if they want you to add the MCP server configuration to .mcp.json
-   - For Claude Chrome Extension, inform them they need the extension installed from the Chrome Web Store
-
-5. **MCP Server Setup** (if applicable):
+4. **MCP Server Setup** (if applicable):
    - If user selected an MCP-based option, configure the appropriate entry in .mcp.json
    - Update the verifier skill's allowed-tools to use the appropriate mcp__* tools
 

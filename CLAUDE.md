@@ -69,7 +69,6 @@ Defined in [bunfig.toml](bunfig.toml) and injected via Bun's `--define` (also re
 ## Stubs
 
 [stubs/](stubs/) contains no-op replacements for internal `@ant/*` packages not included in the leak:
-- `@ant/claude-for-chrome-mcp`
 - `@ant/computer-use-input`
 - `@ant/computer-use-mcp`
 - `@ant/computer-use-swift`
