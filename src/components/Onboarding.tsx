@@ -5,7 +5,7 @@ import { setupTerminal, shouldOfferTerminalSetup } from '../commands/terminalSet
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { Box, Link, Newline, Text, useTheme } from '../ink.js';
 import { useKeybindings } from '../keybindings/useKeybinding.js';
-import { isAnthropicAuthEnabled } from '../utils/auth.js';
+import { isAnthropicAuthEnabled, getAnthropicApiKeyWithSource } from '../utils/auth.js';
 import { normalizeApiKeyForConfig } from '../utils/authPortable.js';
 import { getCustomApiKeyStatus } from '../utils/config.js';
 import { env } from '../utils/env.js';
@@ -19,7 +19,7 @@ import { WelcomeV2 } from './LogoV2/WelcomeV2.js';
 import { PressEnterToContinue } from './PressEnterToContinue.js';
 import { ThemePicker } from './ThemePicker.js';
 import { OrderedList } from './ui/OrderedList.js';
-type StepId = 'preflight' | 'theme' | 'oauth' | 'api-key' | 'security' | 'terminal-setup';
+type StepId = 'preflight' | 'theme' | 'oauth' | 'api-key' | 'offline-setup' | 'security' | 'terminal-setup';
 interface OnboardingStep {
   id: StepId;
   component: React.ReactNode;
@@ -113,6 +113,39 @@ export function Onboarding({
     }
     goToNextStep();
   }
+  // Check if offline-mode has credentials configured
+  const hasOfflineCredentials = useMemo(() => {
+    if (oauthEnabled) return true // OAuth handles its own credential check
+    const { source, key } = getAnthropicApiKeyWithSource()
+    return source !== 'none' && key !== null
+  }, [oauthEnabled])
+
+  const showOfflineSetup = !oauthEnabled && !hasOfflineCredentials
+
+  const offlineSetupStep = <Box flexDirection="column" gap={1} paddingLeft={1}>
+      <Text bold>API credentials required</Text>
+      <Box flexDirection="column" width={70} gap={1}>
+        <Text>
+          Claude Code needs API credentials to work. Set these environment variables
+          before starting the program:
+        </Text>
+        <Box flexDirection="column" marginLeft={2}>
+          <Text dimColor>ANTHROPIC_BASE_URL</Text>
+          <Text>API endpoint URL (e.g. https://api.deepseek.com/anthropic)</Text>
+          <Text dimColor>ANTHROPIC_AUTH_TOKEN</Text>
+          <Text>Your API key / bearer token</Text>
+        </Box>
+        <Text>
+          Add them to your shell profile, .env file, or startup script,
+          then restart Claude Code.
+        </Text>
+        <Text>
+          Already have them set? Run <Text bold>/login</Text> to reload configuration.
+        </Text>
+      </Box>
+      <PressEnterToContinue />
+    </Box>
+
   const steps: OnboardingStep[] = [];
   if (oauthEnabled) {
     steps.push({
@@ -128,6 +161,12 @@ export function Onboarding({
     steps.push({
       id: 'api-key',
       component: <ApproveApiKey customApiKeyTruncated={apiKeyNeedingApproval} onDone={handleApiKeyDone} />
+    });
+  }
+  if (showOfflineSetup) {
+    steps.push({
+      id: 'offline-setup',
+      component: offlineSetupStep
     });
   }
   if (oauthEnabled) {
