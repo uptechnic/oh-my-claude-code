@@ -4,10 +4,9 @@ import { Dialog } from '../../components/design-system/Dialog.js';
 import TextInput from '../../components/TextInput.js';
 import { Box, Text } from '../../ink.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
-import { saveApiKey } from '../../utils/auth.js';
 import {
-  configureEnvVars,
   LOGIN_ENV_VAR_DEFS,
+  setSessionEnvVars,
 } from '../../utils/envFile.js';
 
 export async function call(
@@ -24,7 +23,11 @@ export async function call(
             authVersion: prev.authVersion + 1,
           }));
         }
-        onDone(success ? 'Configuration saved. Restart to apply all settings.' : 'Setup interrupted');
+        onDone(
+          success
+            ? 'Session configured. Set env vars at startup for permanent config.'
+            : 'Setup interrupted',
+        );
       }}
     />
   );
@@ -54,8 +57,6 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
   const isLast = stepIndex >= LOGIN_ENV_VAR_DEFS.length - 1;
   const isRequired = currentDef?.required ?? false;
   const isAdvanced = currentDef?.advanced ?? false;
-  // Show advanced fields only if user has entered the first two required ones
-  // or if step is already past required fields
 
   const handleSubmit = useCallback(async () => {
     const trimmed = inputValue.trim();
@@ -70,13 +71,12 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
     if (trimmed) {
       updated[currentDef.key] = trimmed;
     } else if (updated[currentDef.key]) {
-      // User cleared an existing value — remove it
       delete updated[currentDef.key];
     }
     setSavedValues(updated);
 
     if (isLast) {
-      // Collect non-empty values and persist
+      // Apply to current session only (no disk persistence)
       const vars: Record<string, string> = {};
       for (const def of LOGIN_ENV_VAR_DEFS) {
         const v = updated[def.key]?.trim();
@@ -84,22 +84,11 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
       }
 
       if (Object.keys(vars).length > 0) {
-        configureEnvVars(vars);
-      }
-
-      // Also save auth token via standard path
-      const authToken = vars['ANTHROPIC_AUTH_TOKEN'];
-      if (authToken) {
-        try {
-          await saveApiKey(authToken);
-        } catch {
-          // Non-fatal
-        }
+        setSessionEnvVars(vars);
       }
 
       onDone(true);
     } else {
-      // Move to next step
       const nextIndex = stepIndex + 1;
       setStepIndex(nextIndex);
       setInputValue(updated[LOGIN_ENV_VAR_DEFS[nextIndex].key] ?? '');
@@ -110,7 +99,6 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
 
   const handleCancel = useCallback(() => {
     if (stepIndex > 0) {
-      // Go back one step
       const prevIndex = stepIndex - 1;
       setStepIndex(prevIndex);
       setInputValue(savedValues[LOGIN_ENV_VAR_DEFS[prevIndex].key] ?? '');
@@ -132,9 +120,20 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
       color="permission"
     >
       <Box flexDirection="column" gap={1}>
+        <Box flexDirection="column">
+          <Text color="yellow" bold={true}>
+            Session-only — no credentials are saved to disk.
+          </Text>
+          <Text dimColor={true}>
+            For permanent configuration, set environment variables before starting the program
+            (e.g. in .env, shell profile, or startup script).
+          </Text>
+        </Box>
+
         {stepIndex === 0 && startingMessage && (
           <Text>{startingMessage}</Text>
         )}
+
         <Box flexDirection="column">
           <Text bold={true}>{currentDef.label}</Text>
           <Text dimColor={true}>
@@ -160,7 +159,7 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
         {error && <Text color="red">{error}</Text>}
         <Text dimColor={true}>
           {isLast
-            ? 'Enter: save & finish  |  Esc: back'
+            ? 'Enter: apply & finish  |  Esc: back'
             : `Enter: ${isRequired ? 'save & next' : 'skip (optional)'}  |  Esc: ${stepIndex > 0 ? 'back' : 'cancel'}`}
         </Text>
       </Box>

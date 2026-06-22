@@ -9,9 +9,9 @@ import {
 import { saveGlobalConfig } from '../../utils/config.js'
 import { isRunningOnHomespace } from '../../utils/envUtils.js'
 import {
-  configureEnvVars,
   LOGIN_ENV_VAR_DEFS,
   readEnvFile,
+  setSessionEnvVars,
 } from '../../utils/envFile.js'
 import { getAPIProvider } from '../../utils/model/providers.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
@@ -23,7 +23,10 @@ import {
 /**
  * Login by reading configuration from environment variables
  * (ANTHROPIC_AUTH_TOKEN, ANTHROPIC_BASE_URL, model mappings, etc.)
- * and persisting them to .env and local config.
+ * and applying them to the current session only.
+ *
+ * No credentials are written to disk. For permanent configuration,
+ * set environment variables before starting the program.
  */
 export async function authLogin(): Promise<void> {
   const apiKey =
@@ -44,6 +47,7 @@ export async function authLogin(): Promise<void> {
         '    ANTHROPIC_SMALL_FAST_MODEL       Fast/small model\n' +
         '    CLAUDE_CODE_SUBAGENT_MODEL       Subagent model\n' +
         '    CLAUDE_CODE_EFFORT_LEVEL         Thinking effort (low/medium/high/xhigh/max)\n\n' +
+        'For permanent configuration, add these to your shell profile or .env file.\n' +
         'Then run: claude auth login\n',
     )
     process.exit(1)
@@ -52,17 +56,18 @@ export async function authLogin(): Promise<void> {
   try {
     logEvent('tengu_offline_login', {})
 
-    // Collect all configured env vars and persist to .env
+    // Apply env vars to current session (no disk persistence)
     const vars: Record<string, string> = {}
     for (const def of LOGIN_ENV_VAR_DEFS) {
       const value = process.env[def.key]
       if (value) vars[def.key] = value
     }
     if (Object.keys(vars).length > 0) {
-      configureEnvVars(vars)
+      setSessionEnvVars(vars)
     }
 
-    // Also save the auth token via the standard path (keychain/config)
+    // Save auth token via the standard path (keychain/config) — this is the
+    // only credential that gets persisted, for convenience across sessions
     await saveApiKey(apiKey)
 
     // Mark onboarding complete
@@ -73,10 +78,11 @@ export async function authLogin(): Promise<void> {
 
     const baseUrl = process.env.ANTHROPIC_BASE_URL || '(default)'
     process.stdout.write(
-      `Login successful.\n` +
+      `Login successful (session-only).\n` +
       `  Base URL:  ${baseUrl}\n` +
-      `  Auth:      configured\n` +
-      `  Config saved to .env (${Object.keys(vars).length} variables)\n`,
+      `  Auth:      configured\n\n` +
+      `Note: This configuration is temporary. For permanent setup, add env vars\n` +
+      `to your shell profile or .env file before starting the program.\n`,
     )
     process.exit(0)
   } catch (err) {
@@ -89,7 +95,7 @@ export async function authStatus(opts: {
   json?: boolean
   text?: boolean
 }): Promise<void> {
-  const { source: apiKeySource, key } = getAnthropicApiKeyWithSource()
+  const { source: apiKeySource } = getAnthropicApiKeyWithSource()
   const hasApiKeyEnvVar =
     !!process.env.ANTHROPIC_API_KEY && !isRunningOnHomespace()
   const hasAuthTokenEnvVar = !!process.env.ANTHROPIC_AUTH_TOKEN
@@ -98,7 +104,6 @@ export async function authStatus(opts: {
     hasApiKeyEnvVar ||
     hasAuthTokenEnvVar
 
-  // Determine auth method
   let authMethod: string = 'none'
   if (apiKeySource === 'apiKeyHelper') {
     authMethod = 'api_key_helper'
@@ -110,7 +115,6 @@ export async function authStatus(opts: {
     authMethod = 'auth_token'
   }
 
-  // Read .env file for additional context
   const envFileVars = readEnvFile()
   const envFileKeys = Object.keys(envFileVars)
 
@@ -141,7 +145,6 @@ export async function authStatus(opts: {
       process.stdout.write('API key: ANTHROPIC_API_KEY\n')
     }
 
-    // Show key env vars
     if (process.env.ANTHROPIC_BASE_URL) {
       process.stdout.write(`Base URL: ${process.env.ANTHROPIC_BASE_URL}\n`)
     }
@@ -152,12 +155,12 @@ export async function authStatus(opts: {
       process.stdout.write(`Effort: ${process.env.CLAUDE_CODE_EFFORT_LEVEL}\n`)
     }
     if (envFileKeys.length > 0) {
-      process.stdout.write(`Config (.env): ${envFileKeys.length} variables\n`)
+      process.stdout.write(`Config (.env): ${envFileKeys.length} variables found\n`)
     }
 
     if (!loggedIn) {
       process.stdout.write(
-        'Not logged in. Run claude auth login to configure your API key.\n',
+        'Not logged in. Set ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY and run claude auth login.\n',
       )
     }
   } else {
@@ -205,7 +208,7 @@ export async function authLogout(): Promise<void> {
 /**
  * Stub — OAuth token installation is not supported in offline mode.
  * Kept for backward compatibility with ConsoleOAuthFlow and print.ts
- * which still reference this function (to be removed in Phase 2/3).
+ * which still reference this function (to be removed in a later cleanup).
  */
 export async function installOAuthTokens(_tokens: unknown): Promise<void> {
   throw new Error(
