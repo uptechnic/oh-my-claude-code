@@ -12,10 +12,6 @@ import {
   getIsNonInteractiveSession,
   preferThirdPartyAuthentication,
 } from '../bootstrap/state.js'
-import {
-  getMockSubscriptionType,
-  shouldUseMockSubscription,
-} from '../services/mockRateLimits.js'
 // Stub types for OAuth interfaces (OAuth is disabled in offline mode)
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface OAuthTokens {}
@@ -54,7 +50,6 @@ import {
   isValidAwsStsOutput,
 } from './aws.js'
 import { AwsAuthStatusManager } from './awsAuthStatusManager.js'
-import { clearBetasCaches } from './betas.js'
 import {
   type AccountInfo,
   checkHasTrustDialogAccepted,
@@ -70,10 +65,8 @@ import {
 } from './envUtils.js'
 import { errorMessage } from './errors.js'
 import { execSyncWithDefaults_DEPRECATED } from './execFileNoThrow.js'
-import * as lockfile from './lockfile.js'
 import { logError } from './log.js'
 import { memoizeWithTTLAsync } from './memoize.js'
-import { getSecureStorage } from './secureStorage/index.js'
 import {
   clearLegacyApiKeyPrefetch,
   getLegacyApiKeyPrefetchResult,
@@ -89,7 +82,6 @@ import {
 } from './settings/settings.js'
 import { sleep } from './sleep.js'
 import { jsonParse } from './slowOperations.js'
-import { clearToolSchemaCache } from './toolSchemaCache.js'
 
 /** Default TTL for API key helper cache in milliseconds (5 minutes) */
 const DEFAULT_API_KEY_HELPER_TTL = 5 * 60 * 1000
@@ -220,13 +212,6 @@ export type ApiKeySource =
 export function getAnthropicApiKey(): null | string {
   const { key } = getAnthropicApiKeyWithSource()
   return key
-}
-
-export function hasAnthropicApiKeyAuth(): boolean {
-  const { key, source } = getAnthropicApiKeyWithSource({
-    skipRetrievingKeyFromApiKeyHelper: true,
-  })
-  return key !== null && source !== 'none'
 }
 
 export function getAnthropicApiKeyWithSource(
@@ -1165,14 +1150,6 @@ export async function saveApiKey(apiKey: string): Promise<void> {
   clearLegacyApiKeyPrefetch()
 }
 
-export function isCustomApiKeyApproved(apiKey: string): boolean {
-  const config = getGlobalConfig()
-  const normalizedKey = normalizeApiKeyForConfig(apiKey)
-  return (
-    config.customApiKeyResponses?.approved?.includes(normalizedKey) ?? false
-  )
-}
-
 export async function removeApiKey(): Promise<void> {
   await maybeRemoveApiKeyFromMacOSKeychain()
 
@@ -1237,15 +1214,6 @@ export async function handleOAuth401Error(
   _failedAccessToken: string,
 ): Promise<boolean> {
   return false // Offline mode — no OAuth token refresh
-}
-
-/**
- * Reads OAuth tokens asynchronously, avoiding blocking keychain reads.
- * Delegates to the sync memoized version for env var / file descriptor tokens
- * (which don't hit the keychain), and only uses async for storage reads.
- */
-export async function getClaudeAIOAuthTokensAsync(): Promise<OAuthTokens | null> {
-  return null // Offline mode — no OAuth tokens
 }
 
 /** Always returns null in offline mode. */
@@ -1350,23 +1318,6 @@ export function isOverageProvisioningAllowed(): boolean {
   }
 
   return true
-}
-
-// Returns whether the user has Opus access at all, regardless of whether they
-// are a subscriber or PayG.
-export function hasOpusAccess(): boolean {
-  const subscriptionType = getSubscriptionType()
-
-  return (
-    subscriptionType === 'max' ||
-    subscriptionType === 'enterprise' ||
-    subscriptionType === 'team' ||
-    subscriptionType === 'pro' ||
-    // subscriptionType === null covers both API users and the case where
-    // subscribers do not have subscription type populated. For those
-    // subscribers, when in doubt, we should not limit their access to Opus.
-    subscriptionType === null
-  )
 }
 
 export function getSubscriptionType(): SubscriptionType | null {
