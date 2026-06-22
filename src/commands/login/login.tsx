@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type { LocalJSXCommandContext } from '../../commands.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import TextInput from '../../components/TextInput.js';
@@ -24,7 +24,7 @@ export async function call(
             authVersion: prev.authVersion + 1,
           }));
         }
-        onDone(success ? 'Configuration saved — restart to apply all settings' : 'Setup interrupted');
+        onDone(success ? 'Configuration saved. Restart to apply all settings.' : 'Setup interrupted');
       }}
     />
   );
@@ -35,11 +35,12 @@ type Props = {
   startingMessage?: string;
 };
 
-type Step = 'required' | 'advanced';
-
 export function Login({ onDone, startingMessage }: Props): React.ReactNode {
-  const [step, setStep] = useState<Step>('required');
-  const [values, setValues] = useState<Record<string, string>>(() => {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [inputValue, setInputValue] = useState('');
+  const [cursorOffset, setCursorOffset] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [savedValues, setSavedValues] = useState<Record<string, string>>(() => {
     // Pre-fill from current env
     const initial: Record<string, string> = {};
     for (const def of LOGIN_ENV_VAR_DEFS) {
@@ -48,134 +49,119 @@ export function Login({ onDone, startingMessage }: Props): React.ReactNode {
     }
     return initial;
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const requiredDefs = LOGIN_ENV_VAR_DEFS.filter(d => !d.advanced);
-  const advancedDefs = LOGIN_ENV_VAR_DEFS.filter(d => d.advanced);
-  const currentDefs = step === 'required' ? requiredDefs : advancedDefs;
+  const currentDef = LOGIN_ENV_VAR_DEFS[stepIndex];
+  const isLast = stepIndex >= LOGIN_ENV_VAR_DEFS.length - 1;
+  const isRequired = currentDef?.required ?? false;
+  const isAdvanced = currentDef?.advanced ?? false;
+  // Show advanced fields only if user has entered the first two required ones
+  // or if step is already past required fields
 
-  function setValue(key: string, value: string) {
-    setValues(prev => ({ ...prev, [key]: value }));
-    setErrors(prev => {
-      const next = { ...prev };
-      delete next[key];
-      return next;
-    });
-  }
+  const handleSubmit = useCallback(async () => {
+    const trimmed = inputValue.trim();
 
-  async function handleRequiredDone() {
-    const newErrors: Record<string, string> = {};
-    for (const def of requiredDefs) {
-      if (def.required && !values[def.key]?.trim()) {
-        newErrors[def.key] = `${def.label} is required`;
-      }
-    }
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    setStep('advanced');
-  }
-
-  async function handleSave() {
-    const newErrors: Record<string, string> = {};
-    for (const def of requiredDefs) {
-      if (def.required && !values[def.key]?.trim()) {
-        newErrors[def.key] = `${def.label} is required`;
-      }
-    }
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (isRequired && !trimmed) {
+      setError(`${currentDef.label} is required`);
       return;
     }
 
-    // Collect non-empty values
-    const vars: Record<string, string> = {};
-    for (const def of LOGIN_ENV_VAR_DEFS) {
-      const v = values[def.key]?.trim();
-      if (v) vars[def.key] = v;
+    // Save this step's value
+    const updated = { ...savedValues };
+    if (trimmed) {
+      updated[currentDef.key] = trimmed;
+    } else if (updated[currentDef.key]) {
+      // User cleared an existing value — remove it
+      delete updated[currentDef.key];
     }
+    setSavedValues(updated);
 
-    // Persist to .env and set on process.env
-    configureEnvVars(vars);
-
-    // Also save the auth token via the standard saveApiKey path
-    const authToken = values['ANTHROPIC_AUTH_TOKEN']?.trim();
-    if (authToken) {
-      try {
-        await saveApiKey(authToken);
-      } catch {
-        // Non-fatal — the .env file has the token regardless
+    if (isLast) {
+      // Collect non-empty values and persist
+      const vars: Record<string, string> = {};
+      for (const def of LOGIN_ENV_VAR_DEFS) {
+        const v = updated[def.key]?.trim();
+        if (v) vars[def.key] = v;
       }
+
+      if (Object.keys(vars).length > 0) {
+        configureEnvVars(vars);
+      }
+
+      // Also save auth token via standard path
+      const authToken = vars['ANTHROPIC_AUTH_TOKEN'];
+      if (authToken) {
+        try {
+          await saveApiKey(authToken);
+        } catch {
+          // Non-fatal
+        }
+      }
+
+      onDone(true);
+    } else {
+      // Move to next step
+      const nextIndex = stepIndex + 1;
+      setStepIndex(nextIndex);
+      setInputValue(updated[LOGIN_ENV_VAR_DEFS[nextIndex].key] ?? '');
+      setCursorOffset(updated[LOGIN_ENV_VAR_DEFS[nextIndex].key]?.length ?? 0);
+      setError(null);
     }
+  }, [inputValue, isRequired, isLast, currentDef, savedValues, stepIndex, onDone]);
 
-    onDone(true);
-  }
+  const handleCancel = useCallback(() => {
+    if (stepIndex > 0) {
+      // Go back one step
+      const prevIndex = stepIndex - 1;
+      setStepIndex(prevIndex);
+      setInputValue(savedValues[LOGIN_ENV_VAR_DEFS[prevIndex].key] ?? '');
+      setCursorOffset(savedValues[LOGIN_ENV_VAR_DEFS[prevIndex].key]?.length ?? 0);
+      setError(null);
+    } else {
+      onDone(false);
+    }
+  }, [stepIndex, savedValues, onDone]);
 
-  // Render a single-field input step
-  if (currentDefs.length === 1) {
-    const def = currentDefs[0];
-    const [cursorOffset, setCursorOffset] = useState(0);
-    return (
-      <Dialog
-        title={step === 'required' ? 'Configure API Connection' : 'Advanced Settings'}
-        onCancel={() => onDone(false)}
-        color="permission"
-      >
-        <Box flexDirection="column" gap={1}>
-          <Text bold={true}>{def.label}</Text>
-          <Text dimColor={true}>{def.required ? '(required)' : '(optional)'}</Text>
-          <TextInput
-            value={values[def.key] ?? ''}
-            onChange={v => setValue(def.key, v)}
-            onSubmit={step === 'required' ? handleRequiredDone : handleSave}
-            focus={true}
-            showCursor={true}
-            mask={def.key.includes('TOKEN') || def.key.includes('KEY') ? '*' : undefined}
-            placeholder={def.placeholder}
-            columns={70}
-            cursorOffset={cursorOffset}
-            onChangeCursorOffset={setCursorOffset}
-          />
-          {errors[def.key] && <Text color="red">{errors[def.key]}</Text>}
-        </Box>
-      </Dialog>
-    );
-  }
+  const totalSteps = LOGIN_ENV_VAR_DEFS.length;
+  const progress = `(${stepIndex + 1}/${totalSteps})`;
+  const sectionLabel = isAdvanced ? 'Advanced' : 'Required';
 
-  // Render multi-field step (show all fields in a form)
   return (
     <Dialog
-      title={step === 'required' ? 'Configure API Connection' : 'Advanced Settings'}
-      onCancel={step === 'required' ? () => onDone(false) : () => setStep('required')}
+      title={`Configure API — ${sectionLabel} ${progress}`}
+      onCancel={handleCancel}
       color="permission"
     >
       <Box flexDirection="column" gap={1}>
-        {startingMessage && <Text>{startingMessage}</Text>}
-        {currentDefs.map(def => {
-          const [cursorOffset, setCursorOffset] = useState(0);
-          return (
-            <Box key={def.key} flexDirection="column">
-              <Text>{def.label}{def.required ? ' *' : ' (optional)'}</Text>
-              <TextInput
-                value={values[def.key] ?? ''}
-                onChange={v => setValue(def.key, v)}
-                focus={false}
-                showCursor={true}
-                mask={def.key.includes('TOKEN') || def.key.includes('KEY') ? '*' : undefined}
-                placeholder={def.placeholder}
-                columns={70}
-                cursorOffset={cursorOffset}
-                onChangeCursorOffset={setCursorOffset}
-              />
-              {errors[def.key] && <Text color="red">{errors[def.key]}</Text>}
-            </Box>
-          );
-        })}
+        {stepIndex === 0 && startingMessage && (
+          <Text>{startingMessage}</Text>
+        )}
+        <Box flexDirection="column">
+          <Text bold={true}>{currentDef.label}</Text>
+          <Text dimColor={true}>
+            {currentDef.placeholder ? `e.g. ${currentDef.placeholder}` : ''}
+            {isRequired ? ' (required)' : ' (optional, press Enter to skip)'}
+          </Text>
+        </Box>
+        <TextInput
+          value={inputValue}
+          onChange={v => {
+            setInputValue(v);
+            setError(null);
+          }}
+          onSubmit={handleSubmit}
+          focus={true}
+          showCursor={true}
+          mask={currentDef.key.includes('TOKEN') || currentDef.key.includes('KEY') ? '*' : undefined}
+          placeholder={currentDef.placeholder}
+          columns={70}
+          cursorOffset={cursorOffset}
+          onChangeCursorOffset={setCursorOffset}
+        />
+        {error && <Text color="red">{error}</Text>}
         <Text dimColor={true}>
-          {step === 'required'
-            ? 'Press Enter on any field to continue to advanced settings'
-            : 'Press Enter on any field to save and finish'}
+          {isLast
+            ? 'Enter: save & finish  |  Esc: back'
+            : `Enter: ${isRequired ? 'save & next' : 'skip (optional)'}  |  Esc: ${stepIndex > 0 ? 'back' : 'cancel'}`}
         </Text>
       </Box>
     </Dialog>
