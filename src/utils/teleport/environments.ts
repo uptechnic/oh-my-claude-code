@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
-import { getOrganizationUUID } from './auth.js'
+import { getOrganizationUUID } from '../auth.js'
 import { getClaudeAIOAuthTokens } from '../auth.js'
 import { toError } from '../errors.js'
 import { logError } from '../log.js'
