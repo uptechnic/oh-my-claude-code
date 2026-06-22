@@ -114,23 +114,8 @@ export function getAuthHeaders(): AuthHeaders {
  */
 export async function withOAuth401Retry<T>(
   request: () => Promise<T>,
-  opts?: { also403Revoked?: boolean },
+  _opts?: { also403Revoked?: boolean },
 ): Promise<T> {
-  try {
-    return await request()
-  } catch (err) {
-    if (!axios.isAxiosError(err)) throw err
-    const status = err.response?.status
-    const isAuthError =
-      status === 401 ||
-      (opts?.also403Revoked &&
-        status === 403 &&
-        typeof err.response?.data === 'string' &&
-        err.response.data.includes('OAuth token has been revoked'))
-    if (!isAuthError) throw err
-    const failedAccessToken = getClaudeAIOAuthTokens()?.accessToken
-    if (!failedAccessToken) throw err
-    await handleOAuth401Error(failedAccessToken)
-    return await request()
-  }
+  // Offline mode — no OAuth token refresh; pass through without retry
+  return await request()
 }

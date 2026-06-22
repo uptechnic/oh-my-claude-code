@@ -89,10 +89,7 @@ const DEFAULT_API_KEY_HELPER_TTL = 5 * 60 * 1000
  * also use that key — and fail if it's stale/wrong-org.
  */
 function isManagedOAuthContext(): boolean {
-  return (
-    isEnvTruthy(process.env.CLAUDE_CODE_REMOTE) ||
-    process.env.CLAUDE_CODE_ENTRYPOINT === 'claude-desktop'
-  )
+  return false // Offline mode — no managed OAuth contexts
 }
 
 /** Whether we are supporting direct 1P auth. */
@@ -1191,112 +1188,15 @@ async function maybeRemoveApiKeyFromMacOSKeychain(): Promise<void> {
 }
 
 // Function to store OAuth tokens in secure storage
-export function saveOAuthTokensIfNeeded(tokens: OAuthTokens): {
+export function saveOAuthTokensIfNeeded(_tokens: OAuthTokens): {
   success: boolean
   warning?: string
 } {
-  if (!shouldUseClaudeAIAuth(tokens.scopes)) {
-    logEvent('tengu_oauth_tokens_not_claude_ai', {})
-    return { success: true }
-  }
-
-  // Skip saving inference-only tokens (they come from env vars)
-  if (!tokens.refreshToken || !tokens.expiresAt) {
-    logEvent('tengu_oauth_tokens_inference_only', {})
-    return { success: true }
-  }
-
-  const secureStorage = getSecureStorage()
-  const storageBackend =
-    secureStorage.name as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS
-
-  try {
-    const storageData = secureStorage.read() || {}
-    const existingOauth = storageData.claudeAiOauth
-
-    storageData.claudeAiOauth = {
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      expiresAt: tokens.expiresAt,
-      scopes: tokens.scopes,
-      // Profile fetch in refreshOAuthToken swallows errors and returns null on
-      // transient failures (network, 5xx, rate limit). Don't clobber a valid
-      // stored subscription with null — fall back to the existing value.
-      subscriptionType:
-        tokens.subscriptionType ?? existingOauth?.subscriptionType ?? null,
-      rateLimitTier:
-        tokens.rateLimitTier ?? existingOauth?.rateLimitTier ?? null,
-    }
-
-    const updateStatus = secureStorage.update(storageData)
-
-    if (updateStatus.success) {
-      logEvent('tengu_oauth_tokens_saved', { storageBackend })
-    } else {
-      logEvent('tengu_oauth_tokens_save_failed', { storageBackend })
-    }
-
-    getClaudeAIOAuthTokens.cache?.clear?.()
-    clearBetasCaches()
-    clearToolSchemaCache()
-    return updateStatus
-  } catch (error) {
-    logError(error)
-    logEvent('tengu_oauth_tokens_save_exception', {
-      storageBackend,
-      error: errorMessage(
-        error,
-      ) as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
-    })
-    return { success: false, warning: 'Failed to save OAuth tokens' }
-  }
+  return { success: true } // Offline mode — no OAuth tokens to save
 }
 
 export const getClaudeAIOAuthTokens = memoize((): OAuthTokens | null => {
-  // --bare: API-key-only. No OAuth env tokens, no keychain, no credentials file.
-  if (isBareMode()) return null
-
-  // Check for force-set OAuth token from environment variable
-  if (process.env.CLAUDE_CODE_OAUTH_TOKEN) {
-    // Return an inference-only token (unknown refresh and expiry)
-    return {
-      accessToken: process.env.CLAUDE_CODE_OAUTH_TOKEN,
-      refreshToken: null,
-      expiresAt: null,
-      scopes: ['user:inference'],
-      subscriptionType: null,
-      rateLimitTier: null,
-    }
-  }
-
-  // Check for OAuth token from file descriptor
-  const oauthTokenFromFd = getOAuthTokenFromFileDescriptor()
-  if (oauthTokenFromFd) {
-    // Return an inference-only token (unknown refresh and expiry)
-    return {
-      accessToken: oauthTokenFromFd,
-      refreshToken: null,
-      expiresAt: null,
-      scopes: ['user:inference'],
-      subscriptionType: null,
-      rateLimitTier: null,
-    }
-  }
-
-  try {
-    const secureStorage = getSecureStorage()
-    const storageData = secureStorage.read()
-    const oauthData = storageData?.claudeAiOauth
-
-    if (!oauthData?.accessToken) {
-      return null
-    }
-
-    return oauthData
-  } catch (error) {
-    logError(error)
-    return null
-  }
+  return null // Offline mode — no OAuth tokens
 })
 
 /**
@@ -1357,38 +1257,10 @@ const pending401Handlers = new Map<string, Promise<boolean>>()
  * @param failedAccessToken - The access token that was rejected with 401
  * @returns true if we now have a valid token, false otherwise
  */
-export function handleOAuth401Error(
-  failedAccessToken: string,
+export async function handleOAuth401Error(
+  _failedAccessToken: string,
 ): Promise<boolean> {
-  const pending = pending401Handlers.get(failedAccessToken)
-  if (pending) return pending
-
-  const promise = handleOAuth401ErrorImpl(failedAccessToken).finally(() => {
-    pending401Handlers.delete(failedAccessToken)
-  })
-  pending401Handlers.set(failedAccessToken, promise)
-  return promise
-}
-
-async function handleOAuth401ErrorImpl(
-  failedAccessToken: string,
-): Promise<boolean> {
-  // Clear caches and re-read from keychain (async — sync read blocks ~100ms/call)
-  clearOAuthTokenCache()
-  const currentTokens = await getClaudeAIOAuthTokensAsync()
-
-  if (!currentTokens?.refreshToken) {
-    return false
-  }
-
-  // If keychain has a different token, another tab already refreshed - use it
-  if (currentTokens.accessToken !== failedAccessToken) {
-    logEvent('tengu_oauth_401_recovered_from_keychain', {})
-    return true
-  }
-
-  // Same token that failed - force refresh, bypassing local expiration check
-  return checkAndRefreshOAuthTokenIfNeeded(0, true)
+  return false // Offline mode — no OAuth token refresh
 }
 
 /**
@@ -1397,176 +1269,18 @@ async function handleOAuth401ErrorImpl(
  * (which don't hit the keychain), and only uses async for storage reads.
  */
 export async function getClaudeAIOAuthTokensAsync(): Promise<OAuthTokens | null> {
-  if (isBareMode()) return null
-
-  // Env var and FD tokens are sync and don't hit the keychain
-  if (
-    process.env.CLAUDE_CODE_OAUTH_TOKEN ||
-    getOAuthTokenFromFileDescriptor()
-  ) {
-    return getClaudeAIOAuthTokens()
-  }
-
-  try {
-    const secureStorage = getSecureStorage()
-    const storageData = await secureStorage.readAsync()
-    const oauthData = storageData?.claudeAiOauth
-    if (!oauthData?.accessToken) {
-      return null
-    }
-    return oauthData
-  } catch (error) {
-    logError(error)
-    return null
-  }
+  return null // Offline mode — no OAuth tokens
 }
 
-// In-flight promise for deduplicating concurrent calls
-let pendingRefreshCheck: Promise<boolean> | null = null
-
-export function checkAndRefreshOAuthTokenIfNeeded(
-  retryCount = 0,
-  force = false,
+export async function checkAndRefreshOAuthTokenIfNeeded(
+  _retryCount = 0,
+  _force = false,
 ): Promise<boolean> {
-  // Deduplicate concurrent non-retry, non-force calls
-  if (retryCount === 0 && !force) {
-    if (pendingRefreshCheck) {
-      return pendingRefreshCheck
-    }
-
-    const promise = checkAndRefreshOAuthTokenIfNeededImpl(retryCount, force)
-    pendingRefreshCheck = promise.finally(() => {
-      pendingRefreshCheck = null
-    })
-    return pendingRefreshCheck
-  }
-
-  return checkAndRefreshOAuthTokenIfNeededImpl(retryCount, force)
-}
-
-async function checkAndRefreshOAuthTokenIfNeededImpl(
-  retryCount: number,
-  force: boolean,
-): Promise<boolean> {
-  const MAX_RETRIES = 5
-
-  await invalidateOAuthCacheIfDiskChanged()
-
-  // First check if token is expired with cached value
-  // Skip this check if force=true (server already told us token is bad)
-  const tokens = getClaudeAIOAuthTokens()
-  if (!force) {
-    if (!tokens?.refreshToken || !isOAuthTokenExpired(tokens.expiresAt)) {
-      return false
-    }
-  }
-
-  if (!tokens?.refreshToken) {
-    return false
-  }
-
-  if (!shouldUseClaudeAIAuth(tokens.scopes)) {
-    return false
-  }
-
-  // Re-read tokens async to check if they're still expired
-  // Another process might have refreshed them
-  getClaudeAIOAuthTokens.cache?.clear?.()
-  clearKeychainCache()
-  const freshTokens = await getClaudeAIOAuthTokensAsync()
-  if (
-    !freshTokens?.refreshToken ||
-    !isOAuthTokenExpired(freshTokens.expiresAt)
-  ) {
-    return false
-  }
-
-  // Tokens are still expired, try to acquire lock and refresh
-  const claudeDir = getClaudeConfigHomeDir()
-  await mkdir(claudeDir, { recursive: true })
-
-  let release
-  try {
-    logEvent('tengu_oauth_token_refresh_lock_acquiring', {})
-    release = await lockfile.lock(claudeDir)
-    logEvent('tengu_oauth_token_refresh_lock_acquired', {})
-  } catch (err) {
-    if ((err as { code?: string }).code === 'ELOCKED') {
-      // Another process has the lock, let's retry if we haven't exceeded max retries
-      if (retryCount < MAX_RETRIES) {
-        logEvent('tengu_oauth_token_refresh_lock_retry', {
-          retryCount: retryCount + 1,
-        })
-        // Wait a bit before retrying
-        await sleep(1000 + Math.random() * 1000)
-        return checkAndRefreshOAuthTokenIfNeededImpl(retryCount + 1, force)
-      }
-      logEvent('tengu_oauth_token_refresh_lock_retry_limit_reached', {
-        maxRetries: MAX_RETRIES,
-      })
-      return false
-    }
-    logError(err)
-    logEvent('tengu_oauth_token_refresh_lock_error', {
-      error: errorMessage(
-        err,
-      ) as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
-    })
-    return false
-  }
-  try {
-    // Check one more time after acquiring lock
-    getClaudeAIOAuthTokens.cache?.clear?.()
-    clearKeychainCache()
-    const lockedTokens = await getClaudeAIOAuthTokensAsync()
-    if (
-      !lockedTokens?.refreshToken ||
-      !isOAuthTokenExpired(lockedTokens.expiresAt)
-    ) {
-      logEvent('tengu_oauth_token_refresh_race_resolved', {})
-      return false
-    }
-
-    logEvent('tengu_oauth_token_refresh_starting', {})
-    const refreshedTokens = await refreshOAuthToken(lockedTokens.refreshToken, {
-      // For Claude.ai subscribers, omit scopes so the default
-      // CLAUDE_AI_OAUTH_SCOPES applies — this allows scope expansion
-      // (e.g. adding user:file_upload) on refresh without re-login.
-      scopes: shouldUseClaudeAIAuth(lockedTokens.scopes)
-        ? undefined
-        : lockedTokens.scopes,
-    })
-    saveOAuthTokensIfNeeded(refreshedTokens)
-
-    // Clear the cache after refreshing token
-    getClaudeAIOAuthTokens.cache?.clear?.()
-    clearKeychainCache()
-    return true
-  } catch (error) {
-    logError(error)
-
-    getClaudeAIOAuthTokens.cache?.clear?.()
-    clearKeychainCache()
-    const currentTokens = await getClaudeAIOAuthTokensAsync()
-    if (currentTokens && !isOAuthTokenExpired(currentTokens.expiresAt)) {
-      logEvent('tengu_oauth_token_refresh_race_recovered', {})
-      return true
-    }
-
-    return false
-  } finally {
-    logEvent('tengu_oauth_token_refresh_lock_releasing', {})
-    await release()
-    logEvent('tengu_oauth_token_refresh_lock_released', {})
-  }
+  return false // Offline mode — no OAuth tokens to refresh
 }
 
 export function isClaudeAISubscriber(): boolean {
-  if (!isAnthropicAuthEnabled()) {
-    return false
-  }
-
-  return shouldUseClaudeAIAuth(getClaudeAIOAuthTokens()?.scopes)
+  return false // Offline mode — all users are API key users
 }
 
 /**
@@ -1578,9 +1292,7 @@ export function isClaudeAISubscriber(): boolean {
  * generate 403 storms against /api/oauth/profile, bootstrap, etc.
  */
 export function hasProfileScope(): boolean {
-  return (
-    getClaudeAIOAuthTokens()?.scopes?.includes(CLAUDE_AI_PROFILE_SCOPE) ?? false
-  )
+  return false // Offline mode — no OAuth scopes
 }
 
 export function is1PApiCustomer(): boolean {
@@ -1613,7 +1325,7 @@ export function is1PApiCustomer(): boolean {
  * Returns undefined when using external API keys or third-party services.
  */
 export function getOauthAccountInfo(): AccountInfo | undefined {
-  return isAnthropicAuthEnabled() ? getGlobalConfig().oauthAccount : undefined
+  return undefined // Offline mode — no OAuth accounts
 }
 
 /**
@@ -1660,20 +1372,7 @@ export function hasOpusAccess(): boolean {
 }
 
 export function getSubscriptionType(): SubscriptionType | null {
-  // Check for mock subscription type first (ANT-only testing)
-  if (shouldUseMockSubscription()) {
-    return getMockSubscriptionType()
-  }
-
-  if (!isAnthropicAuthEnabled()) {
-    return null
-  }
-  const oauthTokens = getClaudeAIOAuthTokens()
-  if (!oauthTokens) {
-    return null
-  }
-
-  return oauthTokens.subscriptionType ?? null
+  return null // Offline mode — all users are API key users
 }
 
 export function isMaxSubscriber(): boolean {
