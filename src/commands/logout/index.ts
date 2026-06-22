@@ -4,7 +4,7 @@ import { isEnvTruthy } from '../../utils/envUtils.js'
 export default {
   type: 'local-jsx',
   name: 'logout',
-  description: 'Sign out from your Anthropic account',
+  description: 'Remove configured API Key',
   isEnabled: () => !isEnvTruthy(process.env.DISABLE_LOGOUT_COMMAND),
   load: () => import('./logout.js'),
 } satisfies Command
