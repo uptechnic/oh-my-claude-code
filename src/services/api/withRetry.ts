@@ -368,12 +368,8 @@ export async function* withRetry<T>(
         throw new CannotRetryError(error, retryContext)
       }
 
-      // AWS/GCP errors aren't always APIError, but can be retried
-      const handledCloudAuthError =
-        false
       if (
-        !handledCloudAuthError &&
-        (!(error instanceof APIError) || !shouldRetry(error))
+        !(error instanceof APIError) || !shouldRetry(error)
       ) {
         throw new CannotRetryError(error, retryContext)
       }

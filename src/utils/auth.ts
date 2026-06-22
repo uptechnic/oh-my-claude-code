@@ -24,11 +24,14 @@ interface ReferralEligibilityResponse {}
 interface ReferralRedemptionsResponse {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ReferrerRewardInfo {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ReferralCampaign {}
 
 export type {
   OAuthTokens,
   SubscriptionType,
   BillingType,
+  ReferralCampaign,
   ReferralEligibilityResponse,
   ReferralRedemptionsResponse,
   ReferrerRewardInfo,
@@ -935,24 +938,11 @@ export function getAccountInformation() {
     accountInfo.apiKeySource = apiKeySource
   }
 
-  // We don't know the organization if we're relying on an external API key or auth token
-  if (
-    authTokenSource === 'claude.ai' ||
-    apiKeySource === '/login managed key'
-  ) {
-    // Get organization name from OAuth account info
+  if (apiKeySource === '/login managed key') {
     const orgName = getOauthAccountInfo()?.organizationName
-    if (orgName) {
-      accountInfo.organization = orgName
-    }
-  }
-  const email = getOauthAccountInfo()?.emailAddress
-  if (
-    (authTokenSource === 'claude.ai' ||
-      apiKeySource === '/login managed key') &&
-    email
-  ) {
-    accountInfo.email = email
+    if (orgName) accountInfo.organization = orgName
+    const email = getOauthAccountInfo()?.emailAddress
+    if (email) accountInfo.email = email
   }
   return accountInfo
 }

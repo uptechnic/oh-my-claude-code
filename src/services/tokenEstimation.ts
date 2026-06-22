@@ -6,7 +6,7 @@ import { getModelBetas } from '../utils/betas.js'
 import { logError } from '../utils/log.js'
 import { normalizeAttachmentForAPI } from '../utils/messages.js'
 import {
-  getDefaultSonnetModel,
+
   getMainLoopModel,
   getSmallFastModel,
   normalizeModelStringForAPI,
