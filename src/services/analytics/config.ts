@@ -13,7 +13,6 @@ import { isTelemetryDisabled } from '../../utils/config/privacyLevel.js'
  *
  * Analytics is disabled in the following cases:
  * - Test environment (NODE_ENV === 'test')
- * - Third-party cloud providers (Bedrock/Vertex)
  * - Privacy level is no-telemetry or essential-traffic
  */
 export function isAnalyticsDisabled(): boolean {
@@ -25,9 +24,7 @@ export function isAnalyticsDisabled(): boolean {
 
 /**
  * Check if the feedback survey should be suppressed.
- *
- * Unlike isAnalyticsDisabled(), this does NOT block on 3P providers
- * (Bedrock/Vertex/Foundry). The survey is a local UI prompt with no
+ * The survey is a local UI prompt with no
  * transcript data — enterprise customers capture responses via OTEL.
  */
 export function isFeedbackSurveyDisabled(): boolean {
