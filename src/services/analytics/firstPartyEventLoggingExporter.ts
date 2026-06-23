@@ -291,6 +291,13 @@ export class FirstPartyEventLoggingExporter implements LogRecordExporter {
       return
     }
 
+    if (!isClaudeAISubscriber()) {
+      logForDebugging(
+        '1P event logging export skipped: user is not a Claude AI subscriber',
+      )
+      return
+    }
+
     const exportPromise = this.doExport(logs, resultCallback)
     this.pendingExports.push(exportPromise)
 

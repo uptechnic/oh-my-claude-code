@@ -48,6 +48,7 @@ import { configureGlobalAgents } from '../utils/proxy.js'
 import { isBetaTracingEnabled } from '../utils/telemetry/betaSessionTracing.js'
 import { getTelemetryAttributes } from '../utils/telemetryAttributes.js'
 import { setShellIfWindows } from '../utils/windowsPaths.js'
+import { isClaudeAISubscriber } from '../utils/auth.js';
 
 // initialize1PEventLogging is dynamically imported to defer OpenTelemetry sdk-logs/resources
 
@@ -245,6 +246,13 @@ export const init = memoize(async (): Promise<void> => {
  * This should only be called once, after the trust dialog has been accepted.
  */
 export function initializeTelemetryAfterTrust(): void {
+  if (!isClaudeAISubscriber()) {
+    logForDebugging(
+      '[3P telemetry] Telemetry initialization skipped: user is not a Claude AI subscriber',
+    )
+    return
+  }
+
   if (isEligibleForRemoteManagedSettings()) {
     // For SDK/headless mode with beta tracing, initialize eagerly first
     // to ensure the tracer is ready before the first query runs.
