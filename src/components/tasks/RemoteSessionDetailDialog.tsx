@@ -18,7 +18,7 @@ import { openBrowser } from '../../utils/browser.js';
 import { errorMessage } from '../../utils/errors.js';
 import { formatDuration, truncateToWidth } from '../../utils/format.js';
 import { toInternalMessages } from '../../utils/messages/mappers.js';
-import { EMPTY_LOOKUPS, normalizeMessages } from '../../utils/messages.js';
+import { EMPTY_LOOKUPS, normalizeMessages } from '../../utils/messages/messages.js';
 import { plural } from '../../utils/stringUtils.js';
 import { teleportResumeCodeSession } from '../../utils/teleport.js';
 import { Select } from '../CustomSelect/select.js';

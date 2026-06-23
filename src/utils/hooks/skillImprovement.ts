@@ -18,7 +18,7 @@ import {
   createUserMessage,
   extractTag,
   extractTextContent,
-} from '../messages.js'
+} from '../messages/messages.js'
 import { getSmallFastModel } from '../model/model.js'
 import { jsonParse } from '../slowOperations.js'
 import { asSystemPrompt } from '../systemPromptType.js'

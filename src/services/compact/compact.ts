@@ -54,7 +54,7 @@ import {
 import {
   executePostCompactHooks,
   executePreCompactHooks,
-} from '../../utils/hooks.js'
+} from '../../utils/hooks/hooks.js'
 import { logError } from '../../utils/log.js'
 import { MEMORY_TYPE_VALUES } from '../../utils/memory/types.js'
 import {
@@ -65,7 +65,7 @@ import {
   getMessagesAfterCompactBoundary,
   isCompactBoundaryMessage,
   normalizeMessagesForAPI,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import { expandPath } from '../../utils/path.js'
 import { getPlan, getPlanFilePath } from '../../utils/plans.js'
 import {

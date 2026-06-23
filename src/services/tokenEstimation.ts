@@ -4,7 +4,7 @@ import type { BetaMessageParam as MessageParam } from '@anthropic-ai/sdk/resourc
 import type { Attachment } from '../utils/attachments.js'
 import { getModelBetas } from '../utils/betas.js'
 import { logError } from '../utils/log.js'
-import { normalizeAttachmentForAPI } from '../utils/messages.js'
+import { normalizeAttachmentForAPI } from '../utils/messages/messages.js'
 import {
 
   getMainLoopModel,

@@ -40,7 +40,7 @@ import { getCwd } from './cwd.js'
 import { logForDebugging } from './debug.js'
 import type { FileHistorySnapshot } from './fileHistory.js'
 import { fileHistoryRestoreStateFromLog } from './fileHistory.js'
-import { createSystemMessage } from './messages.js'
+import { createSystemMessage } from './messages/messages.js'
 import { parseUserSpecifiedModel } from './model/model.js'
 import { getPlansDirectory } from './plans.js'
 import { setCwd } from './Shell.js'
@@ -52,7 +52,7 @@ import {
   saveMode,
   saveWorktreeState,
 } from './sessionStorage.js'
-import { isTodoV2Enabled } from './tasks.js'
+import { isTodoV2Enabled } from './task/tasks.js'
 import type { TodoList } from './todo/types.js'
 import { TodoListSchema } from './todo/types.js'
 import type { ContentReplacementRecord } from './toolResultStorage.js'

@@ -4,7 +4,7 @@ import { dirname, join } from 'path'
 import { getCwd } from '../cwd.js'
 import { getErrnoCode } from '../errors.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
-import { dirIsInGitRepo } from '../git.js'
+import { dirIsInGitRepo } from './git.js'
 import { logError } from '../log.js'
 
 /**

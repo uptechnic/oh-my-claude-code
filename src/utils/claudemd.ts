@@ -65,13 +65,13 @@ import {
   splitPathInFrontmatter,
 } from './frontmatterParser.js'
 import { getFsImplementation, safeResolvePath } from './fsOperations.js'
-import { findCanonicalGitRoot, findGitRoot } from './git.js'
+import { findCanonicalGitRoot, findGitRoot } from './git/git.js'
 import {
   executeInstructionsLoadedHooks,
   hasInstructionsLoadedHook,
   type InstructionsLoadReason,
   type InstructionsMemoryType,
-} from './hooks.js'
+} from './hooks/hooks.js'
 import type { MemoryType } from './memory/types.js'
 import { expandPath } from './path.js'
 import { pathInWorkingPath } from './permissions/filesystem.js'

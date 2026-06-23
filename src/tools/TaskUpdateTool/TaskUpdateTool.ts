@@ -6,7 +6,7 @@ import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
 import {
   executeTaskCompletedHooks,
   getTaskCompletedHookMessage,
-} from '../../utils/hooks.js'
+} from '../../utils/hooks/hooks.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import {
   blockTask,
@@ -18,14 +18,14 @@ import {
   type TaskStatus,
   TaskStatusSchema,
   updateTask,
-} from '../../utils/tasks.js'
+} from '../../utils/task/tasks.js'
 import {
   getAgentId,
   getAgentName,
   getTeammateColor,
   getTeamName,
-} from '../../utils/teammate.js'
-import { writeToMailbox } from '../../utils/teammateMailbox.js'
+} from '../../utils/swarm/teammate.js'
+import { writeToMailbox } from '../../utils/swarm/teammateMailbox.js'
 import { VERIFICATION_AGENT_TYPE } from '../AgentTool/constants.js'
 import { TASK_UPDATE_TOOL_NAME } from './constants.js'
 import { DESCRIPTION, PROMPT } from './prompt.js'

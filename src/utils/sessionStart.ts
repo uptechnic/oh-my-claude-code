@@ -6,7 +6,7 @@ import { withDiagnosticsTiming } from './diagLogs.js'
 import { isBareMode } from './envUtils.js'
 import { updateWatchPaths } from './hooks/fileChangedWatcher.js'
 import { shouldAllowManagedHooksOnly } from './hooks/hooksConfigSnapshot.js'
-import { executeSessionStartHooks, executeSetupHooks } from './hooks.js'
+import { executeSessionStartHooks, executeSetupHooks } from './hooks/hooks.js'
 import { logError } from './log.js'
 import { loadPluginHooks } from './plugins/loadPluginHooks.js'
 

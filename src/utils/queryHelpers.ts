@@ -27,7 +27,7 @@ import {
   createFileStateCacheWithSizeLimit,
   type FileStateCache,
 } from './fileStateCache.js'
-import { isNotEmptyMessage, normalizeMessages } from './messages.js'
+import { isNotEmptyMessage, normalizeMessages } from './messages/messages.js'
 import { expandPath } from './path.js'
 import type {
   inputSchema as permissionToolInputSchema,

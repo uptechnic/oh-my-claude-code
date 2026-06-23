@@ -30,12 +30,12 @@ import {
   getBranch,
   getDefaultBranch,
   gitExe,
-} from './git.js'
+} from './git/git.js'
 import {
   executeWorktreeCreateHook,
   executeWorktreeRemoveHook,
   hasWorktreeCreateHook,
-} from './hooks.js'
+} from './hooks/hooks.js'
 import { containsPathTraversal } from './path.js'
 import { getPlatform } from './platform.js'
 import {

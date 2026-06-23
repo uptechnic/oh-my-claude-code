@@ -24,7 +24,7 @@ import {
 import {
   createUserMessage,
   hasToolCallsInLastAssistantTurn,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import { sequential } from '../../utils/sequential.js'
 import { buildMagicDocsUpdatePrompt } from './prompts.js'
 

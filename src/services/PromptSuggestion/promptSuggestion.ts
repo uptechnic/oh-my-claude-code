@@ -15,9 +15,9 @@ import { logError } from '../../utils/log.js'
 import {
   createUserMessage,
   getLastAssistantMessage,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import { getInitialSettings } from '../../utils/settings/settings.js'
-import { isTeammate } from '../../utils/teammate.js'
+import { isTeammate } from '../../utils/swarm/teammate.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,

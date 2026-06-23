@@ -22,7 +22,7 @@ import {
 import { isEnvTruthy } from '../../utils/envUtils.js'
 import { isOfficialMcpUrl } from '../mcp/officialRegistry.js'
 import { isClaudeAISubscriber, getSubscriptionType } from '../../utils/auth.js'
-import { getRepoRemoteHash } from '../../utils/git.js'
+import { getRepoRemoteHash } from '../../utils/git/git.js'
 import {
   getWslVersion,
   getLinuxDistroInfo,
@@ -38,7 +38,7 @@ import {
   getParentSessionId as getTeammateParentSessionId,
   getTeamName,
   isTeammate,
-} from '../../utils/teammate.js'
+} from '../../utils/swarm/teammate.js'
 import { feature } from 'bun:bundle'
 
 /**

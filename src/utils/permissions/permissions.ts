@@ -79,15 +79,15 @@ import { sanitizeToolNameForAnalytics } from '../../services/analytics/metadata.
 import {
   clearClassifierChecking,
   setClassifierChecking,
-} from '../classifierApprovals.js'
+} from './classifierApprovals.js'
 import { isInProtectedNamespace } from '../envUtils.js'
-import { executePermissionRequestHooks } from '../hooks.js'
+import { executePermissionRequestHooks } from '../hooks/hooks.js'
 import {
   AUTO_REJECT_MESSAGE,
   buildClassifierUnavailableMessage,
   buildYoloRejectionMessage,
   DONT_ASK_REJECT_MESSAGE,
-} from '../messages.js'
+} from '../messages/messages.js'
 import { calculateCostFromTokens } from '../modelCost.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { jsonStringify } from '../slowOperations.js'

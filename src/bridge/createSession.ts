@@ -58,7 +58,7 @@ export async function createBridgeSession({
   const { getBaseApiUrl } = await import('../utils/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { parseGitHubRepository } = await import('../utils/detectRepository.js')
-  const { getDefaultBranch } = await import('../utils/git.js')
+  const { getDefaultBranch } = await import('../utils/git/git.js')
   const { getMainLoopModel } = await import('../utils/model/model.js')
   const { default: axios } = await import('axios')
 

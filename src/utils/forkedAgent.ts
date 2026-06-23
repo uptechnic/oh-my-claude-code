@@ -32,7 +32,7 @@ import {
   createUserMessage,
   extractTextContent,
   getLastAssistantMessage,
-} from './messages.js'
+} from './messages/messages.js'
 import { createDenialTrackingState } from './permissions/denialTracking.js'
 import { parseToolListFromCLI } from './permissions/permissionSetup.js'
 import { recordSidechainTranscript } from './sessionStorage.js'

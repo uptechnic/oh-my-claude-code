@@ -21,23 +21,23 @@ import {
 } from 'src/services/analytics/index.js'
 import { sanitizeToolNameForAnalytics } from 'src/services/analytics/metadata.js'
 import type { AgentId } from 'src/types/ids.js'
-import { companionIntroText } from '../buddy/prompt.js'
-import { NO_CONTENT_MESSAGE } from '../constants/messages.js'
-import { OUTPUT_STYLE_CONFIG } from '../constants/outputStyles.js'
-import { isAutoMemoryEnabled } from '../memdir/paths.js'
+import { companionIntroText } from '../../buddy/prompt.js'
+import { NO_CONTENT_MESSAGE } from '../../constants/messages.js'
+import { OUTPUT_STYLE_CONFIG } from '../../constants/outputStyles.js'
+import { isAutoMemoryEnabled } from '../../memdir/paths.js'
 import {
   checkStatsigFeatureGate_CACHED_MAY_BE_STALE,
   getFeatureValue_CACHED_MAY_BE_STALE,
-} from '../services/analytics/growthbook.js'
+} from '../../services/analytics/growthbook.js'
 import {
   getImageTooLargeErrorMessage,
   getPdfInvalidErrorMessage,
   getPdfPasswordProtectedErrorMessage,
   getPdfTooLargeErrorMessage,
   getRequestTooLargeErrorMessage,
-} from '../services/api/errors.js'
-import type { AnyObject, Progress } from '../Tool.js'
-import { isConnectorTextBlock } from '../types/connectorText.js'
+} from '../../services/api/errors.js'
+import type { AnyObject, Progress } from '../../Tool.js'
+import { isConnectorTextBlock } from '../../types/connectorText.js'
 import type {
   AssistantMessage,
   AttachmentMessage,
@@ -70,20 +70,20 @@ import type {
   TombstoneMessage,
   ToolUseSummaryMessage,
   UserMessage,
-} from '../types/message.js'
-import { isAdvisorBlock } from './advisor.js'
-import { isAgentSwarmsEnabled } from './agentSwarmsEnabled.js'
-import { count } from './array.js'
+} from '../../types/message.js'
+import { isAdvisorBlock } from '../advisor.js'
+import { isAgentSwarmsEnabled } from '../agentSwarmsEnabled.js'
+import { count } from '../array.js'
 import {
   type Attachment,
   type HookAttachment,
   type HookPermissionDecisionAttachment,
   memoryHeader,
-} from './attachments.js'
-import { quote } from './bash/shellQuote.js'
-import { formatNumber, formatTokens } from './format.js'
-import { getPewterLedgerVariant } from './planModeV2.js'
-import { jsonStringify } from './slowOperations.js'
+} from '../attachments.js'
+import { quote } from '../bash/shellQuote.js'
+import { formatNumber, formatTokens } from '../format.js'
+import { getPewterLedgerVariant } from '../planModeV2.js'
+import { jsonStringify } from '../slowOperations.js'
 
 // Hook attachments that have a hookName field (excludes HookPermissionDecisionAttachment)
 type HookAttachmentWithName = Exclude<
@@ -119,59 +119,59 @@ import { FileWriteTool } from 'src/tools/FileWriteTool/FileWriteTool.js'
 import { GLOB_TOOL_NAME } from 'src/tools/GlobTool/prompt.js'
 import { GREP_TOOL_NAME } from 'src/tools/GrepTool/prompt.js'
 import type { DeepImmutable } from 'src/types/utils.js'
-import { getStrictToolResultPairing } from '../bootstrap/state.js'
-import type { SpinnerMode } from '../components/Spinner.js'
+import { getStrictToolResultPairing } from '../../bootstrap/state.js'
+import type { SpinnerMode } from '../../components/Spinner.js'
 import {
   COMMAND_ARGS_TAG,
   COMMAND_MESSAGE_TAG,
   COMMAND_NAME_TAG,
   LOCAL_COMMAND_CAVEAT_TAG,
   LOCAL_COMMAND_STDOUT_TAG,
-} from '../constants/xml.js'
-import { DiagnosticTrackingService } from '../services/diagnosticTracking.js'
+} from '../../constants/xml.js'
+import { DiagnosticTrackingService } from '../../services/diagnosticTracking.js'
 import {
   findToolByName,
   type Tool,
   type Tools,
   toolMatchesName,
-} from '../Tool.js'
+} from '../../Tool.js'
 import {
   FileReadTool,
   type Output as FileReadToolOutput,
-} from '../tools/FileReadTool/FileReadTool.js'
-import { SEND_MESSAGE_TOOL_NAME } from '../tools/SendMessageTool/constants.js'
-import { TASK_CREATE_TOOL_NAME } from '../tools/TaskCreateTool/constants.js'
-import { TASK_OUTPUT_TOOL_NAME } from '../tools/TaskOutputTool/constants.js'
-import { TASK_UPDATE_TOOL_NAME } from '../tools/TaskUpdateTool/constants.js'
-import type { PermissionMode } from '../types/permissions.js'
-import { normalizeToolInput, normalizeToolInputForAPI } from './api.js'
-import { getCurrentProjectConfig } from './config.js'
-import { logAntError, logForDebugging } from './debug.js'
-import { stripIdeContextTags } from './displayTags.js'
-import { hasEmbeddedSearchTools } from './embeddedTools.js'
-import { formatFileSize } from './format.js'
-import { validateImagesForAPI } from './imageValidation.js'
-import { safeParseJSON } from './json.js'
-import { logError, logMCPDebug } from './log.js'
-import { normalizeLegacyToolName } from './permissions/permissionRuleParser.js'
+} from '../../tools/FileReadTool/FileReadTool.js'
+import { SEND_MESSAGE_TOOL_NAME } from '../../tools/SendMessageTool/constants.js'
+import { TASK_CREATE_TOOL_NAME } from '../../tools/TaskCreateTool/constants.js'
+import { TASK_OUTPUT_TOOL_NAME } from '../../tools/TaskOutputTool/constants.js'
+import { TASK_UPDATE_TOOL_NAME } from '../../tools/TaskUpdateTool/constants.js'
+import type { PermissionMode } from '../../types/permissions.js'
+import { normalizeToolInput, normalizeToolInputForAPI } from '../api.js'
+import { getCurrentProjectConfig } from '../config.js'
+import { logAntError, logForDebugging } from '../debug.js'
+import { stripIdeContextTags } from '../displayTags.js'
+import { hasEmbeddedSearchTools } from '../embeddedTools.js'
+import { formatFileSize } from '../format.js'
+import { validateImagesForAPI } from '../imageValidation.js'
+import { safeParseJSON } from '../json.js'
+import { logError, logMCPDebug } from '../log.js'
+import { normalizeLegacyToolName } from '../permissions/permissionRuleParser.js'
 import {
   getPlanModeV2AgentCount,
   getPlanModeV2ExploreAgentCount,
   isPlanModeInterviewPhaseEnabled,
-} from './planModeV2.js'
-import { escapeRegExp } from './stringUtils.js'
-import { isTodoV2Enabled } from './tasks.js'
+} from '../planModeV2.js'
+import { escapeRegExp } from '../stringUtils.js'
+import { isTodoV2Enabled } from '../task/tasks.js'
 
 // Lazy import to avoid circular dependency (teammateMailbox -> teammate -> ... -> messages)
-function getTeammateMailbox(): typeof import('./teammateMailbox.js') {
+function getTeammateMailbox(): typeof import('../swarm/teammateMailbox.js') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  return require('./teammateMailbox.js')
+  return require('../swarm/teammateMailbox.js')
 }
 
 import {
   isToolReferenceBlock,
   isToolSearchEnabledOptimistic,
-} from './toolSearch.js'
+} from '../toolSearch.js'
 
 const MEMORY_CORRECTION_HINT =
   "\n\nNote: The user's next message may contain a correction or preference. Pay close attention — if they explain what went wrong or how they'd prefer you to work, consider saving that to memory for future sessions."
@@ -2351,7 +2351,7 @@ export function normalizeMessagesForAPI(
   if (feature('HISTORY_SNIP') && process.env.NODE_ENV !== 'test') {
     const { isSnipRuntimeEnabled } =
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      require('../services/compact/snipCompact.js') as typeof import('../services/compact/snipCompact.js')
+      require('../../services/compact/snipCompact.js') as typeof import('../../services/compact/snipCompact.js')
     if (isSnipRuntimeEnabled()) {
       for (let i = 0; i < sanitized.length; i++) {
         if (sanitized[i]!.type === 'user') {
@@ -2421,7 +2421,7 @@ export function mergeUserMessages(a: UserMessage, b: UserMessage): UserMessage {
     // for all ants.
     const { isSnipRuntimeEnabled } =
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      require('../services/compact/snipCompact.js') as typeof import('../services/compact/snipCompact.js')
+      require('../../services/compact/snipCompact.js') as typeof import('../../services/compact/snipCompact.js')
     if (isSnipRuntimeEnabled()) {
       return {
         ...a,
@@ -4149,7 +4149,7 @@ You have exited auto mode. The user may now want to interact more directly. You 
       if (feature('HISTORY_SNIP')) {
         const { SNIP_NUDGE_TEXT } =
           // eslint-disable-next-line @typescript-eslint/no-require-imports
-          require('../services/compact/snipCompact.js') as typeof import('../services/compact/snipCompact.js')
+          require('../../services/compact/snipCompact.js') as typeof import('../../services/compact/snipCompact.js')
         return wrapMessagesInSystemReminder([
           createUserMessage({
             content: SNIP_NUDGE_TEXT,

@@ -7,7 +7,7 @@ import {
   executeCwdChangedHooks,
   executeFileChangedHooks,
   type HookOutsideReplResult,
-} from '../hooks.js'
+} from './hooks.js'
 import { clearCwdEnvFiles } from '../sessionEnvironment.js'
 import { getHooksConfigFromSnapshot } from './hooksConfigSnapshot.js'
 

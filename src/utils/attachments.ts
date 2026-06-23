@@ -33,7 +33,7 @@ import {
   listTasks,
   getTaskListId,
   isTodoV2Enabled,
-} from './tasks.js'
+} from './task/tasks.js'
 import { getPlanFilePath, getPlan } from './plans.js'
 import { getConnectedIdeName } from './ide.js'
 import {
@@ -171,7 +171,7 @@ import {
   getMcpInstructionsDelta,
   isMcpInstructionsDeltaEnabled,
   type ClientSideInstruction,
-} from './mcpInstructionsDelta.js'
+} from './mcp/mcpInstructionsDelta.js'
 import type { MCPServerConnection } from '../services/mcp/types.js'
 import type {
   HookEvent,
@@ -190,7 +190,7 @@ import {
   extractTextContent,
   getUserMessageText,
   isThinkingMessage,
-} from './messages.js'
+} from './messages/messages.js'
 import { isHumanTurn } from './messagePredicates.js'
 import { isEnvTruthy, getClaudeConfigHomeDir } from './envUtils.js'
 import { feature } from 'bun:bundle'
@@ -220,7 +220,7 @@ import {
   executeInstructionsLoadedHooks,
   type HookBlockingError,
   type InstructionsMemoryType,
-} from './hooks.js'
+} from './hooks/hooks.js'
 import { jsonStringify } from './slowOperations.js'
 import { isPDFExtension } from './pdfUtils.js'
 import { getLocalISODate } from '../constants/common.js'
@@ -237,16 +237,16 @@ import {
   isShutdownApproved,
   isStructuredProtocolMessage,
   isIdleNotification,
-} from './teammateMailbox.js'
+} from './swarm/teammateMailbox.js'
 import {
   getAgentName,
   getAgentId,
   getTeamName,
   isTeamLead,
-} from './teammate.js'
-import { isInProcessTeammate } from './teammateContext.js'
+} from './swarm/teammate.js'
+import { isInProcessTeammate } from './swarm/teammateContext.js'
 import { removeTeammateFromTeamFile } from './swarm/teamHelpers.js'
-import { unassignTeammateTasks } from './tasks.js'
+import { unassignTeammateTasks } from './task/tasks.js'
 import { getCompanionIntroAttachment } from '../buddy/prompt.js'
 
 export const TODO_REMINDER_CONFIG = {

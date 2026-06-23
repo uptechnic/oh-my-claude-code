@@ -75,11 +75,11 @@ import type { FileHistorySnapshot } from './fileHistory.js'
 import { formatFileSize } from './format.js'
 import { getFsImplementation } from './fsOperations.js'
 import { getWorktreePaths } from './getWorktreePaths.js'
-import { getBranch } from './git.js'
+import { getBranch } from './git/git.js'
 import { gracefulShutdownSync, isShuttingDown } from './gracefulShutdown.js'
 import { parseJSONL } from './json.js'
 import { logError } from './log.js'
-import { extractTag, isCompactBoundaryMessage } from './messages.js'
+import { extractTag, isCompactBoundaryMessage } from './messages/messages.js'
 import { sanitizePath } from './path.js'
 import {
   extractJsonStringField,

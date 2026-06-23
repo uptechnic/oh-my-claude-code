@@ -7,7 +7,7 @@ import { prependUserContext } from 'src/utils/api.js'
 import {
   createUserMessage,
   normalizeMessagesForAPI,
-} from 'src/utils/messages.js'
+} from 'src/utils/messages/messages.js'
 import type { ModelName } from 'src/utils/model/model.js'
 import { isAutoMemoryEnabled } from '../../memdir/paths.js'
 import {

@@ -9,7 +9,7 @@ import { lazySchema } from '../../utils/lazySchema.js'
 import {
   getBinaryBlobSavedMessage,
   persistBinaryContent,
-} from '../../utils/mcpOutputStorage.js'
+} from '../../utils/mcp/mcpOutputStorage.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { isOutputLineTruncated } from '../../utils/terminal.js'
 import { DESCRIPTION, PROMPT } from './prompt.js'

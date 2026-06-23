@@ -9,7 +9,7 @@ import { jsonStringify } from '../../../utils/slowOperations.js'
 import {
   createShutdownRequestMessage,
   writeToMailbox,
-} from '../../../utils/teammateMailbox.js'
+} from '../teammateMailbox.js'
 import { startInProcessTeammate } from '../inProcessRunner.js'
 import {
   killInProcessTeammate,

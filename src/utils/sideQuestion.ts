@@ -10,7 +10,7 @@ import { formatAPIError } from '../services/api/errorUtils.js'
 import type { NonNullableUsage } from '../services/api/logging.js'
 import type { Message, SystemAPIErrorMessage } from '../types/message.js'
 import { type CacheSafeParams, runForkedAgent } from './forkedAgent.js'
-import { createUserMessage, extractTextContent } from './messages.js'
+import { createUserMessage, extractTextContent } from './messages/messages.js'
 
 // Pattern to detect "/btw" at start of input (case-insensitive, word boundary)
 const BTW_PATTERN = /^\/btw\b/gi

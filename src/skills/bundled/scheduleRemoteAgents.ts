@@ -11,7 +11,7 @@ import {
   detectCurrentRepositoryWithHost,
   parseGitRemote,
 } from '../../utils/detectRepository.js'
-import { getRemoteUrl } from '../../utils/git.js'
+import { getRemoteUrl } from '../../utils/git/git.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   createDefaultCloudEnvironment,

@@ -19,11 +19,11 @@ import { logForDebugging } from '../utils/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { execFileNoThrowWithCwd } from '../utils/execFileNoThrow.js'
 import { getFsImplementation } from '../utils/fsOperations.js'
-import { findGitRoot, gitExe } from '../utils/git.js'
+import { findGitRoot, gitExe } from '../utils/git/git.js'
 import {
   createBaseHookInput,
   executeFileSuggestionCommand,
-} from '../utils/hooks.js'
+} from '../utils/hooks/hooks.js'
 import { logError } from '../utils/log.js'
 import { expandPath } from '../utils/path.js'
 import { ripGrep } from '../utils/ripgrep.js'

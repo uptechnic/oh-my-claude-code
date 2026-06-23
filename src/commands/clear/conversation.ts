@@ -28,7 +28,7 @@ import type { FileStateCache } from '../../utils/fileStateCache.js'
 import {
   executeSessionEndHooks,
   getSessionEndHookTimeoutMs,
-} from '../../utils/hooks.js'
+} from '../../utils/hooks/hooks.js'
 import { logError } from '../../utils/log.js'
 import { clearAllPlanSlugs } from '../../utils/plans.js'
 import { setCwd } from '../../utils/Shell.js'

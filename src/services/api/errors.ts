@@ -23,7 +23,7 @@ import {
 import {
   createAssistantAPIErrorMessage,
   NO_RESPONSE_REQUESTED,
-} from 'src/utils/messages.js'
+} from 'src/utils/messages/messages.js'
 import {
   getDefaultMainLoopModelSetting,
   isNonCustomOpusModel,

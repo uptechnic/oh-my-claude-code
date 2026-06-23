@@ -59,7 +59,7 @@ import {
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import { registerStructuredOutputEnforcement } from './utils/hooks/hookHelpers.js'
 import { getInMemoryErrors } from './utils/log.js'
-import { countToolCalls, SYNTHETIC_MESSAGES } from './utils/messages.js'
+import { countToolCalls, SYNTHETIC_MESSAGES } from './utils/messages/messages.js'
 import {
   getMainLoopModel,
   parseUserSpecifiedModel,

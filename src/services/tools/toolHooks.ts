@@ -20,7 +20,7 @@ import {
   executePostToolUseFailureHooks,
   executePreToolHooks,
   getPreToolHookBlockingMessage,
-} from '../../utils/hooks.js'
+} from '../../utils/hooks/hooks.js'
 import { logError } from '../../utils/log.js'
 import {
   getRuleBehaviorDescription,

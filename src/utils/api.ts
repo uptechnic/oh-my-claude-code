@@ -43,7 +43,7 @@ import {
 import { getCwd } from './cwd.js'
 import { logForDebugging } from './debug.js'
 import { isEnvTruthy } from './envUtils.js'
-import { createUserMessage } from './messages.js'
+import { createUserMessage } from './messages/messages.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,

@@ -33,14 +33,14 @@ import {
   getAgentName,
   getTeammateColor,
   getTeamName,
-} from '../teammate.js'
+} from './teammate.js'
 import {
   createPermissionRequestMessage,
   createPermissionResponseMessage,
   createSandboxPermissionRequestMessage,
   createSandboxPermissionResponseMessage,
   writeToMailbox,
-} from '../teammateMailbox.js'
+} from './teammateMailbox.js'
 import { getTeamDir, readTeamFileAsync } from './teamHelpers.js'
 
 /**

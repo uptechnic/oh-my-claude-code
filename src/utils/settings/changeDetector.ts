@@ -9,7 +9,7 @@ import {
   type ConfigChangeSource,
   executeConfigChangeHooks,
   hasBlockingResult,
-} from '../hooks.js'
+} from '../hooks/hooks.js'
 import { createSignal } from '../signal.js'
 import { jsonStringify } from '../slowOperations.js'
 import { SETTING_SOURCES, type SettingSource } from './constants.js'

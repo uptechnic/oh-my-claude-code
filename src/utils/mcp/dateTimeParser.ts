@@ -1,6 +1,6 @@
 import { queryHaiku } from '../../services/api/claude.js'
 import { logError } from '../log.js'
-import { extractTextContent } from '../messages.js'
+import { extractTextContent } from '../messages/messages.js'
 import { asSystemPrompt } from '../systemPromptType.js'
 
 export type DateTimeParseResult =

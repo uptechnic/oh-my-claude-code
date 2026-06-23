@@ -28,7 +28,7 @@ import {
   ensureTasksDir,
   resetTaskList,
   setLeaderTeamName,
-} from '../../utils/tasks.js'
+} from '../../utils/task/tasks.js'
 import { generateWordSlug } from '../../utils/words.js'
 import { TEAM_CREATE_TOOL_NAME } from './constants.js'
 import { getPrompt } from './prompt.js'

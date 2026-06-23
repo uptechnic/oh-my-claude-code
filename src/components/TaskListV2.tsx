@@ -11,7 +11,7 @@ import { isAgentSwarmsEnabled } from '../utils/agentSwarmsEnabled.js';
 import { count } from '../utils/array.js';
 import { summarizeRecentActivities } from '../utils/collapseReadSearch.js';
 import { truncateToWidth } from '../utils/format.js';
-import { isTodoV2Enabled, type Task } from '../utils/tasks.js';
+import { isTodoV2Enabled, type Task } from '../utils/task/tasks.js';
 import type { Theme } from '../utils/theme.js';
 import ThemedText from './design-system/ThemedText.js';
 type Props = {

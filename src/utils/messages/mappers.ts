@@ -20,7 +20,7 @@ import type {
 } from 'src/types/message.js'
 import type { DeepImmutable } from 'src/types/utils.js'
 import stripAnsi from 'strip-ansi'
-import { createAssistantMessage } from '../messages.js'
+import { createAssistantMessage } from './messages.js'
 import { getPlan } from '../plans.js'
 
 export function toInternalMessages(

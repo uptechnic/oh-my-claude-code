@@ -4,7 +4,7 @@ import { getCwd } from '../utils/cwd.js'
 import { getCurrentProjectConfig, saveCurrentProjectConfig } from './config.js'
 import { env } from './env.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
-import { getIsGit, gitExe } from './git.js'
+import { getIsGit, gitExe } from './git/git.js'
 import { logError } from './log.js'
 import { getGitEmail } from './user.js'
 

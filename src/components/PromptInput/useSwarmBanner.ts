@@ -22,8 +22,8 @@ import {
   getTeammateColor,
   getTeamName,
   isTeammate,
-} from '../../utils/teammate.js'
-import { isInProcessTeammate } from '../../utils/teammateContext.js'
+} from '../../utils/swarm/teammate.js'
+import { isInProcessTeammate } from '../../utils/swarm/teammateContext.js'
 import type { Theme } from '../../utils/theme.js'
 
 type SwarmBannerInfo = {

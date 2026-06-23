@@ -31,7 +31,7 @@ import {
 import {
   createUserMessage,
   hasToolCallsInLastAssistantTurn,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import {
   getSessionMemoryDir,
   getSessionMemoryPath,

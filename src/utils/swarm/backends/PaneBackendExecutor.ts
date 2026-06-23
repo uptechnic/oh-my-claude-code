@@ -5,7 +5,7 @@ import { quote } from '../../../utils/bash/shellQuote.js'
 import { registerCleanup } from '../../../utils/cleanupRegistry.js'
 import { logForDebugging } from '../../../utils/debug.js'
 import { jsonStringify } from '../../../utils/slowOperations.js'
-import { writeToMailbox } from '../../../utils/teammateMailbox.js'
+import { writeToMailbox } from '../teammateMailbox.js'
 import {
   buildInheritedCliFlags,
   buildInheritedEnvVars,

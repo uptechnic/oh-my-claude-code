@@ -18,7 +18,7 @@ import {
 import {
   createUserMessage,
   createMemorySavedMessage,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import type { Message } from '../../types/message.js'
 import { logForDebugging } from '../../utils/debug.js'
 import type { ToolUseContext } from '../../Tool.js'

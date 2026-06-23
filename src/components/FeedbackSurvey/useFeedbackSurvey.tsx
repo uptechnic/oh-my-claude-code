@@ -6,7 +6,7 @@ import { isPolicyAllowed } from '../../services/policyLimits/index.js';
 import type { Message } from '../../types/message.js';
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js';
 import { isEnvTruthy } from '../../utils/envUtils.js';
-import { getLastAssistantMessage } from '../../utils/messages.js';
+import { getLastAssistantMessage } from '../../utils/messages/messages.js';
 import { getMainLoopModel } from '../../utils/model/model.js';
 import { getInitialSettings } from '../../utils/settings/settings.js';
 import { logOTelEvent } from '../../utils/telemetry/events.js';

@@ -3,7 +3,7 @@ import {
   getAttributionTexts,
   getEnhancedPRAttribution,
 } from '../utils/attribution.js'
-import { getDefaultBranch } from '../utils/git.js'
+import { getDefaultBranch } from '../utils/git/git.js'
 import { executeShellCommandsInPrompt } from '../utils/promptShellExecution.js'
 import { getUndercoverInstructions, isUndercover } from '../utils/undercover.js'
 
