@@ -11,18 +11,18 @@ import { FILE_EDIT_TOOL_NAME } from '../../tools/FileEditTool/constants.js'
 import { FILE_READ_TOOL_NAME } from '../../tools/FileReadTool/prompt.js'
 import { FILE_WRITE_TOOL_NAME } from '../../tools/FileWriteTool/prompt.js'
 import { getPluginErrorMessage } from '../../types/plugin.js'
-import { logForDebugging } from '../debug.js'
-import { EFFORT_LEVELS, parseEffortValue } from '../effort.js'
+import { logForDebugging } from '../debug/debug.js'
+import { EFFORT_LEVELS, parseEffortValue } from '../config/effort.js'
 import {
   coerceDescriptionToString,
   parseFrontmatter,
   parsePositiveIntFromFrontmatter,
-} from '../frontmatterParser.js'
-import { getFsImplementation, isDuplicatePath } from '../fsOperations.js'
+} from '../text/frontmatterParser.js'
+import { getFsImplementation, isDuplicatePath } from '../files/fsOperations.js'
 import {
   parseAgentToolsFromFrontmatter,
   parseSlashCommandToolsFromFrontmatter,
-} from '../markdownConfigLoader.js'
+} from '../config/markdownConfigLoader.js'
 import { loadAllPluginsCacheOnly } from './pluginLoader.js'
 import {
   loadPluginOptions,

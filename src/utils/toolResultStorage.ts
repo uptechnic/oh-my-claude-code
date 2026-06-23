@@ -16,11 +16,11 @@ import { getFeatureValue_CACHED_MAY_BE_STALE } from '../services/analytics/growt
 import { logEvent } from '../services/analytics/index.js'
 import { sanitizeToolNameForAnalytics } from '../services/analytics/metadata.js'
 import type { Message } from '../types/message.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { getErrnoCode, toError } from './errors.js'
-import { formatFileSize } from './format.js'
-import { logError } from './log.js'
-import { getProjectDir } from './sessionStorage.js'
+import { formatFileSize } from './text/format.js'
+import { logError } from './debug/log.js'
+import { getProjectDir } from './session/sessionStorage.js'
 import { jsonStringify } from './slowOperations.js'
 
 // Subdirectory name for tool results within a session

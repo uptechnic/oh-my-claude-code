@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { createHash } from 'crypto'
 import memoize from 'lodash-es/memoize.js'
-import { getOrCreateUserID } from '../../utils/config.js'
-import { logError } from '../../utils/log.js'
+import { getOrCreateUserID } from '../../utils/config/config.js'
+import { logError } from '../../utils/debug/log.js'
 import { getCanonicalName } from '../../utils/model/model.js'
 import { getAPIProvider } from '../../utils/model/providers.js'
-import { MODEL_COSTS } from '../../utils/modelCost.js'
+import { MODEL_COSTS } from '../../utils/api/modelCost.js'
 import { isAnalyticsDisabled } from './config.js'
 import { getEventMetadata } from './metadata.js'
 
@@ -17,13 +17,6 @@ const MAX_BATCH_SIZE = 100
 const NETWORK_TIMEOUT_MS = 5000
 
 const DATADOG_ALLOWED_EVENTS = new Set([
-  'chrome_bridge_connection_succeeded',
-  'chrome_bridge_connection_failed',
-  'chrome_bridge_disconnected',
-  'chrome_bridge_tool_call_completed',
-  'chrome_bridge_tool_call_error',
-  'chrome_bridge_tool_call_started',
-  'chrome_bridge_tool_call_timeout',
   'tengu_api_error',
   'tengu_api_success',
   'tengu_brief_mode_enabled',

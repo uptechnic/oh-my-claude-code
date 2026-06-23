@@ -5,10 +5,10 @@ import { useMemo } from 'react';
 import { type Command, type CommandBase, type CommandResultDisplay, getCommandName, type PromptCommand } from '../../commands.js';
 import { Box, Text } from '../../ink.js';
 import { estimateSkillFrontmatterTokens, getSkillsPath } from '../../skills/loadSkillsDir.js';
-import { getDisplayPath } from '../../utils/file.js';
-import { formatTokens } from '../../utils/format.js';
+import { getDisplayPath } from '../../utils/files/file.js';
+import { formatTokens } from '../../utils/text/format.js';
 import { getSettingSourceName, type SettingSource } from '../../utils/settings/constants.js';
-import { plural } from '../../utils/stringUtils.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { ConfigurableShortcutHint } from '../ConfigurableShortcutHint.js';
 import { Dialog } from '../design-system/Dialog.js';
 

@@ -27,17 +27,17 @@ import { mkdirSync, writeFileSync } from 'fs'
 import { mkdir, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { getSessionId } from '../../bootstrap/state.js'
-import { registerCleanup } from '../cleanupRegistry.js'
-import { logForDebugging } from '../debug.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../debug/debug.js'
 import {
   getClaudeConfigHomeDir,
   isEnvDefinedFalsy,
   isEnvTruthy,
-} from '../envUtils.js'
+} from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
-import { djb2Hash } from '../hash.js'
+import { djb2Hash } from '../text/hash.js'
 import { jsonStringify } from '../slowOperations.js'
-import { getAgentId, getAgentName, getParentSessionId } from '../teammate.js'
+import { getAgentId, getAgentName, getParentSessionId } from '../swarm/teammate.js'
 
 /**
  * Chrome Trace Event format types

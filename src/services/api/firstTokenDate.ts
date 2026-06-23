@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { getOauthConfig } from '../../constants/oauth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
-import { getAuthHeaders } from '../../utils/http.js'
-import { logError } from '../../utils/log.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
+import { getAuthHeaders } from '../../utils/api/http.js'
+import { getBaseApiUrl } from '../../utils/api/apiBaseUrl.js'
+import { logError } from '../../utils/debug/log.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 /**
  * Fetch the user's first Claude Code token date and store in config.
@@ -23,8 +23,7 @@ export async function fetchAndStoreClaudeCodeFirstTokenDate(): Promise<void> {
       return
     }
 
-    const oauthConfig = getOauthConfig()
-    const url = `${oauthConfig.BASE_API_URL}/api/organization/claude_code_first_token_date`
+    const url = `${getBaseApiUrl()}/api/organization/claude_code_first_token_date`
 
     const response = await axios.get(url, {
       headers: {

@@ -54,7 +54,7 @@ async function main(): Promise<void> {
     profileCheckpoint('cli_dump_system_prompt_path');
     const {
       enableConfigs
-    } = await import('../utils/config.js');
+    } = await import('../utils/config/config.js');
     enableConfigs();
     const {
       getMainLoopModel
@@ -69,29 +69,6 @@ async function main(): Promise<void> {
     console.log(prompt.join('\n'));
     return;
   }
-  if (process.argv[2] === '--claude-in-chrome-mcp') {
-    profileCheckpoint('cli_claude_in_chrome_mcp_path');
-    const {
-      runClaudeInChromeMcpServer
-    } = await import('../utils/claudeInChrome/mcpServer.js');
-    await runClaudeInChromeMcpServer();
-    return;
-  } else if (process.argv[2] === '--chrome-native-host') {
-    profileCheckpoint('cli_chrome_native_host_path');
-    const {
-      runChromeNativeHost
-    } = await import('../utils/claudeInChrome/chromeNativeHost.js');
-    await runChromeNativeHost();
-    return;
-  } else if (feature('CHICAGO_MCP') && process.argv[2] === '--computer-use-mcp') {
-    profileCheckpoint('cli_computer_use_mcp_path');
-    const {
-      runComputerUseMcpServer
-    } = await import('../utils/computerUse/mcpServer.js');
-    await runComputerUseMcpServer();
-    return;
-  }
-
   // Fast-path for `--daemon-worker=<kind>` (internal — supervisor spawns this).
   // Must come before the daemon subcommand check: spawned per-worker, so
   // perf-sensitive. No enableConfigs(), no analytics sinks at this layer —
@@ -113,7 +90,7 @@ async function main(): Promise<void> {
     profileCheckpoint('cli_bridge_path');
     const {
       enableConfigs
-    } = await import('../utils/config.js');
+    } = await import('../utils/config/config.js');
     enableConfigs();
     const {
       getBridgeDisabledReason,
@@ -127,7 +104,7 @@ async function main(): Promise<void> {
     } = await import('../bridge/bridgeMain.js');
     const {
       exitWithError
-    } = await import('../utils/process.js');
+    } = await import('../utils/platform/process.js');
 
     // Auth check must come before the GrowthBook gate check — without auth,
     // GrowthBook has no user context and would return a stale/default false.
@@ -135,7 +112,7 @@ async function main(): Promise<void> {
     // (not the stale disk cache), but init still needs auth headers to work.
     const {
       getClaudeAIOAuthTokens
-    } = await import('../utils/auth.js');
+    } = await import('../utils/auth/auth.js');
     if (!getClaudeAIOAuthTokens()?.accessToken) {
       exitWithError(BRIDGE_LOGIN_ERROR);
     }
@@ -166,11 +143,11 @@ async function main(): Promise<void> {
     profileCheckpoint('cli_daemon_path');
     const {
       enableConfigs
-    } = await import('../utils/config.js');
+    } = await import('../utils/config/config.js');
     enableConfigs();
     const {
       initSinks
-    } = await import('../utils/sinks.js');
+    } = await import('../utils/debug/sinks.js');
     initSinks();
     const {
       daemonMain
@@ -186,7 +163,7 @@ async function main(): Promise<void> {
     profileCheckpoint('cli_bg_path');
     const {
       enableConfigs
-    } = await import('../utils/config.js');
+    } = await import('../utils/config/config.js');
     enableConfigs();
     const bg = await import('../cli/bg.js');
     switch (args[0]) {
@@ -250,7 +227,7 @@ async function main(): Promise<void> {
     profileCheckpoint('cli_tmux_worktree_fast_path');
     const {
       enableConfigs
-    } = await import('../utils/config.js');
+    } = await import('../utils/config/config.js');
     enableConfigs();
     const {
       isWorktreeModeEnabled
@@ -267,7 +244,7 @@ async function main(): Promise<void> {
       if (result.error) {
         const {
           exitWithError
-        } = await import('../utils/process.js');
+        } = await import('../utils/platform/process.js');
         exitWithError(result.error);
       }
     }
@@ -287,7 +264,7 @@ async function main(): Promise<void> {
   // No special flags detected, load and run the full CLI
   const {
     startCapturingEarlyInput
-  } = await import('../utils/earlyInput.js');
+  } = await import('../utils/lifecycle/earlyInput.js');
   startCapturingEarlyInput();
   profileCheckpoint('cli_before_main_import');
   const {

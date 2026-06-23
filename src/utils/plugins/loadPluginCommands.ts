@@ -7,9 +7,9 @@ import {
   parseArgumentNames,
   substituteArguments,
 } from '../argumentSubstitution.js'
-import { logForDebugging } from '../debug.js'
-import { EFFORT_LEVELS, parseEffortValue } from '../effort.js'
-import { isBareMode } from '../envUtils.js'
+import { logForDebugging } from '../debug/debug.js'
+import { EFFORT_LEVELS, parseEffortValue } from '../config/effort.js'
+import { isBareMode } from '../platform/envUtils.js'
 import { isENOENT } from '../errors.js'
 import {
   coerceDescriptionToString,
@@ -17,12 +17,12 @@ import {
   parseBooleanFrontmatter,
   parseFrontmatter,
   parseShellFrontmatter,
-} from '../frontmatterParser.js'
-import { getFsImplementation, isDuplicatePath } from '../fsOperations.js'
+} from '../text/frontmatterParser.js'
+import { getFsImplementation, isDuplicatePath } from '../files/fsOperations.js'
 import {
   extractDescriptionFromMarkdown,
   parseSlashCommandToolsFromFrontmatter,
-} from '../markdownConfigLoader.js'
+} from '../config/markdownConfigLoader.js'
 import { parseUserSpecifiedModel } from '../model/model.js'
 import { executeShellCommandsInPrompt } from '../promptShellExecution.js'
 import { loadAllPluginsCacheOnly } from './pluginLoader.js'

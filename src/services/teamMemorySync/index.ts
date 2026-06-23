@@ -28,32 +28,27 @@ import axios from 'axios'
 import { createHash } from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 import { join, relative, sep } from 'path'
-import {
-  CLAUDE_AI_INFERENCE_SCOPE,
-  CLAUDE_AI_PROFILE_SCOPE,
-  getOauthConfig,
-  OAUTH_BETA_HEADER,
-} from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   getTeamMemPath,
   PathTraversalError,
   validateTeamMemKey,
 } from '../../memdir/teamMemPaths.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
-import { logForDebugging } from '../../utils/debug.js'
+} from '../../utils/auth/auth.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { classifyAxiosError } from '../../utils/errors.js'
-import { getGithubRepo } from '../../utils/git.js'
+import { getGithubRepo } from '../../utils/git/git.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
 } from '../../utils/model/providers.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { logEvent } from '../analytics/index.js'
 import type { AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS } from '../analytics/metadata.js'
 import { getRetryDelay } from '../api/withRetry.js'
@@ -162,7 +157,7 @@ function isUsingOAuth(): boolean {
 
 function getTeamMemorySyncEndpoint(repoSlug: string): string {
   const baseUrl =
-    process.env.TEAM_MEMORY_SYNC_URL || getOauthConfig().BASE_API_URL
+    process.env.TEAM_MEMORY_SYNC_URL || getBaseApiUrl()
   return `${baseUrl}/api/claude_code/team_memory?repo=${encodeURIComponent(repoSlug)}`
 }
 
@@ -175,7 +170,6 @@ function getAuthHeaders(): {
     return {
       headers: {
         Authorization: `Bearer ${oauthTokens.accessToken}`,
-        'anthropic-beta': OAUTH_BETA_HEADER,
         'User-Agent': getClaudeCodeUserAgent(),
       },
     }
@@ -850,7 +844,7 @@ export async function pullTeamMemory(
 
   const filesWritten = await writeRemoteEntriesToLocal(entries)
   if (filesWritten > 0) {
-    const { clearMemoryFileCaches } = await import('../../utils/claudemd.js')
+    const { clearMemoryFileCaches } = await import('../../utils/config/claudemd.js')
     clearMemoryFileCaches()
   }
   logForDebugging(`team-memory-sync: pulled ${filesWritten} files`, {

@@ -13,15 +13,15 @@ import { POWERSHELL_TOOL_NAME } from '../../tools/PowerShellTool/toolName.js'
 import { REPL_TOOL_NAME } from '../../tools/REPLTool/constants.js'
 import type { AssistantMessage } from '../../types/message.js'
 import { extractOutputRedirections } from '../bash/commands.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { AbortError, toError } from '../errors.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { SandboxManager } from '../sandbox/sandbox-adapter.js'
 import {
   getSettingSourceDisplayNameLowercase,
   SETTING_SOURCES,
 } from '../settings/constants.js'
-import { plural } from '../stringUtils.js'
+import { plural } from '../text/stringUtils.js'
 import { permissionModeTitle } from './PermissionMode.js'
 import type {
   PermissionAskDecision,
@@ -79,16 +79,16 @@ import { sanitizeToolNameForAnalytics } from '../../services/analytics/metadata.
 import {
   clearClassifierChecking,
   setClassifierChecking,
-} from '../classifierApprovals.js'
-import { isInProtectedNamespace } from '../envUtils.js'
-import { executePermissionRequestHooks } from '../hooks.js'
+} from './classifierApprovals.js'
+import { isInProtectedNamespace } from '../platform/envUtils.js'
+import { executePermissionRequestHooks } from '../hooks/hooks.js'
 import {
   AUTO_REJECT_MESSAGE,
   buildClassifierUnavailableMessage,
   buildYoloRejectionMessage,
   DONT_ASK_REJECT_MESSAGE,
-} from '../messages.js'
-import { calculateCostFromTokens } from '../modelCost.js'
+} from '../messages/messages.js'
+import { calculateCostFromTokens } from '../api/modelCost.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { jsonStringify } from '../slowOperations.js'
 import {

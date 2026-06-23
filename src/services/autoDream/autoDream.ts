@@ -14,19 +14,19 @@ import type { REPLHookContext } from '../../utils/hooks/postSamplingHooks.js'
 import {
   createCacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import {
   createUserMessage,
   createMemorySavedMessage,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import type { Message } from '../../types/message.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { logEvent } from '../analytics/index.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import { isAutoMemoryEnabled, getAutoMemPath } from '../../memdir/paths.js'
 import { isAutoDreamEnabled } from './config.js'
-import { getProjectDir } from '../../utils/sessionStorage.js'
+import { getProjectDir } from '../../utils/session/sessionStorage.js'
 import {
   getOriginalCwd,
   getKairosActive,

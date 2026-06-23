@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { z } from 'zod/v4'
-import { getOauthConfig } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js'
-import { getOrganizationUUID } from '../../services/oauth/client.js'
+import { getOrganizationUUID } from '../../utils/auth/auth.js'
 import { isPolicyAllowed } from '../../services/policyLimits/index.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { DESCRIPTION, PROMPT, REMOTE_TRIGGER_TOOL_NAME } from './prompt.js'
@@ -88,7 +88,7 @@ export const RemoteTriggerTool = buildTool({
       throw new Error('Unable to resolve organization UUID.')
     }
 
-    const base = `${getOauthConfig().BASE_API_URL}/v1/code/triggers`
+    const base = `${getBaseApiUrl()}/v1/code/triggers`
     const headers = {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',

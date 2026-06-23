@@ -7,7 +7,7 @@ import type {
 import { randomUUID } from 'crypto'
 import type { QuerySource } from 'src/constants/querySource.js'
 import { logEvent } from 'src/services/analytics/index.js'
-import { getContentText } from 'src/utils/messages.js'
+import { getContentText } from 'src/utils/messages/messages.js'
 import {
   findCommand,
   getCommandName,
@@ -34,24 +34,24 @@ import {
   type AgentMentionAttachment,
   createAttachmentMessage,
   getAttachmentMessages,
-} from '../attachments.js'
-import type { PastedContent } from '../config.js'
-import type { EffortValue } from '../effort.js'
+} from '../media/attachments.js'
+import type { PastedContent } from '../config/config.js'
+import type { EffortValue } from '../config/effort.js'
 import { toArray } from '../generators.js'
 import {
   executeUserPromptSubmitHooks,
   getUserPromptSubmitHookBlockingMessage,
-} from '../hooks.js'
+} from '../hooks/hooks.js'
 import {
   createImageMetadataText,
   maybeResizeAndDownsampleImageBlock,
-} from '../imageResizer.js'
-import { storeImages } from '../imageStore.js'
+} from '../media/imageResizer.js'
+import { storeImages } from '../media/imageStore.js'
 import {
   createCommandInputMessage,
   createSystemMessage,
   createUserMessage,
-} from '../messages.js'
+} from '../messages/messages.js'
 import { queryCheckpoint } from '../queryProfiler.js'
 import { parseSlashCommand } from '../slashCommandParsing.js'
 import {

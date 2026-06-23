@@ -14,10 +14,10 @@
  */
 
 import { dirname, join } from 'path'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { errorMessage, isENOENT, toError } from '../errors.js'
-import { getFsImplementation } from '../fsOperations.js'
-import { logError } from '../log.js'
+import { getFsImplementation } from '../files/fsOperations.js'
+import { logError } from '../debug/log.js'
 import {
   jsonParse,
   jsonStringify,
@@ -41,7 +41,7 @@ type InstalledPluginsMapV2 = Record<string, PluginInstallationEntry[]>
 export type PersistableScope = Exclude<PluginScope, never> // All scopes are persistable in the schema
 
 import { getOriginalCwd } from '../../bootstrap/state.js'
-import { getCwd } from '../cwd.js'
+import { getCwd } from '../platform/cwd.js'
 import { getHeadForDir } from '../git/gitFilesystem.js'
 import type { EditableSettingSource } from '../settings/constants.js'
 import {

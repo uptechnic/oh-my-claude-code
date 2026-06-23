@@ -21,8 +21,8 @@ import type {
   StopHookInfo,
   SystemStopHookSummaryMessage,
 } from '../types/message.js'
-import { getDisplayPath } from './file.js'
-import { isFullscreenEnvEnabled } from './fullscreen.js'
+import { getDisplayPath } from './files/file.js'
+import { isFullscreenEnvEnabled } from './rendering/fullscreen.js'
 import {
   isAutoManagedMemoryFile,
   isAutoManagedMemoryPattern,
@@ -32,7 +32,7 @@ import {
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const teamMemOps = feature('TEAMMEM')
-  ? (require('./teamMemoryOps.js') as typeof import('./teamMemoryOps.js'))
+  ? (require('./swarm/teamMemoryOps.js') as typeof import('./swarm/teamMemoryOps.js'))
   : null
 const SNIP_TOOL_NAME = feature('HISTORY_SNIP')
   ? (

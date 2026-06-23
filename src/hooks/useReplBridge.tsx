@@ -16,12 +16,12 @@ import { Text } from '../ink.js';
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../services/analytics/growthbook.js';
 import { useAppState, useAppStateStore, useSetAppState } from '../state/AppState.js';
 import type { Message } from '../types/message.js';
-import { getCwd } from '../utils/cwd.js';
-import { logForDebugging } from '../utils/debug.js';
+import { getCwd } from '../utils/platform/cwd.js';
+import { logForDebugging } from '../utils/debug/debug.js';
 import { errorMessage } from '../utils/errors.js';
 import { enqueue } from '../utils/messageQueueManager.js';
 import { buildSystemInitMessage } from '../utils/messages/systemInit.js';
-import { createBridgeStatusMessage, createSystemMessage } from '../utils/messages.js';
+import { createBridgeStatusMessage, createSystemMessage } from '../utils/messages/messages.js';
 import { getAutoModeUnavailableNotification, getAutoModeUnavailableReason, isAutoModeGateEnabled, isBypassPermissionsModeDisabled, transitionPermissionMode } from '../utils/permissions/permissionSetup.js';
 import { getLeaderToolUseConfirmQueue } from '../utils/swarm/leaderPermissionBridge.js';
 

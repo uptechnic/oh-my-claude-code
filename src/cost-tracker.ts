@@ -36,16 +36,16 @@ import { getAdvisorUsage } from './utils/advisor.js'
 import {
   getCurrentProjectConfig,
   saveCurrentProjectConfig,
-} from './utils/config.js'
+} from './utils/config/config.js'
 import {
   getContextWindowForModel,
   getModelMaxOutputTokens,
 } from './utils/context.js'
-import { isFastModeEnabled } from './utils/fastMode.js'
-import { formatDuration, formatNumber } from './utils/format.js'
+import { isFastModeEnabled } from './utils/config/fastMode.js'
+import { formatDuration, formatNumber } from './utils/text/format.js'
 import type { FpsMetrics } from './utils/fpsTracker.js'
 import { getCanonicalName } from './utils/model/model.js'
-import { calculateUSDCost } from './utils/modelCost.js'
+import { calculateUSDCost } from './utils/api/modelCost.js'
 export {
   getTotalCostUSD as getTotalCost,
   getTotalDuration,

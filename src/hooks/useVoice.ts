@@ -20,12 +20,12 @@ import {
   isVoiceStreamAvailable,
   type VoiceStreamConnection,
 } from '../services/voiceStreamSTT.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { toError } from '../utils/errors.js'
-import { getSystemLocaleLanguage } from '../utils/intl.js'
-import { logError } from '../utils/log.js'
+import { getSystemLocaleLanguage } from '../utils/text/intl.js'
+import { logError } from '../utils/debug/log.js'
 import { getInitialSettings } from '../utils/settings/settings.js'
-import { sleep } from '../utils/sleep.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 
 // ─── Language normalization ─────────────────────────────────────────────
 

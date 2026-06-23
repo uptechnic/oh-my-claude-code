@@ -1,13 +1,13 @@
 import { feature } from 'bun:bundle'
-import { getRemoteControlAtStartup } from '../../utils/config.js'
+import { getRemoteControlAtStartup } from '../../utils/config/config.js'
 import {
   EDITOR_MODES,
   NOTIFICATION_CHANNELS,
   TEAMMATE_MODES,
-} from '../../utils/configConstants.js'
+} from '../../utils/config/configConstants.js'
 import { getModelOptions } from '../../utils/model/modelOptions.js'
 import { validateModel } from '../../utils/model/validateModel.js'
-import { THEME_NAMES, THEME_SETTINGS } from '../../utils/theme.js'
+import { THEME_NAMES, THEME_SETTINGS } from '../../utils/rendering/theme.js'
 
 /** AppState keys that can be synced for immediate UI effect */
 type SyncableAppStateKey = 'verbose' | 'mainLoopModel' | 'thinkingEnabled'

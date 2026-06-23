@@ -5,20 +5,20 @@ import { logEvent } from '../../services/analytics/index.js'
 import {
   getAnthropicApiKeyWithSource,
   saveApiKey,
-} from '../../utils/auth.js'
-import { saveGlobalConfig } from '../../utils/config.js'
-import { isRunningOnHomespace } from '../../utils/envUtils.js'
+} from '../../utils/auth/auth.js'
+import { saveGlobalConfig } from '../../utils/config/config.js'
+import { isRunningOnHomespace } from '../../utils/platform/envUtils.js'
 import {
   LOGIN_ENV_VAR_DEFS,
   readEnvFile,
   setSessionEnvVars,
-} from '../../utils/envFile.js'
+} from '../../utils/config/envFile.js'
 import { getAPIProvider } from '../../utils/model/providers.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   buildAccountProperties,
   buildAPIProviderProperties,
-} from '../../utils/status.js'
+} from '../../utils/rendering/status.js'
 
 /**
  * Login by reading configuration from environment variables
@@ -203,17 +203,4 @@ export async function authLogout(): Promise<void> {
   }
   process.stdout.write('Successfully removed API Key.\n')
   process.exit(0)
-}
-
-/**
- * Stub — OAuth token installation is not supported in offline mode.
- * Kept for backward compatibility with ConsoleOAuthFlow and print.ts
- * which still reference this function (to be removed in a later cleanup).
- */
-export async function installOAuthTokens(_tokens: unknown): Promise<void> {
-  throw new Error(
-    'OAuth login is not available in offline mode. ' +
-    'Use claude auth login (with ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY set) ' +
-    'or /login in the REPL to configure an API key.',
-  )
 }

@@ -13,21 +13,21 @@ import {
   McpServerConfigSchema,
 } from '../../services/mcp/types.js'
 import type { ToolUseContext } from '../../Tool.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   EFFORT_LEVELS,
   type EffortValue,
   parseEffortValue,
-} from '../../utils/effort.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
-import { parsePositiveIntFromFrontmatter } from '../../utils/frontmatterParser.js'
+} from '../../utils/config/effort.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
+import { parsePositiveIntFromFrontmatter } from '../../utils/text/frontmatterParser.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   loadMarkdownFilesForSubdir,
   parseAgentToolsFromFrontmatter,
   parseSlashCommandToolsFromFrontmatter,
-} from '../../utils/markdownConfigLoader.js'
+} from '../../utils/config/markdownConfigLoader.js'
 import {
   PERMISSION_MODES,
   type PermissionMode,

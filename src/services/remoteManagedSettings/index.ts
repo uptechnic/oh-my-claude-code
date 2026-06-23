@@ -15,23 +15,23 @@
 import axios from 'axios'
 import { createHash } from 'crypto'
 import { open, unlink } from 'fs/promises'
-import { getOauthConfig, OAUTH_BETA_HEADER } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getAnthropicApiKeyWithSource,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
-import { registerCleanup } from '../../utils/cleanupRegistry.js'
-import { logForDebugging } from '../../utils/debug.js'
+} from '../../utils/auth/auth.js'
+import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { classifyAxiosError, getErrnoCode } from '../../utils/errors.js'
 import { settingsChangeDetector } from '../../utils/settings/changeDetector.js'
 import {
   type SettingsJson,
   SettingsSchema,
 } from '../../utils/settings/types.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { getRetryDelay } from '../api/withRetry.js'
 import {
   checkManagedSettingsSecurity,
@@ -103,7 +103,7 @@ export function initializeRemoteManagedSettingsLoadingPromise(): void {
  * Uses the OAuth config base API URL
  */
 function getRemoteManagedSettingsEndpoint() {
-  return `${getOauthConfig().BASE_API_URL}/api/claude_code/settings`
+  return `${getBaseApiUrl()}/api/claude_code/settings`
 }
 
 /**
@@ -191,7 +191,6 @@ function getRemoteSettingsAuthHeaders(): {
     return {
       headers: {
         Authorization: `Bearer ${oauthTokens.accessToken}`,
-        'anthropic-beta': OAUTH_BETA_HEADER,
       },
     }
   }

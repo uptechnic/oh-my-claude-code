@@ -5,7 +5,7 @@ import React, { Suspense, use, useCallback, useEffect, useMemo, useState } from 
 import { KeybindingWarnings } from 'src/components/KeybindingWarnings.js';
 import { McpParsingWarnings } from 'src/components/mcp/McpParsingWarnings.js';
 import { getModelMaxOutputTokens } from 'src/utils/context.js';
-import { getClaudeConfigHomeDir } from 'src/utils/envUtils.js';
+import { getClaudeConfigHomeDir } from 'src/utils/platform/envUtils.js';
 import type { SettingSource } from 'src/utils/settings/constants.js';
 import { getOriginalCwd } from '../bootstrap/state.js';
 import type { CommandResultDisplay } from '../commands.js';
@@ -19,16 +19,16 @@ import { Box, Text } from '../ink.js';
 import { useKeybindings } from '../keybindings/useKeybinding.js';
 import { useAppState } from '../state/AppState.js';
 import { getPluginErrorMessage } from '../types/plugin.js';
-import { getGcsDistTags, getNpmDistTags, type NpmDistTags } from '../utils/autoUpdater.js';
+import { getGcsDistTags, getNpmDistTags, type NpmDistTags } from '../utils/lifecycle/autoUpdater.js';
 import { type ContextWarnings, checkContextWarnings } from '../utils/doctorContextWarnings.js';
 import { type DiagnosticInfo, getDoctorDiagnostic } from '../utils/doctorDiagnostic.js';
-import { validateBoundedIntEnvVar } from '../utils/envValidation.js';
-import { pathExists } from '../utils/file.js';
+import { validateBoundedIntEnvVar } from '../utils/platform/envValidation.js';
+import { pathExists } from '../utils/files/file.js';
 import { cleanupStaleLocks, getAllLockInfo, isPidBasedLockingEnabled, type LockInfo } from '../utils/nativeInstaller/pidLock.js';
 import { getInitialSettings } from '../utils/settings/settings.js';
 import { BASH_MAX_OUTPUT_DEFAULT, BASH_MAX_OUTPUT_UPPER_LIMIT } from '../utils/shell/outputLimits.js';
 import { TASK_MAX_OUTPUT_DEFAULT, TASK_MAX_OUTPUT_UPPER_LIMIT } from '../utils/task/outputFormatting.js';
-import { getXDGStateHome } from '../utils/xdg.js';
+import { getXDGStateHome } from '../utils/platform/xdg.js';
 type Props = {
   onDone: (result?: string, options?: {
     display?: CommandResultDisplay;

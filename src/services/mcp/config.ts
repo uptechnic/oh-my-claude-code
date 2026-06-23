@@ -3,22 +3,21 @@ import { chmod, open, rename, stat, unlink } from 'fs/promises'
 import mapValues from 'lodash-es/mapValues.js'
 import memoize from 'lodash-es/memoize.js'
 import { dirname, join, parse } from 'path'
-import { getPlatform } from 'src/utils/platform.js'
+import { getPlatform } from 'src/utils/platform/platform.js'
 import type { PluginError } from '../../types/plugin.js'
 import { getPluginErrorMessage } from '../../types/plugin.js'
-import { isClaudeInChromeMCPServer } from '../../utils/claudeInChrome/common.js'
 import {
   getCurrentProjectConfig,
   getGlobalConfig,
   saveCurrentProjectConfig,
   saveGlobalConfig,
-} from '../../utils/config.js'
-import { getCwd } from '../../utils/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+} from '../../utils/config/config.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { getErrnoCode } from '../../utils/errors.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
-import { safeParseJSON } from '../../utils/json.js'
-import { logError } from '../../utils/log.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
+import { safeParseJSON } from '../../utils/text/json.js'
+import { logError } from '../../utils/debug/log.js'
 import { getPluginMcpServers } from '../../utils/plugins/mcpPluginIntegration.js'
 import { loadAllPluginsCacheOnly } from '../../utils/plugins/pluginLoader.js'
 import { isSettingSourceEnabled } from '../../utils/settings/constants.js'
@@ -631,20 +630,6 @@ export async function addMcpConfig(
     throw new Error(
       `Invalid name ${name}. Names can only contain letters, numbers, hyphens, and underscores.`,
     )
-  }
-
-  // Block reserved server name "claude-in-chrome"
-  if (isClaudeInChromeMCPServer(name)) {
-    throw new Error(`Cannot add MCP server "${name}": this name is reserved.`)
-  }
-
-  if (feature('CHICAGO_MCP')) {
-    const { isComputerUseMCPServer } = await import(
-      '../../utils/computerUse/common.js'
-    )
-    if (isComputerUseMCPServer(name)) {
-      throw new Error(`Cannot add MCP server "${name}": this name is reserved.`)
-    }
   }
 
   // Block adding servers when enterprise MCP config exists (it has exclusive control)
@@ -1504,33 +1489,12 @@ export function areMcpConfigsAllowedWithEnterpriseMcpConfig(
 }
 
 /**
- * Built-in MCP server that defaults to disabled. Unlike user-configured servers
- * (opt-out via disabledMcpServers), this requires explicit opt-in via
- * enabledMcpServers. Shows up in /mcp as disabled until the user enables it.
- */
-/* eslint-disable @typescript-eslint/no-require-imports */
-const DEFAULT_DISABLED_BUILTIN = feature('CHICAGO_MCP')
-  ? (
-      require('../../utils/computerUse/common.js') as typeof import('../../utils/computerUse/common.js')
-    ).COMPUTER_USE_MCP_SERVER_NAME
-  : null
-/* eslint-enable @typescript-eslint/no-require-imports */
-
-function isDefaultDisabledBuiltin(name: string): boolean {
-  return DEFAULT_DISABLED_BUILTIN !== null && name === DEFAULT_DISABLED_BUILTIN
-}
-
-/**
  * Check if an MCP server is disabled
  * @param name The name of the server
  * @returns true if the server is disabled
  */
 export function isMcpServerDisabled(name: string): boolean {
   const projectConfig = getCurrentProjectConfig()
-  if (isDefaultDisabledBuiltin(name)) {
-    const enabledServers = projectConfig.enabledMcpServers || []
-    return !enabledServers.includes(name)
-  }
   const disabledServers = projectConfig.disabledMcpServers || []
   return disabledServers.includes(name)
 }
@@ -1551,28 +1515,10 @@ function toggleMembership(
  * @param enabled Whether the server should be enabled
  */
 export function setMcpServerEnabled(name: string, enabled: boolean): void {
-  const isBuiltinStateChange =
-    isDefaultDisabledBuiltin(name) && isMcpServerDisabled(name) === enabled
-
   saveCurrentProjectConfig(current => {
-    if (isDefaultDisabledBuiltin(name)) {
-      const prev = current.enabledMcpServers || []
-      const next = toggleMembership(prev, name, enabled)
-      if (next === prev) return current
-      return { ...current, enabledMcpServers: next }
-    }
-
     const prev = current.disabledMcpServers || []
     const next = toggleMembership(prev, name, !enabled)
     if (next === prev) return current
     return { ...current, disabledMcpServers: next }
   })
-
-  if (isBuiltinStateChange) {
-    logEvent('tengu_builtin_mcp_toggle', {
-      serverName:
-        name as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
-      enabled,
-    })
-  }
 }

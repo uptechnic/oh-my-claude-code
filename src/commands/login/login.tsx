@@ -7,7 +7,7 @@ import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import {
   LOGIN_ENV_VAR_DEFS,
   setSessionEnvVars,
-} from '../../utils/envFile.js';
+} from '../../utils/config/envFile.js';
 
 export async function call(
   onDone: LocalJSXCommandOnDone,

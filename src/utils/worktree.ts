@@ -12,9 +12,9 @@ import {
 } from 'fs/promises'
 import ignore from 'ignore'
 import { basename, dirname, join } from 'path'
-import { saveCurrentProjectConfig } from './config.js'
-import { getCwd } from './cwd.js'
-import { logForDebugging } from './debug.js'
+import { saveCurrentProjectConfig } from './config/config.js'
+import { getCwd } from './platform/cwd.js'
+import { logForDebugging } from './debug/debug.js'
 import { errorMessage, getErrnoCode } from './errors.js'
 import { execFileNoThrow, execFileNoThrowWithCwd } from './execFileNoThrow.js'
 import { parseGitConfigValue } from './git/gitConfigParser.js'
@@ -30,19 +30,19 @@ import {
   getBranch,
   getDefaultBranch,
   gitExe,
-} from './git.js'
+} from './git/git.js'
 import {
   executeWorktreeCreateHook,
   executeWorktreeRemoveHook,
   hasWorktreeCreateHook,
-} from './hooks.js'
-import { containsPathTraversal } from './path.js'
-import { getPlatform } from './platform.js'
+} from './hooks/hooks.js'
+import { containsPathTraversal } from './platform/path.js'
+import { getPlatform } from './platform/platform.js'
 import {
   getInitialSettings,
   getRelativeSettingsFilePathForSource,
 } from './settings/settings.js'
-import { sleep } from './sleep.js'
+import { sleep } from './concurrency/sleep.js'
 import { isInITerm2 } from './swarm/backends/detection.js'
 
 const VALID_WORKTREE_SLUG_SEGMENT = /^[a-zA-Z0-9._-]+$/

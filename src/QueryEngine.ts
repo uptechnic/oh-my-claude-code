@@ -41,25 +41,25 @@ import type { AgentDefinition } from './tools/AgentTool/loadAgentsDir.js'
 import { SYNTHETIC_OUTPUT_TOOL_NAME } from './tools/SyntheticOutputTool/SyntheticOutputTool.js'
 import type { Message } from './types/message.js'
 import type { OrphanedPermission } from './types/textInputTypes.js'
-import { createAbortController } from './utils/abortController.js'
+import { createAbortController } from './utils/concurrency/abortController.js'
 import type { AttributionState } from './utils/commitAttribution.js'
-import { getGlobalConfig } from './utils/config.js'
-import { getCwd } from './utils/cwd.js'
-import { isBareMode, isEnvTruthy } from './utils/envUtils.js'
-import { getFastModeState } from './utils/fastMode.js'
+import { getGlobalConfig } from './utils/config/config.js'
+import { getCwd } from './utils/platform/cwd.js'
+import { isBareMode, isEnvTruthy } from './utils/platform/envUtils.js'
+import { getFastModeState } from './utils/config/fastMode.js'
 import {
   type FileHistoryState,
   fileHistoryEnabled,
   fileHistoryMakeSnapshot,
-} from './utils/fileHistory.js'
+} from './utils/files/fileHistory.js'
 import {
   cloneFileStateCache,
   type FileStateCache,
-} from './utils/fileStateCache.js'
+} from './utils/files/fileStateCache.js'
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import { registerStructuredOutputEnforcement } from './utils/hooks/hookHelpers.js'
-import { getInMemoryErrors } from './utils/log.js'
-import { countToolCalls, SYNTHETIC_MESSAGES } from './utils/messages.js'
+import { getInMemoryErrors } from './utils/debug/log.js'
+import { countToolCalls, SYNTHETIC_MESSAGES } from './utils/messages/messages.js'
 import {
   getMainLoopModel,
   parseUserSpecifiedModel,
@@ -74,9 +74,9 @@ import { setCwd } from './utils/Shell.js'
 import {
   flushSessionStorage,
   recordTranscript,
-} from './utils/sessionStorage.js'
-import { asSystemPrompt } from './utils/systemPromptType.js'
-import { resolveThemeSetting } from './utils/systemTheme.js'
+} from './utils/session/sessionStorage.js'
+import { asSystemPrompt } from './utils/agent/systemPromptType.js'
+import { resolveThemeSetting } from './utils/rendering/systemTheme.js'
 import {
   shouldEnableThinkingByDefault,
   type ThinkingConfig,

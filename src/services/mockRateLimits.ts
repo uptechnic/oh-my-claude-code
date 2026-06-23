@@ -5,8 +5,8 @@
 // The mock headers may not exactly match the API specification or real-world behavior.
 // Always validate against actual API responses before relying on this for production features.
 
-import type { SubscriptionType } from '../services/oauth/types.js'
-import { setMockBillingAccessOverride } from '../utils/billing.js'
+import type { SubscriptionType } from '../utils/auth/auth.js'
+import { setMockBillingAccessOverride } from '../utils/api/billing.js'
 import type { OverageDisabledReason } from './claudeAiLimits.js'
 
 type MockHeaders = {

@@ -14,12 +14,12 @@ import { setClipboard } from '../../ink/termio/osc.js';
 import { Box, Text } from '../../ink.js';
 import type { LocalJSXCommandCall } from '../../types/command.js';
 import type { LogOption } from '../../types/logs.js';
-import { agenticSessionSearch } from '../../utils/agenticSessionSearch.js';
-import { checkCrossProjectResume } from '../../utils/crossProjectResume.js';
+import { agenticSessionSearch } from '../../utils/agent/agenticSessionSearch.js';
+import { checkCrossProjectResume } from '../../utils/session/crossProjectResume.js';
 import { getWorktreePaths } from '../../utils/getWorktreePaths.js';
-import { logError } from '../../utils/log.js';
-import { getLastSessionLog, getSessionIdFromLog, isCustomTitleEnabled, isLiteLog, loadAllProjectsMessageLogs, loadFullLog, loadSameRepoMessageLogs, searchSessionsByCustomTitle } from '../../utils/sessionStorage.js';
-import { validateUuid } from '../../utils/uuid.js';
+import { logError } from '../../utils/debug/log.js';
+import { getLastSessionLog, getSessionIdFromLog, isCustomTitleEnabled, isLiteLog, loadAllProjectsMessageLogs, loadFullLog, loadSameRepoMessageLogs, searchSessionsByCustomTitle } from '../../utils/session/sessionStorage.js';
+import { validateUuid } from '../../utils/text/uuid.js';
 type ResumeResult = {
   resultType: 'sessionNotFound';
   arg: string;

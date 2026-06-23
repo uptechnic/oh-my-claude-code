@@ -1,13 +1,13 @@
 import { APIUserAbortError } from '@anthropic-ai/sdk'
 import { getEmptyToolPermissionContext } from '../Tool.js'
 import type { Message } from '../types/message.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import {
   createUserMessage,
   getAssistantMessageText,
-} from '../utils/messages.js'
+} from '../utils/messages/messages.js'
 import { getSmallFastModel } from '../utils/model/model.js'
-import { asSystemPrompt } from '../utils/systemPromptType.js'
+import { asSystemPrompt } from '../utils/agent/systemPromptType.js'
 import { queryModelWithoutStreaming } from './api/claude.js'
 import { getSessionMemoryContent } from './SessionMemory/sessionMemoryUtils.js'
 

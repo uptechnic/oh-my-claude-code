@@ -7,11 +7,11 @@ import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithK
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
 import { Box } from '../../ink.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
-import { getAnthropicApiKey, isAnthropicAuthEnabled } from '../../utils/auth.js';
+import { getAnthropicApiKey, isAnthropicAuthEnabled } from '../../utils/auth/auth.js';
 import { openBrowser } from '../../utils/browser.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
-import { getGithubRepo } from '../../utils/git.js';
-import { plural } from '../../utils/stringUtils.js';
+import { getGithubRepo } from '../../utils/git/git.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { ApiKeyStep } from './ApiKeyStep.js';
 import { CheckExistingSecretStep } from './CheckExistingSecretStep.js';
 import { CheckGitHubStep } from './CheckGitHubStep.js';
@@ -20,7 +20,6 @@ import { CreatingStep } from './CreatingStep.js';
 import { ErrorStep } from './ErrorStep.js';
 import { ExistingWorkflowStep } from './ExistingWorkflowStep.js';
 import { InstallAppStep } from './InstallAppStep.js';
-import { OAuthFlowStep } from './OAuthFlowStep.js';
 import { SuccessStep } from './SuccessStep.js';
 import { setupGitHubActions } from './setupGitHubActions.js';
 import type { State, Warning, Workflow } from './types.js';
@@ -578,7 +577,7 @@ function InstallGitHubApp(props: {
         }
       }} />;
     case 'oauth-flow':
-      return <OAuthFlowStep onSuccess={handleOAuthSuccess} onCancel={handleOAuthCancel} />;
+      return <Box flexDirection="column"><Text>OAuth login is not available in offline mode.</Text><Text dimColor={true}>Use /login to configure an API key.</Text></Box>;
   }
 }
 export async function call(onDone: LocalJSXCommandOnDone): Promise<React.ReactNode> {

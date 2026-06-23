@@ -4,20 +4,20 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { gracefulShutdown } from 'src/utils/gracefulShutdown.js'
-import { isEssentialTrafficOnly } from 'src/utils/privacyLevel.js'
-import { writeToStderr } from 'src/utils/process.js'
-import { getOauthConfig } from '../../constants/oauth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
+import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth/auth.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
+import { isEssentialTrafficOnly } from 'src/utils/config/privacyLevel.js'
+import { writeToStderr } from 'src/utils/platform/process.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
 import {
   getAuthHeaders,
   getUserAgent,
   withOAuth401Retry,
-} from '../../utils/http.js'
-import { logError } from '../../utils/log.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+} from '../../utils/api/http.js'
+import { logError } from '../../utils/debug/log.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 // Cache expiration: 24 hours
 const GROVE_CACHE_EXPIRATION_MS = 24 * 60 * 60 * 1000
@@ -62,7 +62,7 @@ export const getGroveSettings = memoize(
           throw new Error(`Failed to get auth headers: ${authHeaders.error}`)
         }
         return axios.get<AccountSettings>(
-          `${getOauthConfig().BASE_API_URL}/api/oauth/account/settings`,
+          `${getBaseApiUrl()}/api/oauth/account/settings`,
           {
             headers: {
               ...authHeaders.headers,
@@ -95,7 +95,7 @@ export async function markGroveNoticeViewed(): Promise<void> {
         throw new Error(`Failed to get auth headers: ${authHeaders.error}`)
       }
       return axios.post(
-        `${getOauthConfig().BASE_API_URL}/api/oauth/account/grove_notice_viewed`,
+        `${getBaseApiUrl()}/api/oauth/account/grove_notice_viewed`,
         {},
         {
           headers: {
@@ -127,7 +127,7 @@ export async function updateGroveSettings(
         throw new Error(`Failed to get auth headers: ${authHeaders.error}`)
       }
       return axios.patch(
-        `${getOauthConfig().BASE_API_URL}/api/oauth/account/settings`,
+        `${getBaseApiUrl()}/api/oauth/account/settings`,
         {
           grove_enabled: groveEnabled,
         },
@@ -242,7 +242,7 @@ export const getGroveNoticeConfig = memoize(
           throw new Error(`Failed to get auth headers: ${authHeaders.error}`)
         }
         return axios.get<GroveConfig>(
-          `${getOauthConfig().BASE_API_URL}/api/claude_code_grove`,
+          `${getBaseApiUrl()}/api/claude_code_grove`,
           {
             headers: {
               ...authHeaders.headers,

@@ -7,25 +7,25 @@ import type { ToolUseContext } from '../../Tool.js'
 import { registerAsyncAgent } from '../../tasks/LocalAgentTask/LocalAgentTask.js'
 import { assembleToolPool } from '../../tools.js'
 import { asAgentId } from '../../types/ids.js'
-import { runWithAgentContext } from '../../utils/agentContext.js'
-import { runWithCwdOverride } from '../../utils/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { runWithAgentContext } from '../../utils/agent/agentContext.js'
+import { runWithCwdOverride } from '../../utils/platform/cwd.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   createUserMessage,
   filterOrphanedThinkingOnlyMessages,
   filterUnresolvedToolUses,
   filterWhitespaceOnlyAssistantMessages,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import { getAgentModel } from '../../utils/model/agent.js'
 import { getQuerySourceForAgent } from '../../utils/promptCategory.js'
 import {
   getAgentTranscript,
   readAgentMetadata,
-} from '../../utils/sessionStorage.js'
-import { buildEffectiveSystemPrompt } from '../../utils/systemPrompt.js'
-import type { SystemPrompt } from '../../utils/systemPromptType.js'
+} from '../../utils/session/sessionStorage.js'
+import { buildEffectiveSystemPrompt } from '../../utils/agent/systemPrompt.js'
+import type { SystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js'
-import { getParentSessionId } from '../../utils/teammate.js'
+import { getParentSessionId } from '../../utils/swarm/teammate.js'
 import { reconstructForSubagentResume } from '../../utils/toolResultStorage.js'
 import { runAsyncAgentLifecycle } from './agentToolUtils.js'
 import { GENERAL_PURPOSE_AGENT } from './built-in/generalPurposeAgent.js'

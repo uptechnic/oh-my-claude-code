@@ -15,9 +15,9 @@
 import { randomBytes } from 'crypto'
 import { readFile, rename, unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
-import { logForDebugging } from '../debug.js'
-import { getFsImplementation } from '../fsOperations.js'
-import { logError } from '../log.js'
+import { logForDebugging } from '../debug/debug.js'
+import { getFsImplementation } from '../files/fsOperations.js'
+import { logError } from '../debug/log.js'
 import { jsonParse, jsonStringify } from '../slowOperations.js'
 import { getPluginsDirectory } from './pluginDirectories.js'
 

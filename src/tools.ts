@@ -84,8 +84,8 @@ import { TaskGetTool } from './tools/TaskGetTool/TaskGetTool.js'
 import { TaskUpdateTool } from './tools/TaskUpdateTool/TaskUpdateTool.js'
 import { TaskListTool } from './tools/TaskListTool/TaskListTool.js'
 import uniqBy from 'lodash-es/uniqBy.js'
-import { isToolSearchEnabledOptimistic } from './utils/toolSearch.js'
-import { isTodoV2Enabled } from './utils/tasks.js'
+import { isToolSearchEnabledOptimistic } from './utils/agent/toolSearch.js'
+import { isTodoV2Enabled } from './utils/task/tasks.js'
 // Dead code elimination: conditional import for CLAUDE_CODE_VERIFY_PLAN
 /* eslint-disable custom-rules/no-process-env-top-level, @typescript-eslint/no-require-imports */
 const VerifyPlanExecutionTool =
@@ -135,10 +135,10 @@ const WorkflowTool = feature('WORKFLOW_SCRIPTS')
 /* eslint-enable custom-rules/no-process-env-top-level, @typescript-eslint/no-require-imports */
 import type { ToolPermissionContext } from './Tool.js'
 import { getDenyRuleForTool } from './utils/permissions/permissions.js'
-import { hasEmbeddedSearchTools } from './utils/embeddedTools.js'
-import { isEnvTruthy } from './utils/envUtils.js'
+import { hasEmbeddedSearchTools } from './utils/agent/embeddedTools.js'
+import { isEnvTruthy } from './utils/platform/envUtils.js'
 import { isPowerShellToolEnabled } from './utils/shell/shellToolUtils.js'
-import { isAgentSwarmsEnabled } from './utils/agentSwarmsEnabled.js'
+import { isAgentSwarmsEnabled } from './utils/agent/agentSwarmsEnabled.js'
 import { isWorktreeModeEnabled } from './utils/worktreeModeEnabled.js'
 import {
   REPL_TOOL_NAME,

@@ -1,7 +1,7 @@
 import { type StructuredPatchHunk, structuredPatch } from 'diff'
-import { logError } from 'src/utils/log.js'
-import { expandPath } from 'src/utils/path.js'
-import { countCharInString } from 'src/utils/stringUtils.js'
+import { logError } from 'src/utils/debug/log.js'
+import { expandPath } from 'src/utils/platform/path.js'
+import { countCharInString } from 'src/utils/text/stringUtils.js'
 import {
   DIFF_TIMEOUT_MS,
   getPatchForDisplay,
@@ -12,7 +12,7 @@ import {
   addLineNumbers,
   convertLeadingTabsToSpaces,
   readFileSyncCached,
-} from '../../utils/file.js'
+} from '../../utils/files/file.js'
 import type { EditInput, FileEdit } from './types.js'
 
 // Claude can't output curly quotes, so we define them as constants here for Claude to use

@@ -9,11 +9,11 @@ import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/gr
 import { queryModelWithStreaming } from '../../services/api/claude.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
-import { createUserMessage } from '../../utils/messages.js'
+import { logError } from '../../utils/debug/log.js'
+import { createUserMessage } from '../../utils/messages/messages.js'
 import { getMainLoopModel, getSmallFastModel } from '../../utils/model/model.js'
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js'
-import { asSystemPrompt } from '../../utils/systemPromptType.js'
+import { asSystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getWebSearchPrompt, WEB_SEARCH_TOOL_NAME } from './prompt.js'
 import {
   getToolUseSummary,
@@ -167,29 +167,9 @@ export const WebSearchTool = buildTool({
   },
   isEnabled() {
     const provider = getAPIProvider()
-    const model = getMainLoopModel()
 
     // Enable for firstParty
-    if (provider === 'firstParty') {
-      return true
-    }
-
-    // Enable for Vertex AI with supported models (Claude 4.0+)
-    if (provider === 'vertex') {
-      const supportsWebSearch =
-        model.includes('claude-opus-4') ||
-        model.includes('claude-sonnet-4') ||
-        model.includes('claude-haiku-4')
-
-      return supportsWebSearch
-    }
-
-    // Foundry only ships models that already support Web Search
-    if (provider === 'foundry') {
-      return true
-    }
-
-    return false
+    return provider === 'firstParty'
   },
   get inputSchema(): InputSchema {
     return inputSchema()

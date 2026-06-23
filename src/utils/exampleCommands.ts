@@ -1,11 +1,11 @@
 import memoize from 'lodash-es/memoize.js'
 import sample from 'lodash-es/sample.js'
-import { getCwd } from '../utils/cwd.js'
-import { getCurrentProjectConfig, saveCurrentProjectConfig } from './config.js'
-import { env } from './env.js'
+import { getCwd } from './platform/cwd.js'
+import { getCurrentProjectConfig, saveCurrentProjectConfig } from './config/config.js'
+import { env } from './platform/env.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
-import { getIsGit, gitExe } from './git.js'
-import { logError } from './log.js'
+import { getIsGit, gitExe } from './git/git.js'
+import { logError } from './debug/log.js'
 import { getGitEmail } from './user.js'
 
 // Patterns that mark a file as non-core (auto-generated, dependency, or config).

@@ -2,8 +2,8 @@ import { normalizeLanguageForSTT } from '../../hooks/useVoice.js'
 import { getShortcutDisplay } from '../../keybindings/shortcutFormat.js'
 import { logEvent } from '../../services/analytics/index.js'
 import type { LocalCommandCall } from '../../types/command.js'
-import { isAnthropicAuthEnabled } from '../../utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
+import { isAnthropicAuthEnabled } from '../../utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
 import { settingsChangeDetector } from '../../utils/settings/changeDetector.js'
 import {
   getInitialSettings,

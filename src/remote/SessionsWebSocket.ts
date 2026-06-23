@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { getOauthConfig } from '../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
 import type {
   SDKControlCancelRequest,
@@ -7,11 +7,11 @@ import type {
   SDKControlRequestInner,
   SDKControlResponse,
 } from '../entrypoints/sdk/controlTypes.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { errorMessage } from '../utils/errors.js'
-import { logError } from '../utils/log.js'
-import { getWebSocketTLSOptions } from '../utils/mtls.js'
-import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/proxy.js'
+import { logError } from '../utils/debug/log.js'
+import { getWebSocketTLSOptions } from '../utils/auth/mtls.js'
+import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/auth/proxy.js'
 import { jsonParse, jsonStringify } from '../utils/slowOperations.js'
 
 const RECONNECT_DELAY_MS = 2000
@@ -105,7 +105,7 @@ export class SessionsWebSocket {
 
     this.state = 'connecting'
 
-    const baseUrl = getOauthConfig().BASE_API_URL.replace('https://', 'wss://')
+    const baseUrl = getBaseApiUrl().replace('https://', 'wss://')
     const url = `${baseUrl}/v1/sessions/ws/${this.sessionId}/subscribe?organization_uuid=${this.orgUuid}`
 
     logForDebugging(`[SessionsWebSocket] Connecting to ${url}`)

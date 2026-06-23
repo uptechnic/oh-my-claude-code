@@ -14,9 +14,9 @@ import type {
   StreamEvent,
   SystemMessage,
 } from '../types/message.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { fromSDKCompactMetadata } from '../utils/messages/mappers.js'
-import { createUserMessage } from '../utils/messages.js'
+import { createUserMessage } from '../utils/messages/messages.js'
 
 /**
  * Converts SDKMessage from CCR to REPL Message types.

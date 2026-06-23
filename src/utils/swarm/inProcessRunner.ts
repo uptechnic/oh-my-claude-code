@@ -60,19 +60,19 @@ import type { PermissionDecision } from '../../types/permissions.js'
 import {
   createAssistantAPIErrorMessage,
   createUserMessage,
-} from '../../utils/messages.js'
+} from '../messages/messages.js'
 import { evictTaskOutput } from '../../utils/task/diskOutput.js'
 import { evictTerminalTask } from '../../utils/task/framework.js'
 import { tokenCountWithEstimation } from '../../utils/tokens.js'
-import { createAbortController } from '../abortController.js'
-import { type AgentContext, runWithAgentContext } from '../agentContext.js'
-import { count } from '../array.js'
-import { logForDebugging } from '../debug.js'
-import { cloneFileStateCache } from '../fileStateCache.js'
+import { createAbortController } from '../concurrency/abortController.js'
+import { type AgentContext, runWithAgentContext } from '../agent/agentContext.js'
+import { count } from '../text/array.js'
+import { logForDebugging } from '../debug/debug.js'
+import { cloneFileStateCache } from '../files/fileStateCache.js'
 import {
   SUBAGENT_REJECT_MESSAGE,
   SUBAGENT_REJECT_MESSAGE_WITH_REASON_PREFIX,
-} from '../messages.js'
+} from '../messages/messages.js'
 import type { ModelAlias } from '../model/aliases.js'
 import {
   applyPermissionUpdates,
@@ -81,12 +81,12 @@ import {
 import type { PermissionUpdate } from '../permissions/PermissionUpdateSchema.js'
 import { hasPermissionsToUseTool } from '../permissions/permissions.js'
 import { emitTaskTerminatedSdk } from '../sdkEventQueue.js'
-import { sleep } from '../sleep.js'
+import { sleep } from '../concurrency/sleep.js'
 import { jsonStringify } from '../slowOperations.js'
-import { asSystemPrompt } from '../systemPromptType.js'
-import { claimTask, listTasks, type Task, updateTask } from '../tasks.js'
-import type { TeammateContext } from '../teammateContext.js'
-import { runWithTeammateContext } from '../teammateContext.js'
+import { asSystemPrompt } from '../agent/systemPromptType.js'
+import { claimTask, listTasks, type Task, updateTask } from '../task/tasks.js'
+import type { TeammateContext } from './teammateContext.js'
+import { runWithTeammateContext } from './teammateContext.js'
 import {
   createIdleNotification,
   getLastPeerDmSummary,
@@ -95,7 +95,7 @@ import {
   markMessageAsReadByIndex,
   readMailbox,
   writeToMailbox,
-} from '../teammateMailbox.js'
+} from './teammateMailbox.js'
 import { unregisterAgent as unregisterPerfettoAgent } from '../telemetry/perfettoTracing.js'
 import { createContentReplacementState } from '../toolResultStorage.js'
 import { TEAM_LEAD_NAME } from './constants.js'

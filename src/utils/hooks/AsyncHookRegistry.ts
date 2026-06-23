@@ -3,9 +3,9 @@ import type {
   HookEvent,
   SyncHookJSONOutput,
 } from 'src/entrypoints/agentSdkTypes.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import type { ShellCommand } from '../ShellCommand.js'
-import { invalidateSessionEnvCache } from '../sessionEnvironment.js'
+import { invalidateSessionEnvCache } from '../session/sessionEnvironment.js'
 import { jsonParse, jsonStringify } from '../slowOperations.js'
 import { emitHookResponse, startHookProgressInterval } from './hookEvents.js'
 

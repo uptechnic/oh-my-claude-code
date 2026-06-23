@@ -3,14 +3,13 @@
  */
 
 import {
-  getChromeFlagOverride,
   getFlagSettingsPath,
   getInlinePlugins,
   getMainLoopModelOverride,
   getSessionBypassPermissionsMode,
 } from '../../bootstrap/state.js'
 import { quote } from '../bash/shellQuote.js'
-import { isInBundledMode } from '../bundledMode.js'
+import { isInBundledMode } from '../config/bundledMode.js'
 import type { PermissionMode } from '../permissions/PermissionMode.js'
 import { getTeammateModeFromSnapshot } from './backends/teammateModeSnapshot.js'
 import { TEAMMATE_COMMAND_ENV_VAR } from './constants.js'
@@ -77,14 +76,6 @@ export function buildInheritedCliFlags(options?: {
   const sessionMode = getTeammateModeFromSnapshot()
   flags.push(`--teammate-mode ${sessionMode}`)
 
-  // Propagate --chrome / --no-chrome if explicitly set on the CLI
-  const chromeFlagOverride = getChromeFlagOverride()
-  if (chromeFlagOverride === true) {
-    flags.push('--chrome')
-  } else if (chromeFlagOverride === false) {
-    flags.push('--no-chrome')
-  }
-
   return flags.join(' ')
 }
 
@@ -96,9 +87,6 @@ export function buildInheritedCliFlags(options?: {
 const TEAMMATE_ENV_VARS = [
   // API provider selection — without these, teammates default to firstParty
   // and send requests to the wrong endpoint (GitHub issue #23561)
-  'CLAUDE_CODE_USE_BEDROCK',
-  'CLAUDE_CODE_USE_VERTEX',
-  'CLAUDE_CODE_USE_FOUNDRY',
   // Custom API endpoint
   'ANTHROPIC_BASE_URL',
   // Config directory override

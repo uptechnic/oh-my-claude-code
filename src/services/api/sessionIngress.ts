@@ -1,14 +1,14 @@
 import axios, { type AxiosError } from 'axios'
 import type { UUID } from 'crypto'
-import { getOauthConfig } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { Entry, TranscriptMessage } from '../../types/logs.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { logForDiagnosticsNoPII } from '../../utils/diagLogs.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
-import { logError } from '../../utils/log.js'
-import { sequential } from '../../utils/sequential.js'
-import { getSessionIngressAuthToken } from '../../utils/sessionIngressAuth.js'
-import { sleep } from '../../utils/sleep.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from '../../utils/debug/diagLogs.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
+import { logError } from '../../utils/debug/log.js'
+import { sequential } from '../../utils/concurrency/sequential.js'
+import { getSessionIngressAuthToken } from '../../utils/session/sessionIngressAuth.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { getOAuthHeaders } from '../../utils/teleport/api.js'
 
@@ -248,7 +248,7 @@ export async function getSessionLogsViaOAuth(
   accessToken: string,
   orgUUID: string,
 ): Promise<Entry[] | null> {
-  const url = `${getOauthConfig().BASE_API_URL}/v1/session_ingress/session/${sessionId}`
+  const url = `${getBaseApiUrl()}/v1/session_ingress/session/${sessionId}`
   logForDebugging(`[session-ingress] Fetching session logs from: ${url}`)
   const headers = {
     ...getOAuthHeaders(accessToken),
@@ -293,7 +293,7 @@ export async function getTeleportEvents(
   accessToken: string,
   orgUUID: string,
 ): Promise<Entry[] | null> {
-  const baseUrl = `${getOauthConfig().BASE_API_URL}/v1/code/sessions/${sessionId}/teleport-events`
+  const baseUrl = `${getBaseApiUrl()}/v1/code/sessions/${sessionId}/teleport-events`
   const headers = {
     ...getOAuthHeaders(accessToken),
     'x-organization-uuid': orgUUID,

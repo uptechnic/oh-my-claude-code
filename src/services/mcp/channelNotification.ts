@@ -23,11 +23,11 @@ import { CHANNEL_TAG } from '../../constants/xml.js'
 import {
   getClaudeAIOAuthTokens,
   getSubscriptionType,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { parsePluginIdentifier } from '../../utils/plugins/pluginIdentifier.js'
 import { getSettingsForSource } from '../../utils/settings/settings.js'
-import { escapeXmlAttr } from '../../utils/xml.js'
+import { escapeXmlAttr } from '../../utils/text/xml.js'
 import {
   type ChannelAllowlistEntry,
   getChannelAllowlist,

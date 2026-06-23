@@ -23,10 +23,10 @@ import {
   logEvent,
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from 'src/services/analytics/index.js'
-import { ImageSizeError } from './utils/imageValidation.js'
-import { ImageResizeError } from './utils/imageResizer.js'
+import { ImageSizeError } from './utils/media/imageValidation.js'
+import { ImageResizeError } from './utils/media/imageResizer.js'
 import { findToolByName, type ToolUseContext } from './Tool.js'
-import { asSystemPrompt, type SystemPrompt } from './utils/systemPromptType.js'
+import { asSystemPrompt, type SystemPrompt } from './utils/agent/systemPromptType.js'
 import type {
   AssistantMessage,
   AttachmentMessage,
@@ -37,12 +37,12 @@ import type {
   UserMessage,
   TombstoneMessage,
 } from './types/message.js'
-import { logError } from './utils/log.js'
+import { logError } from './utils/debug/log.js'
 import {
   PROMPT_TOO_LONG_ERROR_MESSAGE,
   isPromptTooLongMessage,
 } from './services/api/errors.js'
-import { logAntError, logForDebugging } from './utils/debug.js'
+import { logAntError, logForDebugging } from './utils/debug/debug.js'
 import {
   createUserMessage,
   createUserInterruptionMessage,
@@ -53,15 +53,15 @@ import {
   createToolUseSummaryMessage,
   createMicrocompactBoundaryMessage,
   stripSignatureBlocks,
-} from './utils/messages.js'
+} from './utils/messages/messages.js'
 import { generateToolUseSummary } from './services/toolUseSummary/toolUseSummaryGenerator.js'
-import { prependUserContext, appendSystemContext } from './utils/api.js'
+import { prependUserContext, appendSystemContext } from './utils/api/api.js'
 import {
   createAttachmentMessage,
   filterDuplicateMemoryAttachments,
   getAttachmentMessages,
   startRelevantMemoryPrefetch,
-} from './utils/attachments.js'
+} from './utils/media/attachments.js'
 /* eslint-disable @typescript-eslint/no-require-imports */
 const skillPrefetch = feature('EXPERIMENTAL_SKILL_SEARCH')
   ? (require('./services/skillSearch/prefetch.js') as typeof import('./services/skillSearch/prefetch.js'))
@@ -75,7 +75,7 @@ import {
   getCommandsByMaxPriority,
   isSlashCommand,
 } from './utils/messageQueueManager.js'
-import { notifyCommandLifecycle } from './utils/commandLifecycle.js'
+import { notifyCommandLifecycle } from './utils/lifecycle/commandLifecycle.js'
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import {
   getRuntimeMainLoopModel,
@@ -90,14 +90,14 @@ import { ESCALATED_MAX_TOKENS } from './utils/context.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from './services/analytics/growthbook.js'
 import { SLEEP_TOOL_NAME } from './tools/SleepTool/prompt.js'
 import { executePostSamplingHooks } from './utils/hooks/postSamplingHooks.js'
-import { executeStopFailureHooks } from './utils/hooks.js'
+import { executeStopFailureHooks } from './utils/hooks/hooks.js'
 import type { QuerySource } from './constants/querySource.js'
 import { createDumpPromptsFetch } from './services/api/dumpPrompts.js'
 import { StreamingToolExecutor } from './services/tools/StreamingToolExecutor.js'
 import { queryCheckpoint } from './utils/queryProfiler.js'
 import { runTools } from './services/tools/toolOrchestration.js'
 import { applyToolResultBudget } from './utils/toolResultStorage.js'
-import { recordContentReplacement } from './utils/sessionStorage.js'
+import { recordContentReplacement } from './utils/session/sessionStorage.js'
 import { handleStopHooks } from './query/stopHooks.js'
 import { buildQueryConfig } from './query/config.js'
 import { productionDeps, type QueryDeps } from './query/deps.js'
@@ -109,7 +109,7 @@ import {
   incrementBudgetContinuationCount,
 } from './bootstrap/state.js'
 import { createBudgetTracker, checkTokenBudget } from './query/tokenBudget.js'
-import { count } from './utils/array.js'
+import { count } from './utils/text/array.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const snipModule = feature('HISTORY_SNIP')
@@ -1027,20 +1027,6 @@ async function* queryLoop(
           'Interrupted by user',
         )
       }
-      // chicago MCP: auto-unhide + lock release on interrupt. Same cleanup
-      // as the natural turn-end path in stopHooks.ts. Main thread only —
-      // see stopHooks.ts for the subagent-releasing-main's-lock rationale.
-      if (feature('CHICAGO_MCP') && !toolUseContext.agentId) {
-        try {
-          const { cleanupComputerUseAfterTurn } = await import(
-            './utils/computerUse/cleanup.js'
-          )
-          await cleanupComputerUseAfterTurn(toolUseContext)
-        } catch {
-          // Failures are silent — this is dogfooding cleanup, not critical path
-        }
-      }
-
       // Skip the interruption message for submit-interrupts — the queued
       // user message that follows provides sufficient context.
       if (toolUseContext.abortController.signal.reason !== 'interrupt') {
@@ -1191,7 +1177,6 @@ async function* queryLoop(
         // multi-turn dance. This fires once per turn (guarded by the
         // override check), then falls through to multi-turn recovery if
         // 64k also hits the cap.
-        // 3P default: false (not validated on Bedrock/Vertex)
         const capEnabled = getFeatureValue_CACHED_MAY_BE_STALE(
           'tengu_otk_slot_v1',
           false,
@@ -1484,18 +1469,6 @@ async function* queryLoop(
     // We were aborted during tool calls
     if (toolUseContext.abortController.signal.aborted) {
       // chicago MCP: auto-unhide + lock release when aborted mid-tool-call.
-      // This is the most likely Ctrl+C path for CU (e.g. slow screenshot).
-      // Main thread only — see stopHooks.ts for the subagent rationale.
-      if (feature('CHICAGO_MCP') && !toolUseContext.agentId) {
-        try {
-          const { cleanupComputerUseAfterTurn } = await import(
-            './utils/computerUse/cleanup.js'
-          )
-          await cleanupComputerUseAfterTurn(toolUseContext)
-        } catch {
-          // Failures are silent — this is dogfooding cleanup, not critical path
-        }
-      }
       // Skip the interruption message for submit-interrupts — the queued
       // user message that follows provides sufficient context.
       if (toolUseContext.abortController.signal.reason !== 'interrupt') {

@@ -66,14 +66,6 @@ Defined in [bunfig.toml](bunfig.toml) and injected via Bun's `--define` (also re
 - **[src/tasks/](src/tasks/)** — Task types: `LocalMainSessionTask`, `LocalShellTask`, `LocalWorkflowTask`, `LocalAgentTask`, `InProcessTeammateTask`, `DreamTask`, `MonitorMcpTask`, `RemoteAgentTask`.
 - **[src/hooks/toolPermission/](src/hooks/toolPermission/)** — Permission system: every tool invocation checks permissions. Modes: `default`, `plan`, `bypassPermissions`, `auto`. Uses bash/shell classifiers and dangerous-pattern detection.
 
-## Stubs
-
-[stubs/](stubs/) contains no-op replacements for internal `@ant/*` packages not included in the leak:
-- `@ant/claude-for-chrome-mcp`
-- `@ant/computer-use-input`
-- `@ant/computer-use-mcp`
-- `@ant/computer-use-swift`
-
 ## Startup Flow
 
 [src/main.tsx](src/main.tsx) parallelizes MDM settings reads, keychain prefetches, and API preconnects as side-effects before heavy module evaluation. Heavy modules (OpenTelemetry ~400KB, gRPC ~700KB) are deferred via dynamic `import()` until needed.

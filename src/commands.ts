@@ -147,12 +147,11 @@ import {
 import antTrace from './commands/ant-trace/index.js'
 import perfIssue from './commands/perf-issue/index.js'
 import sandboxToggle from './commands/sandbox-toggle/index.js'
-import chrome from './commands/chrome/index.js'
 import stickers from './commands/stickers/index.js'
 import advisor from './commands/advisor.js'
-import { logError } from './utils/log.js'
+import { logError } from './utils/debug/log.js'
 import { toError } from './utils/errors.js'
-import { logForDebugging } from './utils/debug.js'
+import { logForDebugging } from './utils/debug/debug.js'
 import {
   getSkillDirCommands,
   clearSkillCaches,
@@ -167,7 +166,7 @@ import {
   clearPluginSkillsCache,
 } from './utils/plugins/loadPluginCommands.js'
 import memoize from 'lodash-es/memoize.js'
-import { isUsing3PServices, isClaudeAISubscriber } from './utils/auth.js'
+import { isUsing3PServices, isClaudeAISubscriber } from './utils/auth/auth.js'
 import { isFirstPartyAnthropicBaseUrl } from './utils/model/providers.js'
 import env from './commands/env/index.js'
 import exit from './commands/exit/index.js'
@@ -261,7 +260,6 @@ const COMMANDS = memoize((): Command[] => [
   agents,
   branch,
   btw,
-  chrome,
   clear,
   color,
   compact,
@@ -334,7 +332,7 @@ const COMMANDS = memoize((): Command[] => [
   hooks,
   exportCommand,
   sandboxToggle,
-  ...(!isUsing3PServices() ? [logout, login()] : []),
+  ...([logout, login()]),
   passes,
   ...(peersCmd ? [peersCmd] : []),
   tasks,

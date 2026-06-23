@@ -1,21 +1,21 @@
 import axios from 'axios'
-import { getOauthConfig } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   getOauthAccountInfo,
   getSubscriptionType,
   isClaudeAISubscriber,
-} from '../../utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { logError } from '../../utils/log.js'
-import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
+} from '../../utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { logError } from '../../utils/debug/log.js'
+import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 import type {
   ReferralCampaign,
   ReferralEligibilityResponse,
   ReferralRedemptionsResponse,
   ReferrerRewardInfo,
-} from '../oauth/types.js'
+} from '../../utils/auth/auth.js'
 
 // Cache expiration time: 24 hours (eligibility changes only on subscription/experiment changes)
 const CACHE_EXPIRATION_MS = 24 * 60 * 60 * 1000
@@ -33,7 +33,7 @@ export async function fetchReferralEligibility(
     'x-organization-uuid': orgUUID,
   }
 
-  const url = `${getOauthConfig().BASE_API_URL}/api/oauth/organizations/${orgUUID}/referral/eligibility`
+  const url = `${getBaseApiUrl()}/api/oauth/organizations/${orgUUID}/referral/eligibility`
 
   const response = await axios.get(url, {
     headers,
@@ -54,7 +54,7 @@ export async function fetchReferralRedemptions(
     'x-organization-uuid': orgUUID,
   }
 
-  const url = `${getOauthConfig().BASE_API_URL}/api/oauth/organizations/${orgUUID}/referral/redemptions`
+  const url = `${getBaseApiUrl()}/api/oauth/organizations/${orgUUID}/referral/redemptions`
 
   const response = await axios.get<ReferralRedemptionsResponse>(url, {
     headers,

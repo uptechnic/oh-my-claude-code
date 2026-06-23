@@ -21,13 +21,13 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { logForDebugging } from '../debug.js'
-import { getClaudeConfigHomeDir } from '../envUtils.js'
+import { logForDebugging } from '../debug/debug.js'
+import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { getErrnoCode } from '../errors.js'
 import { execFileNoThrow } from '../execFileNoThrow.js'
 import { getInitialSettings } from '../settings/settings.js'
 import { which } from '../which.js'
-import { getUserBinDir, getXDGDataHome } from '../xdg.js'
+import { getUserBinDir, getXDGDataHome } from '../platform/xdg.js'
 import { DEEP_LINK_PROTOCOL } from './parseDeepLink.js'
 
 export const MACOS_BUNDLE_ID = 'com.anthropic.claude-code-url-handler'

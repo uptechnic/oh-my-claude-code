@@ -1,13 +1,13 @@
 import { profileCheckpoint } from '../utils/startupProfiler.js'
 import '../bootstrap/state.js'
-import '../utils/config.js'
+import '../utils/config/config.js'
 import type { Attributes, MetricOptions } from '@opentelemetry/api'
 import memoize from 'lodash-es/memoize.js'
 import { getIsNonInteractiveSession } from 'src/bootstrap/state.js'
 import type { AttributedCounter } from '../bootstrap/state.js'
 import { getSessionCounter, setMeter } from '../bootstrap/state.js'
 import { shutdownLspServerManager } from '../services/lsp/manager.js'
-import { populateOAuthAccountInfoIfNeeded } from '../services/oauth/client.js'
+import { populateOAuthAccountInfoIfNeeded } from '../utils/auth/auth.js'
 import {
   initializePolicyLimitsLoadingPromise,
   isPolicyLimitsEligible,
@@ -17,26 +17,26 @@ import {
   isEligibleForRemoteManagedSettings,
   waitForRemoteManagedSettingsToLoad,
 } from '../services/remoteManagedSettings/index.js'
-import { preconnectAnthropicApi } from '../utils/apiPreconnect.js'
-import { applyExtraCACertsFromConfig } from '../utils/caCertsConfig.js'
-import { registerCleanup } from '../utils/cleanupRegistry.js'
-import { enableConfigs, recordFirstStartTime } from '../utils/config.js'
-import { logForDebugging } from '../utils/debug.js'
+import { preconnectAnthropicApi } from '../utils/api/apiPreconnect.js'
+import { applyExtraCACertsFromConfig } from '../utils/auth/caCertsConfig.js'
+import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
+import { enableConfigs, recordFirstStartTime } from '../utils/config/config.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { detectCurrentRepository } from '../utils/detectRepository.js'
-import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
-import { initJetBrainsDetection } from '../utils/envDynamic.js'
-import { isEnvTruthy } from '../utils/envUtils.js'
+import { logForDiagnosticsNoPII } from '../utils/debug/diagLogs.js'
+import { initJetBrainsDetection } from '../utils/platform/envDynamic.js'
+import { isEnvTruthy } from '../utils/platform/envUtils.js'
 import { ConfigParseError, errorMessage } from '../utils/errors.js'
 // showInvalidConfigDialog is dynamically imported in the error path to avoid loading React at init
 import {
   gracefulShutdownSync,
   setupGracefulShutdown,
-} from '../utils/gracefulShutdown.js'
+} from '../utils/lifecycle/gracefulShutdown.js'
 import {
   applyConfigEnvironmentVariables,
   applySafeConfigEnvironmentVariables,
-} from '../utils/managedEnv.js'
-import { configureGlobalMTLS } from '../utils/mtls.js'
+} from '../utils/config/managedEnv.js'
+import { configureGlobalMTLS } from '../utils/auth/mtls.js'
 import {
   ensureScratchpadDir,
   isScratchpadEnabled,
@@ -44,10 +44,10 @@ import {
 // initializeTelemetry is loaded lazily via import() in setMeterState() to defer
 // ~400KB of OpenTelemetry + protobuf modules until telemetry is actually initialized.
 // gRPC exporters (~700KB via @grpc/grpc-js) are further lazy-loaded within instrumentation.ts.
-import { configureGlobalAgents } from '../utils/proxy.js'
+import { configureGlobalAgents } from '../utils/auth/proxy.js'
 import { isBetaTracingEnabled } from '../utils/telemetry/betaSessionTracing.js'
-import { getTelemetryAttributes } from '../utils/telemetryAttributes.js'
-import { setShellIfWindows } from '../utils/windowsPaths.js'
+import { getTelemetryAttributes } from '../utils/telemetry/telemetryAttributes.js'
+import { setShellIfWindows } from '../utils/platform/windowsPaths.js'
 
 // initialize1PEventLogging is dynamically imported to defer OpenTelemetry sdk-logs/resources
 

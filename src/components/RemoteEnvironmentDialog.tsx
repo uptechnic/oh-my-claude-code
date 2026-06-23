@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Text } from '../ink.js';
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { toError } from '../utils/errors.js';
-import { logError } from '../utils/log.js';
+import { logError } from '../utils/debug/log.js';
 import { getSettingSourceName, type SettingSource } from '../utils/settings/constants.js';
 import { updateSettingsForSource } from '../utils/settings/settings.js';
 import { getEnvironmentSelectionInfo } from '../utils/teleport/environmentSelection.js';

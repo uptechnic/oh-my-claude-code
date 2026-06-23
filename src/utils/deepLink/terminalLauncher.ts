@@ -13,8 +13,8 @@
 
 import { spawn } from 'child_process'
 import { basename } from 'path'
-import { getGlobalConfig } from '../config.js'
-import { logForDebugging } from '../debug.js'
+import { getGlobalConfig } from '../config/config.js'
+import { logForDebugging } from '../debug/debug.js'
 import { execFileNoThrow } from '../execFileNoThrow.js'
 import { which } from '../which.js'
 

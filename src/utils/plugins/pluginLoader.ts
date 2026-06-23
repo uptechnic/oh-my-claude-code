@@ -58,8 +58,8 @@ import type {
   PluginLoadResult,
   PluginManifest,
 } from '../../types/plugin.js'
-import { logForDebugging } from '../debug.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { logForDebugging } from '../debug/debug.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import {
   errorMessage,
   getErrnoPath,
@@ -68,11 +68,11 @@ import {
   toError,
 } from '../errors.js'
 import { execFileNoThrow, execFileNoThrowWithCwd } from '../execFileNoThrow.js'
-import { pathExists } from '../file.js'
-import { getFsImplementation } from '../fsOperations.js'
-import { gitExe } from '../git.js'
+import { pathExists } from '../files/file.js'
+import { getFsImplementation } from '../files/fsOperations.js'
+import { gitExe } from '../git/git.js'
 import { lazySchema } from '../lazySchema.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { getSettings_DEPRECATED } from '../settings/settings.js'
 import {
   clearPluginSettingsBase,

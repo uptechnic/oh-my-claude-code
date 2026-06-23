@@ -7,47 +7,47 @@ import * as React from 'react';
 import { useState, useCallback } from 'react';
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import figures from 'figures';
-import { type GlobalConfig, saveGlobalConfig, getCurrentProjectConfig, type OutputStyle } from '../../utils/config.js';
-import { normalizeApiKeyForConfig } from '../../utils/authPortable.js';
-import { getGlobalConfig, getAutoUpdaterDisabledReason, formatAutoUpdaterDisabledReason, getRemoteControlAtStartup } from '../../utils/config.js';
+import { type GlobalConfig, saveGlobalConfig, getCurrentProjectConfig, type OutputStyle } from '../../utils/config/config.js';
+import { normalizeApiKeyForConfig } from '../../utils/auth/authPortable.js';
+import { getGlobalConfig, getAutoUpdaterDisabledReason, formatAutoUpdaterDisabledReason, getRemoteControlAtStartup } from '../../utils/config/config.js';
 import chalk from 'chalk';
 import { permissionModeTitle, permissionModeFromString, toExternalPermissionMode, isExternalPermissionMode, EXTERNAL_PERMISSION_MODES, PERMISSION_MODES, type ExternalPermissionMode, type PermissionMode } from '../../utils/permissions/PermissionMode.js';
 import { getAutoModeEnabledState, hasAutoModeOptInAnySource, transitionPlanAutoMode } from '../../utils/permissions/permissionSetup.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { logEvent, type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS } from 'src/services/analytics/index.js';
 import { isBridgeEnabled } from '../../bridge/bridgeEnabled.js';
 import { ThemePicker } from '../ThemePicker.js';
 import { useAppState, useSetAppState, useAppStateStore } from '../../state/AppState.js';
 import { ModelPicker } from '../ModelPicker.js';
 import { modelDisplayString, isOpus1mMergeEnabled } from '../../utils/model/model.js';
-import { isBilledAsExtraUsage } from '../../utils/extraUsage.js';
+import { isBilledAsExtraUsage } from '../../utils/api/extraUsage.js';
 import { ClaudeMdExternalIncludesDialog } from '../ClaudeMdExternalIncludesDialog.js';
 import { ChannelDowngradeDialog, type ChannelDowngradeChoice } from '../ChannelDowngradeDialog.js';
 import { Dialog } from '../design-system/Dialog.js';
 import { Select } from '../CustomSelect/index.js';
 import { OutputStylePicker } from '../OutputStylePicker.js';
 import { LanguagePicker } from '../LanguagePicker.js';
-import { getExternalClaudeMdIncludes, getMemoryFiles, hasExternalClaudeMdIncludes } from 'src/utils/claudemd.js';
+import { getExternalClaudeMdIncludes, getMemoryFiles, hasExternalClaudeMdIncludes } from 'src/utils/config/claudemd.js';
 import { KeyboardShortcutHint } from '../design-system/KeyboardShortcutHint.js';
 import { ConfigurableShortcutHint } from '../ConfigurableShortcutHint.js';
 import { Byline } from '../design-system/Byline.js';
 import { useTabHeaderFocus } from '../design-system/Tabs.js';
 import { useIsInsideModal } from '../../context/modalContext.js';
 import { SearchBox } from '../SearchBox.js';
-import { isSupportedTerminal, hasAccessToIDEExtensionDiffFeature } from '../../utils/ide.js';
+import { isSupportedTerminal, hasAccessToIDEExtensionDiffFeature } from '../../utils/ide/ide.js';
 import { getInitialSettings, getSettingsForSource, updateSettingsForSource } from '../../utils/settings/settings.js';
 import { getUserMsgOptIn, setUserMsgOptIn } from '../../bootstrap/state.js';
 import { DEFAULT_OUTPUT_STYLE_NAME } from 'src/constants/outputStyles.js';
-import { isEnvTruthy, isRunningOnHomespace } from 'src/utils/envUtils.js';
+import { isEnvTruthy, isRunningOnHomespace } from 'src/utils/platform/envUtils.js';
 import type { LocalJSXCommandContext, CommandResultDisplay } from '../../commands.js';
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js';
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js';
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js';
 import { getCliTeammateModeOverride, clearCliTeammateModeOverride } from '../../utils/swarm/backends/teammateModeSnapshot.js';
 import { getHardcodedTeammateModelFallback } from '../../utils/swarm/teammateModel.js';
 import { useSearchInput } from '../../hooks/useSearchInput.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
-import { clearFastModeCooldown, FAST_MODE_MODEL_DISPLAY, isFastModeAvailable, isFastModeEnabled, getFastModeModel, isFastModeSupportedByModel } from '../../utils/fastMode.js';
-import { isFullscreenEnvEnabled } from '../../utils/fullscreen.js';
+import { clearFastModeCooldown, FAST_MODE_MODEL_DISPLAY, isFastModeAvailable, isFastModeEnabled, getFastModeModel, isFastModeSupportedByModel } from '../../utils/config/fastMode.js';
+import { isFullscreenEnvEnabled } from '../../utils/rendering/fullscreen.js';
 type Props = {
   onClose: (result?: string, options?: {
     display?: CommandResultDisplay;
@@ -871,25 +871,7 @@ export function Config({
         source: 'config_panel' as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS
       });
     }
-  }] : []), {
-    id: 'claudeInChromeDefaultEnabled',
-    label: 'Claude in Chrome enabled by default',
-    value: globalConfig.claudeInChromeDefaultEnabled ?? true,
-    type: 'boolean' as const,
-    onChange(enabled_5: boolean) {
-      saveGlobalConfig(current_18 => ({
-        ...current_18,
-        claudeInChromeDefaultEnabled: enabled_5
-      }));
-      setGlobalConfig({
-        ...getGlobalConfig(),
-        claudeInChromeDefaultEnabled: enabled_5
-      });
-      logEvent('tengu_claude_in_chrome_setting_changed', {
-        enabled: enabled_5
-      });
-    }
-  },
+  }] : []),
   // Teammate mode (only shown when agent swarms are enabled)
   ...(isAgentSwarmsEnabled() ? (() => {
     const cliOverride = getCliTeammateModeOverride();

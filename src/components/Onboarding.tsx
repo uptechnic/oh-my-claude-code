@@ -5,21 +5,20 @@ import { setupTerminal, shouldOfferTerminalSetup } from '../commands/terminalSet
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { Box, Link, Newline, Text, useTheme } from '../ink.js';
 import { useKeybindings } from '../keybindings/useKeybinding.js';
-import { isAnthropicAuthEnabled, getAnthropicApiKeyWithSource } from '../utils/auth.js';
-import { normalizeApiKeyForConfig } from '../utils/authPortable.js';
-import { getCustomApiKeyStatus } from '../utils/config.js';
-import { env } from '../utils/env.js';
-import { isRunningOnHomespace } from '../utils/envUtils.js';
-import { PreflightStep } from '../utils/preflightChecks.js';
-import type { ThemeSetting } from '../utils/theme.js';
+import { isAnthropicAuthEnabled, getAnthropicApiKeyWithSource } from '../utils/auth/auth.js';
+import { normalizeApiKeyForConfig } from '../utils/auth/authPortable.js';
+import { getCustomApiKeyStatus } from '../utils/config/config.js';
+import { env } from '../utils/platform/env.js';
+import { isRunningOnHomespace } from '../utils/platform/envUtils.js';
+import { PreflightStep } from '../utils/rendering/preflightChecks.js';
+import type { ThemeSetting } from '../utils/rendering/theme.js';
 import { ApproveApiKey } from './ApproveApiKey.js';
-import { ConsoleOAuthFlow } from './ConsoleOAuthFlow.js';
 import { Select } from './CustomSelect/select.js';
 import { WelcomeV2 } from './LogoV2/WelcomeV2.js';
 import { PressEnterToContinue } from './PressEnterToContinue.js';
 import { ThemePicker } from './ThemePicker.js';
 import { OrderedList } from './ui/OrderedList.js';
-type StepId = 'preflight' | 'theme' | 'oauth' | 'api-key' | 'offline-setup' | 'security' | 'terminal-setup';
+type StepId = 'preflight' | 'theme' | 'api-key' | 'offline-setup' | 'security' | 'terminal-setup';
 interface OnboardingStep {
   id: StepId;
   component: React.ReactNode;
@@ -167,14 +166,6 @@ export function Onboarding({
     steps.push({
       id: 'offline-setup',
       component: offlineSetupStep
-    });
-  }
-  if (oauthEnabled) {
-    steps.push({
-      id: 'oauth',
-      component: <SkippableStep skip={skipOAuth} onSkip={goToNextStep}>
-          <ConsoleOAuthFlow onDone={goToNextStep} />
-        </SkippableStep>
     });
   }
   steps.push({

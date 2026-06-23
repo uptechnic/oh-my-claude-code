@@ -23,10 +23,10 @@ import type {
   InProcessTeammateTaskState,
   TeammateIdentity,
 } from '../../tasks/InProcessTeammateTask/types.js'
-import { createAbortController } from '../abortController.js'
-import { formatAgentId } from '../agentId.js'
-import { registerCleanup } from '../cleanupRegistry.js'
-import { logForDebugging } from '../debug.js'
+import { createAbortController } from '../concurrency/abortController.js'
+import { formatAgentId } from '../agent/agentId.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../debug/debug.js'
 import { emitTaskTerminatedSdk } from '../sdkEventQueue.js'
 import { evictTaskOutput } from '../task/diskOutput.js'
 import {
@@ -34,7 +34,7 @@ import {
   registerTask,
   STOPPED_DISPLAY_MS,
 } from '../task/framework.js'
-import { createTeammateContext } from '../teammateContext.js'
+import { createTeammateContext } from './teammateContext.js'
 import {
   isPerfettoTracingEnabled,
   registerAgent as registerPerfettoAgent,

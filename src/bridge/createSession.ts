@@ -1,8 +1,9 @@
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { extractErrorDetail } from './debugUtils.js'
 import { toCompatSessionId } from './sessionIdCompat.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 
 type GitSource = {
   type: 'git_repository'
@@ -52,12 +53,12 @@ export async function createBridgeSession({
   getAccessToken?: () => string | undefined
   permissionMode?: string
 }): Promise<string | null> {
-  const { getClaudeAIOAuthTokens } = await import('../utils/auth.js')
-  const { getOrganizationUUID } = await import('../services/oauth/client.js')
-  const { getOauthConfig } = await import('../constants/oauth.js')
+  const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
+  const { getOrganizationUUID } = await import('../utils/auth/auth.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { parseGitHubRepository } = await import('../utils/detectRepository.js')
-  const { getDefaultBranch } = await import('../utils/git.js')
+  const { getDefaultBranch } = await import('../utils/git/git.js')
   const { getMainLoopModel } = await import('../utils/model/model.js')
   const { default: axios } = await import('axios')
 
@@ -141,7 +142,7 @@ export async function createBridgeSession({
     'x-organization-uuid': orgUUID,
   }
 
-  const url = `${baseUrlOverride ?? getOauthConfig().BASE_API_URL}/v1/sessions`
+  const url = `${baseUrlOverride ?? getBaseApiUrl()}/v1/sessions`
   let response
   try {
     response = await axios.post(url, requestBody, {
@@ -191,9 +192,9 @@ export async function getBridgeSession(
   sessionId: string,
   opts?: { baseUrl?: string; getAccessToken?: () => string | undefined },
 ): Promise<{ environment_id?: string; title?: string } | null> {
-  const { getClaudeAIOAuthTokens } = await import('../utils/auth.js')
-  const { getOrganizationUUID } = await import('../services/oauth/client.js')
-  const { getOauthConfig } = await import('../constants/oauth.js')
+  const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
+  const { getOrganizationUUID } = await import('../utils/auth/auth.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 
@@ -216,7 +217,7 @@ export async function getBridgeSession(
     'x-organization-uuid': orgUUID,
   }
 
-  const url = `${opts?.baseUrl ?? getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}`
+  const url = `${opts?.baseUrl ?? getBaseApiUrl()}/v1/sessions/${sessionId}`
   logForDebugging(`[bridge] Fetching session ${sessionId}`)
 
   let response
@@ -268,9 +269,9 @@ export async function archiveBridgeSession(
     timeoutMs?: number
   },
 ): Promise<void> {
-  const { getClaudeAIOAuthTokens } = await import('../utils/auth.js')
-  const { getOrganizationUUID } = await import('../services/oauth/client.js')
-  const { getOauthConfig } = await import('../constants/oauth.js')
+  const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
+  const { getOrganizationUUID } = await import('../utils/auth/auth.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 
@@ -293,7 +294,7 @@ export async function archiveBridgeSession(
     'x-organization-uuid': orgUUID,
   }
 
-  const url = `${opts?.baseUrl ?? getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}/archive`
+  const url = `${opts?.baseUrl ?? getBaseApiUrl()}/v1/sessions/${sessionId}/archive`
   logForDebugging(`[bridge] Archiving session ${sessionId}`)
 
   const response = await axios.post(
@@ -329,9 +330,9 @@ export async function updateBridgeSessionTitle(
   title: string,
   opts?: { baseUrl?: string; getAccessToken?: () => string | undefined },
 ): Promise<void> {
-  const { getClaudeAIOAuthTokens } = await import('../utils/auth.js')
-  const { getOrganizationUUID } = await import('../services/oauth/client.js')
-  const { getOauthConfig } = await import('../constants/oauth.js')
+  const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
+  const { getOrganizationUUID } = await import('../utils/auth/auth.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 
@@ -358,7 +359,7 @@ export async function updateBridgeSessionTitle(
   // pass raw cse_*; retag here so all callers can pass whatever they hold.
   // Idempotent for v1's session_* and bridgeMain's pre-converted compatSessionId.
   const compatId = toCompatSessionId(sessionId)
-  const url = `${opts?.baseUrl ?? getOauthConfig().BASE_API_URL}/v1/sessions/${compatId}`
+  const url = `${opts?.baseUrl ?? getBaseApiUrl()}/v1/sessions/${compatId}`
   logForDebugging(`[bridge] Updating session title: ${compatId} → ${title}`)
 
   try {

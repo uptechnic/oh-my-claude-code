@@ -11,9 +11,9 @@ import type {
   InitializeResult,
   ServerCapabilities,
 } from 'vscode-languageserver-protocol'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { subprocessEnv } from '../../utils/subprocessEnv.js'
 /**
  * LSP client interface.

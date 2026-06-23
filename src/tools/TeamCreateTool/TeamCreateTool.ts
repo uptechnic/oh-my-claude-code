@@ -4,9 +4,9 @@ import { logEvent } from '../../services/analytics/index.js'
 import type { AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS } from '../../services/analytics/metadata.js'
 import type { Tool } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { formatAgentId } from '../../utils/agentId.js'
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
-import { getCwd } from '../../utils/cwd.js'
+import { formatAgentId } from '../../utils/agent/agentId.js'
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
+import { getCwd } from '../../utils/platform/cwd.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import {
   getDefaultMainLoopModel,
@@ -28,8 +28,8 @@ import {
   ensureTasksDir,
   resetTaskList,
   setLeaderTeamName,
-} from '../../utils/tasks.js'
-import { generateWordSlug } from '../../utils/words.js'
+} from '../../utils/task/tasks.js'
+import { generateWordSlug } from '../../utils/text/words.js'
 import { TEAM_CREATE_TOOL_NAME } from './constants.js'
 import { getPrompt } from './prompt.js'
 import { renderToolUseMessage } from './UI.js'

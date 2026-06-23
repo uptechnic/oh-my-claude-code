@@ -12,15 +12,15 @@ import type {
 } from 'src/types/message.js'
 import { getPlanSlugCache, getSessionId } from '../bootstrap/state.js'
 import { EXIT_PLAN_MODE_V2_TOOL_NAME } from '../tools/ExitPlanModeTool/constants.js'
-import { getCwd } from './cwd.js'
-import { logForDebugging } from './debug.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { getCwd } from './platform/cwd.js'
+import { logForDebugging } from './debug/debug.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { isENOENT } from './errors.js'
 import { getEnvironmentKind } from './filePersistence/outputsScanner.js'
-import { getFsImplementation } from './fsOperations.js'
-import { logError } from './log.js'
+import { getFsImplementation } from './files/fsOperations.js'
+import { logError } from './debug/log.js'
 import { getInitialSettings } from './settings/settings.js'
-import { generateWordSlug } from './words.js'
+import { generateWordSlug } from './text/words.js'
 
 const MAX_SLUG_RETRIES = 10
 
@@ -389,7 +389,7 @@ export async function persistFileSnapshotIfRemote(): Promise<void> {
       snapshotFiles,
     }
 
-    const { recordTranscript } = await import('./sessionStorage.js')
+    const { recordTranscript } = await import('./session/sessionStorage.js')
     await recordTranscript([message])
   } catch (error) {
     logError(error)

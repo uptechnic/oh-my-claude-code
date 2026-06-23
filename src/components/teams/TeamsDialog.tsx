@@ -13,9 +13,9 @@ import { useShortcutDisplay } from '../../keybindings/useShortcutDisplay.js';
 import { type AppState, useAppState, useSetAppState } from '../../state/AppState.js';
 import { getEmptyToolPermissionContext } from '../../Tool.js';
 import { AGENT_COLOR_TO_THEME_COLOR } from '../../tools/AgentTool/agentColorManager.js';
-import { logForDebugging } from '../../utils/debug.js';
+import { logForDebugging } from '../../utils/debug/debug.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
-import { truncateToWidth } from '../../utils/format.js';
+import { truncateToWidth } from '../../utils/text/format.js';
 import { getNextPermissionMode } from '../../utils/permissions/getNextPermissionMode.js';
 import { getModeColor, type PermissionMode, permissionModeFromString, permissionModeSymbol } from '../../utils/permissions/PermissionMode.js';
 import { jsonStringify } from '../../utils/slowOperations.js';
@@ -24,9 +24,9 @@ import { ensureBackendsRegistered, getBackendByType, getCachedBackend } from '..
 import type { PaneBackendType } from '../../utils/swarm/backends/types.js';
 import { getSwarmSocketName, TMUX_COMMAND } from '../../utils/swarm/constants.js';
 import { addHiddenPaneId, removeHiddenPaneId, removeMemberFromTeam, setMemberMode, setMultipleMemberModes } from '../../utils/swarm/teamHelpers.js';
-import { listTasks, type Task, unassignTeammateTasks } from '../../utils/tasks.js';
-import { getTeammateStatuses, type TeammateStatus, type TeamSummary } from '../../utils/teamDiscovery.js';
-import { createModeSetRequestMessage, sendShutdownRequestToMailbox, writeToMailbox } from '../../utils/teammateMailbox.js';
+import { listTasks, type Task, unassignTeammateTasks } from '../../utils/task/tasks.js';
+import { getTeammateStatuses, type TeammateStatus, type TeamSummary } from '../../utils/swarm/teamDiscovery.js';
+import { createModeSetRequestMessage, sendShutdownRequestToMailbox, writeToMailbox } from '../../utils/swarm/teammateMailbox.js';
 import { Dialog } from '../design-system/Dialog.js';
 import ThemedText from '../design-system/ThemedText.js';
 type Props = {

@@ -20,22 +20,22 @@ import {
   LEGACY_AGENT_TOOL_NAME,
 } from '../tools/AgentTool/constants.js'
 import type { LogOption } from '../types/logs.js'
-import { getClaudeConfigHomeDir } from '../utils/envUtils.js'
+import { getClaudeConfigHomeDir } from '../utils/platform/envUtils.js'
 import { toError } from '../utils/errors.js'
 import { execFileNoThrow } from '../utils/execFileNoThrow.js'
-import { logError } from '../utils/log.js'
-import { extractTextContent } from '../utils/messages.js'
+import { logError } from '../utils/debug/log.js'
+import { extractTextContent } from '../utils/messages/messages.js'
 import { getDefaultOpusModel } from '../utils/model/model.js'
 import {
   getProjectsDir,
   getSessionFilesWithMtime,
   getSessionIdFromLog,
   loadAllLogsFromSessionFile,
-} from '../utils/sessionStorage.js'
+} from '../utils/session/sessionStorage.js'
 import { jsonParse, jsonStringify } from '../utils/slowOperations.js'
-import { countCharInString } from '../utils/stringUtils.js'
-import { asSystemPrompt } from '../utils/systemPromptType.js'
-import { escapeXmlAttr as escapeHtml } from '../utils/xml.js'
+import { countCharInString } from '../utils/text/stringUtils.js'
+import { asSystemPrompt } from '../utils/agent/systemPromptType.js'
+import { escapeXmlAttr as escapeHtml } from '../utils/text/xml.js'
 
 // Model for facet extraction and summarization (Opus - best quality)
 function getAnalysisModel(): string {

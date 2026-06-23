@@ -1,14 +1,14 @@
 import axios from 'axios'
 import memoize from 'lodash-es/memoize.js'
-import { getOauthConfig } from 'src/constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { getClaudeAIOAuthTokens } from 'src/utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from 'src/utils/config.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { isEnvDefinedFalsy } from 'src/utils/envUtils.js'
+import { getClaudeAIOAuthTokens } from 'src/utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from 'src/utils/config/config.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { isEnvDefinedFalsy } from 'src/utils/platform/envUtils.js'
 import { clearMcpAuthCache } from './client.js'
 import { normalizeNameForMCP } from './normalization.js'
 import type { ScopedMcpServerConfig } from './types.js'
@@ -74,7 +74,7 @@ export const fetchClaudeAIMcpConfigsIfEligible = memoize(
         return {}
       }
 
-      const baseUrl = getOauthConfig().BASE_API_URL
+      const baseUrl = getBaseApiUrl()
       const url = `${baseUrl}/v1/mcp_servers?limit=1000`
 
       logForDebugging(`[claudeai-mcp] Fetching from ${url}`)

@@ -11,15 +11,15 @@ import {
 } from '../../tasks/LocalAgentTask/LocalAgentTask.js'
 import { isMainSessionTask } from '../../tasks/LocalMainSessionTask.js'
 import { toAgentId } from '../../types/ids.js'
-import { generateRequestId } from '../../utils/agentId.js'
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { generateRequestId } from '../../utils/agent/agentId.js'
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
-import { truncate } from '../../utils/format.js'
-import { gracefulShutdown } from '../../utils/gracefulShutdown.js'
+import { truncate } from '../../utils/text/format.js'
+import { gracefulShutdown } from '../../utils/lifecycle/gracefulShutdown.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { parseAddress } from '../../utils/peerAddress.js'
-import { semanticBoolean } from '../../utils/semanticBoolean.js'
+import { semanticBoolean } from '../../utils/text/semanticBoolean.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import type { BackendType } from '../../utils/swarm/backends/types.js'
 import { TEAM_LEAD_NAME } from '../../utils/swarm/constants.js'
@@ -31,13 +31,13 @@ import {
   getTeamName,
   isTeamLead,
   isTeammate,
-} from '../../utils/teammate.js'
+} from '../../utils/swarm/teammate.js'
 import {
   createShutdownApprovedMessage,
   createShutdownRejectedMessage,
   createShutdownRequestMessage,
   writeToMailbox,
-} from '../../utils/teammateMailbox.js'
+} from '../../utils/swarm/teammateMailbox.js'
 import { resumeAgentBackground } from '../AgentTool/resumeAgent.js'
 import { SEND_MESSAGE_TOOL_NAME } from './constants.js'
 import { DESCRIPTION, getPrompt } from './prompt.js'

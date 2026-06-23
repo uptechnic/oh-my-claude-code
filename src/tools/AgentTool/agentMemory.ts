@@ -5,9 +5,9 @@ import {
   ensureMemoryDirExists,
 } from '../../memdir/memdir.js'
 import { getMemoryBaseDir } from '../../memdir/paths.js'
-import { getCwd } from '../../utils/cwd.js'
-import { findCanonicalGitRoot } from '../../utils/git.js'
-import { sanitizePath } from '../../utils/path.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { findCanonicalGitRoot } from '../../utils/git/git.js'
+import { sanitizePath } from '../../utils/platform/path.js'
 
 // Persistent agent memory scope: 'user' (~/.claude/agent-memory/), 'project' (.claude/agent-memory/), or 'local' (.claude/agent-memory-local/)
 export type AgentMemoryScope = 'user' | 'project' | 'local'

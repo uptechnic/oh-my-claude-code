@@ -3,10 +3,10 @@ import { join } from 'path'
 import {
   getCurrentProjectConfig,
   saveCurrentProjectConfig,
-} from './utils/config.js'
-import { getCwd } from './utils/cwd.js'
-import { isDirEmpty } from './utils/file.js'
-import { getFsImplementation } from './utils/fsOperations.js'
+} from './utils/config/config.js'
+import { getCwd } from './utils/platform/cwd.js'
+import { isDirEmpty } from './utils/files/file.js'
+import { getFsImplementation } from './utils/files/fsOperations.js'
 
 export type Step = {
   key: string

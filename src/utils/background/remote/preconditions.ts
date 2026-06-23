@@ -1,17 +1,17 @@
 import axios from 'axios'
-import { getOauthConfig } from 'src/constants/oauth.js'
-import { getOrganizationUUID } from 'src/services/oauth/client.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getOrganizationUUID } from 'src/utils/auth/auth.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../../services/analytics/growthbook.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   isClaudeAISubscriber,
-} from '../../auth.js'
-import { getCwd } from '../../cwd.js'
-import { logForDebugging } from '../../debug.js'
+} from '../../auth/auth.js'
+import { getCwd } from '../../platform/cwd.js'
+import { logForDebugging } from '../../debug/debug.js'
 import { detectCurrentRepository } from '../../detectRepository.js'
 import { errorMessage } from '../../errors.js'
-import { findGitRoot, getIsClean } from '../../git.js'
+import { findGitRoot, getIsClean } from '../../git/git.js'
 import { getOAuthHeaders } from '../../teleport/api.js'
 import { fetchEnvironments } from '../../teleport/environments.js'
 
@@ -97,7 +97,7 @@ export async function checkGithubAppInstalled(
       return false
     }
 
-    const url = `${getOauthConfig().BASE_API_URL}/api/oauth/organizations/${orgUUID}/code/repos/${owner}/${repo}`
+    const url = `${getBaseApiUrl()}/api/oauth/organizations/${orgUUID}/code/repos/${owner}/${repo}`
     const headers = {
       ...getOAuthHeaders(accessToken),
       'x-organization-uuid': orgUUID,
@@ -175,7 +175,7 @@ export async function checkGithubTokenSynced(): Promise<boolean> {
       return false
     }
 
-    const url = `${getOauthConfig().BASE_API_URL}/api/oauth/organizations/${orgUUID}/sync/github/auth`
+    const url = `${getBaseApiUrl()}/api/oauth/organizations/${orgUUID}/sync/github/auth`
     const headers = {
       ...getOAuthHeaders(accessToken),
       'x-organization-uuid': orgUUID,

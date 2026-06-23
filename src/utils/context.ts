@@ -1,7 +1,7 @@
 // biome-ignore-all assist/source/organizeImports: ANT-ONLY import markers must not be reordered
 import { CONTEXT_1M_BETA_HEADER } from '../constants/betas.js'
-import { getGlobalConfig } from './config.js'
-import { isEnvTruthy } from './envUtils.js'
+import { getGlobalConfig } from './config/config.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import { getCanonicalName } from './model/model.js'
 import { getModelCapability } from './model/modelCapabilities.js'
 

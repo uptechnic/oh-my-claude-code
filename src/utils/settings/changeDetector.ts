@@ -2,15 +2,15 @@ import chokidar, { type FSWatcher } from 'chokidar'
 import { stat } from 'fs/promises'
 import * as platformPath from 'path'
 import { getIsRemoteMode } from '../../bootstrap/state.js'
-import { registerCleanup } from '../cleanupRegistry.js'
-import { logForDebugging } from '../debug.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../debug/debug.js'
 import { errorMessage } from '../errors.js'
 import {
   type ConfigChangeSource,
   executeConfigChangeHooks,
   hasBlockingResult,
-} from '../hooks.js'
-import { createSignal } from '../signal.js'
+} from '../hooks/hooks.js'
+import { createSignal } from '../platform/signal.js'
 import { jsonStringify } from '../slowOperations.js'
 import { SETTING_SOURCES, type SettingSource } from './constants.js'
 import { clearInternalWrites, consumeInternalWrite } from './internalWrites.js'

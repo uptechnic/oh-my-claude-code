@@ -6,10 +6,10 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { getCwd } from 'src/utils/cwd.js'
+import { getCwd } from 'src/utils/platform/cwd.js'
 import { checkForReleaseNotes } from 'src/utils/releaseNotes.js'
 import { setCwd } from 'src/utils/Shell.js'
-import { initSinks } from 'src/utils/sinks.js'
+import { initSinks } from 'src/utils/debug/sinks.js'
 import {
   getIsNonInteractiveSession,
   getProjectRoot,
@@ -21,30 +21,30 @@ import {
 import { getCommands } from './commands.js'
 import { initSessionMemory } from './services/SessionMemory/sessionMemory.js'
 import { asSessionId } from './types/ids.js'
-import { isAgentSwarmsEnabled } from './utils/agentSwarmsEnabled.js'
+import { isAgentSwarmsEnabled } from './utils/agent/agentSwarmsEnabled.js'
 import { checkAndRestoreTerminalBackup } from './utils/appleTerminalBackup.js'
-import { prefetchApiKeyFromApiKeyHelperIfSafe } from './utils/auth.js'
-import { clearMemoryFileCaches } from './utils/claudemd.js'
-import { getCurrentProjectConfig, getGlobalConfig } from './utils/config.js'
-import { logForDiagnosticsNoPII } from './utils/diagLogs.js'
-import { env } from './utils/env.js'
-import { envDynamic } from './utils/envDynamic.js'
-import { isBareMode, isEnvTruthy } from './utils/envUtils.js'
+import { prefetchApiKeyFromApiKeyHelperIfSafe } from './utils/auth/auth.js'
+import { clearMemoryFileCaches } from './utils/config/claudemd.js'
+import { getCurrentProjectConfig, getGlobalConfig } from './utils/config/config.js'
+import { logForDiagnosticsNoPII } from './utils/debug/diagLogs.js'
+import { env } from './utils/platform/env.js'
+import { envDynamic } from './utils/platform/envDynamic.js'
+import { isBareMode, isEnvTruthy } from './utils/platform/envUtils.js'
 import { errorMessage } from './utils/errors.js'
-import { findCanonicalGitRoot, findGitRoot, getIsGit } from './utils/git.js'
+import { findCanonicalGitRoot, findGitRoot, getIsGit } from './utils/git/git.js'
 import { initializeFileChangedWatcher } from './utils/hooks/fileChangedWatcher.js'
 import {
   captureHooksConfigSnapshot,
   updateHooksConfigSnapshot,
 } from './utils/hooks/hooksConfigSnapshot.js'
-import { hasWorktreeCreateHook } from './utils/hooks.js'
+import { hasWorktreeCreateHook } from './utils/hooks/hooks.js'
 import { checkAndRestoreITerm2Backup } from './utils/iTermBackup.js'
-import { logError } from './utils/log.js'
+import { logError } from './utils/debug/log.js'
 import { getRecentActivity } from './utils/logoV2Utils.js'
 import { lockCurrentVersion } from './utils/nativeInstaller/index.js'
 import type { PermissionMode } from './utils/permissions/PermissionMode.js'
 import { getPlanSlug } from './utils/plans.js'
-import { saveWorktreeState } from './utils/sessionStorage.js'
+import { saveWorktreeState } from './utils/session/sessionStorage.js'
 import { profileCheckpoint } from './utils/startupProfiler.js'
 import {
   createTmuxSessionForWorktree,
@@ -359,7 +359,7 @@ export async function setup(
         )
       })
     }
-    void import('./utils/sessionFileAccessHooks.js').then(m =>
+    void import('./utils/session/sessionFileAccessHooks.js').then(m =>
       m.registerSessionFileAccessHooks(),
     ) // Register session file access analytics hooks
     if (feature('TEAMMEM')) {

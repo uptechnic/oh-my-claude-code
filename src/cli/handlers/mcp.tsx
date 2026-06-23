@@ -17,11 +17,11 @@ import { addMcpConfig, getAllMcpConfigs, getMcpConfigByName, getMcpConfigsByScop
 import type { ConfigScope, ScopedMcpServerConfig } from '../../services/mcp/types.js';
 import { describeMcpConfigFilePath, ensureConfigScope, getScopeLabel } from '../../services/mcp/utils.js';
 import { AppStateProvider } from '../../state/AppState.js';
-import { getCurrentProjectConfig, getGlobalConfig, saveCurrentProjectConfig } from '../../utils/config.js';
+import { getCurrentProjectConfig, getGlobalConfig, saveCurrentProjectConfig } from '../../utils/config/config.js';
 import { isFsInaccessible } from '../../utils/errors.js';
-import { gracefulShutdown } from '../../utils/gracefulShutdown.js';
-import { safeParseJSON } from '../../utils/json.js';
-import { getPlatform } from '../../utils/platform.js';
+import { gracefulShutdown } from '../../utils/lifecycle/gracefulShutdown.js';
+import { safeParseJSON } from '../../utils/text/json.js';
+import { getPlatform } from '../../utils/platform/platform.js';
 import { cliError, cliOk } from '../exit.js';
 async function checkMcpServerHealth(name: string, server: ScopedMcpServerConfig): Promise<string> {
   try {

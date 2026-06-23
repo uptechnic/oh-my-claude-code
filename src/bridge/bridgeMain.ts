@@ -11,14 +11,14 @@ import {
   logEvent,
   logEventAsync,
 } from '../services/analytics/index.js'
-import { isInBundledMode } from '../utils/bundledMode.js'
-import { logForDebugging } from '../utils/debug.js'
-import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
-import { isEnvTruthy, isInProtectedNamespace } from '../utils/envUtils.js'
+import { isInBundledMode } from '../utils/config/bundledMode.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from '../utils/debug/diagLogs.js'
+import { isEnvTruthy, isInProtectedNamespace } from '../utils/platform/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
-import { truncateToWidth } from '../utils/format.js'
-import { logError } from '../utils/log.js'
-import { sleep } from '../utils/sleep.js'
+import { truncateToWidth } from '../utils/text/format.js'
+import { logError } from '../utils/debug/log.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 import { createAgentWorktree, removeAgentWorktree } from '../utils/worktree.js'
 import {
   BridgeFatalError,
@@ -2038,13 +2038,13 @@ export async function bridgeMain(args: string[]): Promise<void> {
   // The bridge fast-path bypasses init.ts, so we must enable config reading
   // before any code that transitively calls getGlobalConfig()
   const { enableConfigs, checkHasTrustDialogAccepted } = await import(
-    '../utils/config.js'
+    '../utils/config/config.js'
   )
   enableConfigs()
 
   // Initialize analytics and error reporting sinks. The bridge bypasses the
   // setup() init flow, so we call initSinks() directly to attach sinks here.
-  const { initSinks } = await import('../utils/sinks.js')
+  const { initSinks } = await import('../utils/debug/sinks.js')
   initSinks()
 
   // Gate-aware validation: --spawn / --capacity / --create-session-in-dir require
@@ -2094,7 +2094,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
 
   // Resolve auth
   const { clearOAuthTokenCache, checkAndRefreshOAuthTokenIfNeeded } =
-    await import('../utils/auth.js')
+    await import('../utils/auth/auth.js')
   const { getBridgeAccessToken, getBridgeBaseUrl } = await import(
     './bridgeConfig.js'
   )
@@ -2113,7 +2113,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
     saveGlobalConfig,
     getCurrentProjectConfig,
     saveCurrentProjectConfig,
-  } = await import('../utils/config.js')
+  } = await import('../utils/config/config.js')
   if (!getGlobalConfig().remoteDialogSeen) {
     const readline = await import('readline')
     const rl = readline.createInterface({
@@ -2204,12 +2204,12 @@ export async function bridgeMain(args: string[]): Promise<void> {
       : baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
-    '../utils/git.js'
+    '../utils/git/git.js'
   )
 
   // Precheck worktree availability for the first-run dialog and the `w`
   // toggle. Unconditional so we know upfront whether worktree is an option.
-  const { hasWorktreeCreateHook } = await import('../utils/hooks.js')
+  const { hasWorktreeCreateHook } = await import('../utils/hooks/hooks.js')
   const worktreeAvailable = hasWorktreeCreateHook() || findGitRoot(dir) !== null
 
   // Load saved per-project spawn-mode preference. Gated by multiSessionEnabled
@@ -2342,7 +2342,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
   const machineName = hostname()
   const bridgeId = randomUUID()
 
-  const { handleOAuth401Error } = await import('../utils/auth.js')
+  const { handleOAuth401Error } = await import('../utils/auth/auth.js')
   const api = createBridgeApiClient({
     baseUrl,
     getAccessToken: getBridgeAccessToken,
@@ -2822,10 +2822,10 @@ export async function runBridgeHeadless(
   setCwdState(dir)
 
   const { enableConfigs, checkHasTrustDialogAccepted } = await import(
-    '../utils/config.js'
+    '../utils/config/config.js'
   )
   enableConfigs()
-  const { initSinks } = await import('../utils/sinks.js')
+  const { initSinks } = await import('../utils/debug/sinks.js')
   initSinks()
 
   if (!checkHasTrustDialogAccepted()) {
@@ -2857,9 +2857,9 @@ export async function runBridgeHeadless(
       : baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
-    '../utils/git.js'
+    '../utils/git/git.js'
   )
-  const { hasWorktreeCreateHook } = await import('../utils/hooks.js')
+  const { hasWorktreeCreateHook } = await import('../utils/hooks/hooks.js')
 
   if (opts.spawnMode === 'worktree') {
     const worktreeAvailable =

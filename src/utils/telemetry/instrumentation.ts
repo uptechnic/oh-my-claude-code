@@ -44,16 +44,16 @@ import {
   getSubscriptionType,
   is1PApiCustomer,
   isClaudeAISubscriber,
-} from 'src/utils/auth.js'
-import { getPlatform, getWslVersion } from 'src/utils/platform.js'
+} from 'src/utils/auth/auth.js'
+import { getPlatform, getWslVersion } from 'src/utils/platform/platform.js'
 
-import { getCACertificates } from '../caCerts.js'
-import { registerCleanup } from '../cleanupRegistry.js'
-import { getHasFormattedOutput, logForDebugging } from '../debug.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { getCACertificates } from '../auth/caCerts.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
+import { getHasFormattedOutput, logForDebugging } from '../debug/debug.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
-import { getMTLSConfig } from '../mtls.js'
-import { getProxyUrl, shouldBypassProxy } from '../proxy.js'
+import { getMTLSConfig } from '../auth/mtls.js'
+import { getProxyUrl, shouldBypassProxy } from '../auth/proxy.js'
 import { getSettings_DEPRECATED } from '../settings/settings.js'
 import { jsonStringify } from '../slowOperations.js'
 import { profileCheckpoint } from '../startupProfiler.js'

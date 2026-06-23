@@ -5,7 +5,7 @@ import type {
   AdditionalWorkingDirectory,
   WorkingDirectorySource,
 } from '../../types/permissions.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import type { EditableSettingSource } from '../settings/constants.js'
 import {
   getSettingsForSource,

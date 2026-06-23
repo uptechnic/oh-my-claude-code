@@ -20,18 +20,18 @@ import type { ToolPermissionContext } from 'src/Tool.js'
 import type { ThinkingConfig } from 'src/utils/thinking.js'
 import { assembleToolPool, filterToolsByDenyRules } from 'src/tools.js'
 import uniqBy from 'lodash-es/uniqBy.js'
-import { uniq } from 'src/utils/array.js'
-import { mergeAndFilterTools } from 'src/utils/toolPool.js'
+import { uniq } from 'src/utils/text/array.js'
+import { mergeAndFilterTools } from 'src/utils/agent/toolPool.js'
 import {
   logEvent,
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from 'src/services/analytics/index.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from 'src/services/analytics/growthbook.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import {
   logForDiagnosticsNoPII,
   withDiagnosticsTiming,
-} from 'src/utils/diagLogs.js'
+} from 'src/utils/debug/diagLogs.js'
 import { toolMatchesName, type Tool, type Tools } from 'src/Tool.js'
 import {
   type AgentDefinition,
@@ -49,7 +49,7 @@ import {
   subscribeToCommandQueue,
   getCommandsByMaxPriority,
 } from 'src/utils/messageQueueManager.js'
-import { notifyCommandLifecycle } from 'src/utils/commandLifecycle.js'
+import { notifyCommandLifecycle } from 'src/utils/lifecycle/commandLifecycle.js'
 import {
   getSessionState,
   notifySessionStateChanged,
@@ -57,19 +57,19 @@ import {
   setPermissionModeChangedListener,
   type RequiresActionDetails,
   type SessionExternalMetadata,
-} from 'src/utils/sessionState.js'
+} from 'src/utils/session/sessionState.js'
 import { externalMetadataToAppState } from 'src/state/onChangeAppState.js'
-import { getInMemoryErrors, logError, logMCPDebug } from 'src/utils/log.js'
+import { getInMemoryErrors, logError, logMCPDebug } from 'src/utils/debug/log.js'
 import {
   writeToStdout,
   registerProcessOutputErrorHandlers,
-} from 'src/utils/process.js'
-import type { Stream } from 'src/utils/stream.js'
+} from 'src/utils/platform/process.js'
+import type { Stream } from 'src/utils/concurrency/stream.js'
 import { EMPTY_USAGE } from 'src/services/api/logging.js'
 import {
   loadConversationForResume,
   type TurnInterruptionState,
-} from 'src/utils/conversationRecovery.js'
+} from 'src/utils/session/conversationRecovery.js'
 import type {
   MCPServerConnection,
   McpSdkServerConfig,
@@ -86,7 +86,7 @@ import {
   isChannelsEnabled,
 } from 'src/services/mcp/channelAllowlist.js'
 import { parsePluginIdentifier } from 'src/utils/plugins/pluginIdentifier.js'
-import { validateUuid } from 'src/utils/uuid.js'
+import { validateUuid } from 'src/utils/text/uuid.js'
 import { fromArray } from 'src/utils/generators.js'
 import { ask } from 'src/QueryEngine.js'
 import type { PermissionPromptTool } from 'src/utils/queryHelpers.js'
@@ -94,8 +94,8 @@ import {
   createFileStateCacheWithSizeLimit,
   mergeFileStateCaches,
   READ_FILE_STATE_CACHE_SIZE,
-} from 'src/utils/fileStateCache.js'
-import { expandPath } from 'src/utils/path.js'
+} from 'src/utils/files/fileStateCache.js'
+import { expandPath } from 'src/utils/platform/path.js'
 import { extractReadFilesFromMessages } from 'src/utils/queryHelpers.js'
 import { registerHookEventHandler } from 'src/utils/hooks/hookEvents.js'
 import { executeFilePersistence } from 'src/utils/filePersistence/filePersistence.js'
@@ -104,9 +104,9 @@ import {
   gracefulShutdown,
   gracefulShutdownSync,
   isShuttingDown,
-} from 'src/utils/gracefulShutdown.js'
-import { registerCleanup } from 'src/utils/cleanupRegistry.js'
-import { createIdleTimeoutManager } from 'src/utils/idleTimeout.js'
+} from 'src/utils/lifecycle/gracefulShutdown.js'
+import { registerCleanup } from 'src/utils/lifecycle/cleanupRegistry.js'
+import { createIdleTimeoutManager } from 'src/utils/lifecycle/idleTimeout.js'
 import type {
   SDKStatus,
   ModelInfo,
@@ -130,7 +130,7 @@ import type {
 import type { PermissionMode } from '@anthropic-ai/claude-agent-sdk'
 import type { PermissionMode as InternalPermissionMode } from 'src/types/permissions.js'
 import { cwd } from 'process'
-import { getCwd } from 'src/utils/cwd.js'
+import { getCwd } from 'src/utils/platform/cwd.js'
 import omit from 'lodash-es/omit.js'
 import reject from 'lodash-es/reject.js'
 import { isPolicyAllowed } from 'src/services/policyLimits/index.js'
@@ -141,21 +141,21 @@ import { extractInboundMessageFields } from 'src/bridge/inboundMessages.js'
 import { resolveAndPrepend } from 'src/bridge/inboundAttachments.js'
 import type { CanUseToolFn } from 'src/hooks/useCanUseTool.js'
 import { hasPermissionsToUseTool } from 'src/utils/permissions/permissions.js'
-import { safeParseJSON } from 'src/utils/json.js'
+import { safeParseJSON } from 'src/utils/text/json.js'
 import {
   outputSchema as permissionToolOutputSchema,
   permissionPromptToolResultToPermissionDecision,
 } from 'src/utils/permissions/PermissionPromptToolResultSchema.js'
-import { createAbortController } from 'src/utils/abortController.js'
-import { createCombinedAbortSignal } from 'src/utils/combinedAbortSignal.js'
-import { generateSessionTitle } from 'src/utils/sessionTitle.js'
+import { createAbortController } from 'src/utils/concurrency/abortController.js'
+import { createCombinedAbortSignal } from 'src/utils/concurrency/combinedAbortSignal.js'
+import { generateSessionTitle } from 'src/utils/session/sessionTitle.js'
 import { buildSideQuestionFallbackParams } from 'src/utils/queryContext.js'
-import { runSideQuestion } from 'src/utils/sideQuestion.js'
+import { runSideQuestion } from 'src/utils/agent/sideQuestion.js'
 import {
   processSessionStartHooks,
   processSetupHooks,
   takeInitialUserMessage,
-} from 'src/utils/sessionStart.js'
+} from 'src/utils/session/sessionStart.js'
 import {
   DEFAULT_OUTPUT_STYLE_NAME,
   getAllOutputStyles,
@@ -172,7 +172,7 @@ import {
   isFastModeEnabled,
   isFastModeSupportedByModel,
   getFastModeState,
-} from 'src/utils/fastMode.js'
+} from 'src/utils/config/fastMode.js'
 import {
   isAutoModeGateEnabled,
   getAutoModeUnavailableNotification,
@@ -186,13 +186,11 @@ import {
   logSuggestionSuppressed,
   type PromptVariant,
 } from 'src/services/PromptSuggestion/promptSuggestion.js'
-import { getLastCacheSafeParams } from 'src/utils/forkedAgent.js'
-import { getAccountInformation } from 'src/utils/auth.js'
-import { OAuthService } from 'src/services/oauth/index.js'
-import { installOAuthTokens } from 'src/cli/handlers/auth.js'
+import { getLastCacheSafeParams } from 'src/utils/agent/forkedAgent.js'
+import { getAccountInformation } from 'src/utils/auth/auth.js'
 import { getAPIProvider } from 'src/utils/model/providers.js'
 import type { HookCallbackMatcher } from 'src/types/hooks.js'
-import { AwsAuthStatusManager } from 'src/utils/awsAuthStatusManager.js'
+import { AwsAuthStatusManager } from 'src/utils/auth/awsAuthStatusManager.js'
 import type { HookEvent } from 'src/entrypoints/agentSdkTypes.js'
 import {
   registerHookCallbacks,
@@ -201,7 +199,7 @@ import {
   setSdkAgentProgressSummariesEnabled,
 } from 'src/bootstrap/state.js'
 import { createSyntheticOutputTool } from 'src/tools/SyntheticOutputTool/SyntheticOutputTool.js'
-import { parseSessionIdentifier } from 'src/utils/sessionUrl.js'
+import { parseSessionIdentifier } from 'src/utils/session/sessionUrl.js'
 import {
   hydrateRemoteSession,
   hydrateFromCCRv2InternalEvents,
@@ -213,7 +211,7 @@ import {
   saveMode,
   saveAiGeneratedTitle,
   restoreSessionMetadata,
-} from 'src/utils/sessionStorage.js'
+} from 'src/utils/session/sessionStorage.js'
 import { incrementPromptCount } from 'src/utils/commitAttribution.js'
 import {
   setupSdkMcpClients,
@@ -237,7 +235,7 @@ import {
   runElicitationHooks,
   runElicitationResultHooks,
 } from 'src/services/mcp/elicitationHandler.js'
-import { executeNotificationHooks } from 'src/utils/hooks.js'
+import { executeNotificationHooks } from 'src/utils/hooks/hooks.js'
 import {
   ElicitRequestSchema,
   ElicitationCompleteNotificationSchema,
@@ -257,7 +255,7 @@ import {
   toInternalMessages,
   toSDKRateLimitInfo,
 } from 'src/utils/messages/mappers.js'
-import { createModelSwitchBreadcrumbs } from 'src/utils/messages.js'
+import { createModelSwitchBreadcrumbs } from 'src/utils/messages/messages.js'
 import { collectContextData } from 'src/commands/context/context-noninteractive.js'
 import { LOCAL_COMMAND_STDOUT_TAG } from 'src/constants/xml.js'
 import {
@@ -276,9 +274,9 @@ import {
   modelSupportsMaxEffort,
   EFFORT_LEVELS,
   resolveAppliedEffort,
-} from 'src/utils/effort.js'
+} from 'src/utils/config/effort.js'
 import { modelSupportsAdaptiveThinking } from 'src/utils/thinking.js'
-import { modelSupportsAutoMode } from 'src/utils/betas.js'
+import { modelSupportsAutoMode } from 'src/utils/config/betas.js'
 import { ensureModelStringsInitialized } from 'src/utils/model/modelStrings.js'
 import {
   getSessionId,
@@ -304,11 +302,11 @@ import {
   fileHistoryCanRestore,
   fileHistoryEnabled,
   fileHistoryGetDiffStats,
-} from 'src/utils/fileHistory.js'
+} from 'src/utils/files/fileHistory.js'
 import {
   restoreAgentFromSession,
   restoreSessionStateFromLog,
-} from 'src/utils/sessionRestore.js'
+} from 'src/utils/session/sessionRestore.js'
 import { SandboxManager } from 'src/utils/sandbox/sandbox-adapter.js'
 import {
   headlessProfilerStartTurn,
@@ -327,7 +325,7 @@ import {
   isBareMode,
   isEnvTruthy,
   isEnvDefinedFalsy,
-} from '../utils/envUtils.js'
+} from '../utils/platform/envUtils.js'
 import { installPluginsForHeadless } from '../utils/plugins/headlessPluginInstall.js'
 import { refreshActivePlugins } from '../utils/plugins/refresh.js'
 import { loadAllPluginsCacheOnly } from '../utils/plugins/pluginLoader.js'
@@ -336,21 +334,21 @@ import {
   hasActiveInProcessTeammates,
   hasWorkingInProcessTeammates,
   waitForTeammatesToBecomeIdle,
-} from '../utils/teammate.js'
+} from '../utils/swarm/teammate.js'
 import {
   readUnreadMessages,
   markMessagesAsRead,
   isShutdownApproved,
-} from '../utils/teammateMailbox.js'
+} from '../utils/swarm/teammateMailbox.js'
 import { removeTeammateFromTeamFile } from '../utils/swarm/teamHelpers.js'
-import { unassignTeammateTasks } from '../utils/tasks.js'
+import { unassignTeammateTasks } from '../utils/task/tasks.js'
 import { getRunningTasks } from '../utils/task/framework.js'
 import { isBackgroundTask } from '../tasks/types.js'
 import { stopTask } from '../tasks/stopTask.js'
 import { drainSdkEvents } from '../utils/sdkEventQueue.js'
 import { initializeGrowthBook } from '../services/analytics/growthbook.js'
 import { errorMessage, toError } from '../utils/errors.js'
-import { sleep } from '../utils/sleep.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 import { isExtractModeActive } from '../memdir/paths.js'
 
 // Dead code elimination: conditional imports
@@ -363,10 +361,10 @@ const proactiveModule =
     ? (require('../proactive/index.js') as typeof import('../proactive/index.js'))
     : null
 const cronSchedulerModule = feature('AGENT_TRIGGERS')
-  ? (require('../utils/cronScheduler.js') as typeof import('../utils/cronScheduler.js'))
+  ? (require('../utils/cron/cronScheduler.js') as typeof import('../utils/cron/cronScheduler.js'))
   : null
 const cronJitterConfigModule = feature('AGENT_TRIGGERS')
-  ? (require('../utils/cronJitterConfig.js') as typeof import('../utils/cronJitterConfig.js'))
+  ? (require('../utils/cron/cronJitterConfig.js') as typeof import('../utils/cron/cronJitterConfig.js'))
   : null
 const cronGate = feature('AGENT_TRIGGERS')
   ? (require('../tools/ScheduleCronTool/prompt.js') as typeof import('../tools/ScheduleCronTool/prompt.js'))
@@ -2699,7 +2697,7 @@ function runHeadlessStreaming(
   // that drains on enqueue while idle. The run() mutex makes this safe
   // during an active turn: the call no-ops and the post-run recheck at
   // the end of run() picks up the queued command.
-  let cronScheduler: import('../utils/cronScheduler.js').CronScheduler | null =
+  let cronScheduler: import('../utils/cron/cronScheduler.js').CronScheduler | null =
     null
   if (
     feature('AGENT_TRIGGERS') &&
@@ -2793,16 +2791,6 @@ function runHeadlessStreaming(
   // token exchange completion. Reconnect is handled separately by the
   // extension via handleAuthDone → mcp_reconnect.
   const oauthAuthPromises = new Map<string, Promise<void>>()
-
-  // In-flight Anthropic OAuth flow (claude_authenticate). Single-slot: a
-  // second authenticate request cleans up the first. The service holds the
-  // PKCE verifier + localhost listener; the promise settles after
-  // installOAuthTokens — after it resolves, the in-process memoized token
-  // cache is already cleared and the next API call picks up the new creds.
-  let claudeOAuth: {
-    service: OAuthService
-    flow: Promise<void>
-  } | null = null
 
   // This is essentially spawning a parallel async task- we have two
   // running in parallel- one reading from stdin and adding to the
@@ -3512,142 +3500,18 @@ function runHeadlessStreaming(
             )
           }
         } else if (message.request.subtype === 'claude_authenticate') {
-          // Anthropic OAuth over the control channel. The SDK client owns
-          // the user's browser (we're headless in -p mode); we hand back
-          // both URLs and wait. Automatic URL → localhost listener catches
-          // the redirect if the browser is on this host; manual URL → the
-          // success page shows "code#state" for claude_oauth_callback.
-          const { loginWithClaudeAi } = message.request
-
-          // Clean up any prior flow. cleanup() closes the localhost listener
-          // and nulls the manual resolver. The prior `flow` promise is left
-          // pending (AuthCodeListener.close() does not reject) but its object
-          // graph becomes unreachable once the server handle is released and
-          // is GC'd — no fd or port is held.
-          claudeOAuth?.service.cleanup()
-
-          logEvent('tengu_oauth_flow_start', {
-            loginWithClaudeAi: loginWithClaudeAi ?? true,
-          })
-
-          const service = new OAuthService()
-          let urlResolver!: (urls: {
-            manualUrl: string
-            automaticUrl: string
-          }) => void
-          const urlPromise = new Promise<{
-            manualUrl: string
-            automaticUrl: string
-          }>(resolve => {
-            urlResolver = resolve
-          })
-
-          const flow = service
-            .startOAuthFlow(
-              async (manualUrl, automaticUrl) => {
-                // automaticUrl is always defined when skipBrowserOpen is set;
-                // the signature is optional only for the existing single-arg callers.
-                urlResolver({ manualUrl, automaticUrl: automaticUrl! })
-              },
-              {
-                loginWithClaudeAi: loginWithClaudeAi ?? true,
-                skipBrowserOpen: true,
-              },
-            )
-            .then(async tokens => {
-              // installOAuthTokens: performLogout (clear stale state) →
-              // store profile → saveOAuthTokensIfNeeded → clearOAuthTokenCache
-              // → clearAuthRelatedCaches. After this resolves, the memoized
-              // getClaudeAIOAuthTokens in this process is invalidated; the
-              // next API call re-reads keychain/file and works. No respawn.
-              await installOAuthTokens(tokens)
-              logEvent('tengu_oauth_success', {
-                loginWithClaudeAi: loginWithClaudeAi ?? true,
-              })
-            })
-            .finally(() => {
-              service.cleanup()
-              if (claudeOAuth?.service === service) {
-                claudeOAuth = null
-              }
-            })
-
-          claudeOAuth = { service, flow }
-
-          // Attach the rejection handler before awaiting so a synchronous
-          // startOAuthFlow failure doesn't surface as an unhandled rejection.
-          // The claude_oauth_callback handler re-awaits flow for the manual
-          // path and surfaces the real error to the client.
-          void flow.catch(err =>
-            logForDebugging(`claude_authenticate flow ended: ${err}`, {
-              level: 'info',
-            }),
+          sendControlResponseError(
+            message,
+            'OAuth authentication is not available in offline mode.',
           )
-
-          try {
-            // Race against flow: if startOAuthFlow rejects before calling
-            // the authURLHandler (e.g. AuthCodeListener.start() fails with
-            // EACCES or fd exhaustion), urlPromise would pend forever and
-            // wedge the stdin loop. flow resolving first is unreachable in
-            // practice (it's suspended on the same urls we're waiting for).
-            const { manualUrl, automaticUrl } = await Promise.race([
-              urlPromise,
-              flow.then(() => {
-                throw new Error(
-                  'OAuth flow completed without producing auth URLs',
-                )
-              }),
-            ])
-            sendControlResponseSuccess(message, {
-              manualUrl,
-              automaticUrl,
-            })
-          } catch (error) {
-            sendControlResponseError(message, errorMessage(error))
-          }
         } else if (
           message.request.subtype === 'claude_oauth_callback' ||
           message.request.subtype === 'claude_oauth_wait_for_completion'
         ) {
-          if (!claudeOAuth) {
-            sendControlResponseError(
-              message,
-              'No active claude_authenticate flow',
-            )
-          } else {
-            // Inject the manual code synchronously — must happen in stdin
-            // message order so a subsequent claude_authenticate doesn't
-            // replace the service before this code lands.
-            if (message.request.subtype === 'claude_oauth_callback') {
-              claudeOAuth.service.handleManualAuthCodeInput({
-                authorizationCode: message.request.authorizationCode,
-                state: message.request.state,
-              })
-            }
-            // Detach the await — the stdin reader is serial and blocking
-            // here deadlocks claude_oauth_wait_for_completion: flow may
-            // only resolve via a future claude_oauth_callback on stdin,
-            // which can't be read while we're parked. Capture the binding;
-            // claudeOAuth is nulled in flow's own .finally.
-            const { flow } = claudeOAuth
-            void flow.then(
-              () => {
-                const accountInfo = getAccountInformation()
-                sendControlResponseSuccess(message, {
-                  account: {
-                    email: accountInfo?.email,
-                    organization: accountInfo?.organization,
-                    subscriptionType: accountInfo?.subscription,
-                    tokenSource: accountInfo?.tokenSource,
-                    apiKeySource: accountInfo?.apiKeySource,
-                    apiProvider: getAPIProvider(),
-                  },
-                })
-              },
-              (error: unknown) =>
-                sendControlResponseError(message, errorMessage(error)),
-            )
-          }
+          sendControlResponseError(
+            message,
+            'OAuth authentication is not available in offline mode.',
+          )
         } else if (message.request.subtype === 'mcp_clear_auth') {
           const { serverName } = message.request
           const currentAppState = getAppState()

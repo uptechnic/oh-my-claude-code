@@ -1,13 +1,11 @@
 import { setMainLoopModelOverride } from '../bootstrap/state.js'
 import {
   clearApiKeyHelperCache,
-  clearAwsCredentialsCache,
-  clearGcpCredentialsCache,
-} from '../utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js'
+} from '../utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from '../utils/config/config.js'
 import { toError } from '../utils/errors.js'
-import { logError } from '../utils/log.js'
-import { applyConfigEnvironmentVariables } from '../utils/managedEnv.js'
+import { logError } from '../utils/debug/log.js'
+import { applyConfigEnvironmentVariables } from '../utils/config/managedEnv.js'
 import {
   permissionModeFromString,
   toExternalPermissionMode,
@@ -16,7 +14,7 @@ import {
   notifyPermissionModeChanged,
   notifySessionMetadataChanged,
   type SessionExternalMetadata,
-} from '../utils/sessionState.js'
+} from '../utils/session/sessionState.js'
 import { updateSettingsForSource } from '../utils/settings/settings.js'
 import type { AppState } from './AppStateStore.js'
 
@@ -156,8 +154,6 @@ export function onChangeAppState({
   if (newState.settings !== oldState.settings) {
     try {
       clearApiKeyHelperCache()
-      clearAwsCredentialsCache()
-      clearGcpCredentialsCache()
 
       // Re-apply environment variables when settings.env changes
       // This is additive-only: new vars are added, existing may be overwritten, nothing is deleted

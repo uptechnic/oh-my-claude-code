@@ -13,17 +13,17 @@
 
 import type { ClientRequest, IncomingMessage } from 'http'
 import WebSocket from 'ws'
-import { getOauthConfig } from '../constants/oauth.js'
+import { getBaseApiUrl } from '../utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   isAnthropicAuthEnabled,
-} from '../utils/auth.js'
-import { logForDebugging } from '../utils/debug.js'
-import { getUserAgent } from '../utils/http.js'
-import { logError } from '../utils/log.js'
-import { getWebSocketTLSOptions } from '../utils/mtls.js'
-import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/proxy.js'
+} from '../utils/auth/auth.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { getUserAgent } from '../utils/api/http.js'
+import { logError } from '../utils/debug/log.js'
+import { getWebSocketTLSOptions } from '../utils/auth/mtls.js'
+import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/auth/proxy.js'
 import { jsonParse, jsonStringify } from '../utils/slowOperations.js'
 
 const KEEPALIVE_MSG = '{"type":"KeepAlive"}'
@@ -131,8 +131,8 @@ export async function connectVoiceStream(
   // browser-class JA3 fingerprint, so CF lets it through).
   const wsBaseUrl =
     process.env.VOICE_STREAM_BASE_URL ||
-    getOauthConfig()
-      .BASE_API_URL.replace('https://', 'wss://')
+    getBaseApiUrl()
+      .replace('https://', 'wss://')
       .replace('http://', 'ws://')
 
   if (process.env.VOICE_STREAM_BASE_URL) {

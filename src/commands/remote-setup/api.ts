@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { getOauthConfig } from '../../constants/oauth.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 import { fetchEnvironments } from '../../utils/teleport/environments.js'
 
@@ -61,7 +61,7 @@ export async function importGithubToken(
     return { ok: false, error: { kind: 'not_signed_in' } }
   }
 
-  const url = `${getOauthConfig().BASE_API_URL}/v1/code/github/import-token`
+  const url = `${getBaseApiUrl()}/v1/code/github/import-token`
   const headers = {
     ...getOAuthHeaders(accessToken),
     'anthropic-beta': CCR_BYOC_BETA_HEADER,
@@ -131,7 +131,7 @@ export async function createDefaultEnvironment(): Promise<boolean> {
   // The /private/organizations/{org}/ path rejects CLI OAuth tokens (wrong
   // auth dep). The public path uses build_flexible_auth — same path
   // fetchEnvironments() uses. Org is passed via x-organization-uuid header.
-  const url = `${getOauthConfig().BASE_API_URL}/v1/environment_providers/cloud/create`
+  const url = `${getBaseApiUrl()}/v1/environment_providers/cloud/create`
   const headers = {
     ...getOAuthHeaders(accessToken),
     'x-organization-uuid': orgUUID,
@@ -178,5 +178,5 @@ export async function isSignedIn(): Promise<boolean> {
 }
 
 export function getCodeWebUrl(): string {
-  return `${getOauthConfig().CLAUDE_AI_ORIGIN}/code`
+  return `/code`
 }

@@ -5,8 +5,8 @@ import { getIsRemoteMode } from '../../bootstrap/state.js';
 import { useNotifications } from '../../context/notifications.js';
 import { Text } from '../../ink.js';
 import { useAppState } from '../../state/AppState.js';
-import { logForDebugging } from '../../utils/debug.js';
-import { plural } from '../../utils/stringUtils.js';
+import { logForDebugging } from '../../utils/debug/debug.js';
+import { plural } from '../../utils/text/stringUtils.js';
 export function usePluginInstallationStatus() {
   const $ = _c(20);
   const {

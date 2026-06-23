@@ -2,7 +2,7 @@ import { feature } from 'bun:bundle'
 import type { UUID } from 'crypto'
 import { randomUUID } from 'crypto'
 import uniqBy from 'lodash-es/uniqBy.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { getProjectRoot, getSessionId } from '../../bootstrap/state.js'
 import { getCommand, getSkillToolCommands, hasCommand } from '../../commands.js'
 import {
@@ -40,22 +40,22 @@ import type {
   ToolUseSummaryMessage,
   UserMessage,
 } from '../../types/message.js'
-import { createAttachmentMessage } from '../../utils/attachments.js'
+import { createAttachmentMessage } from '../../utils/media/attachments.js'
 import { AbortError } from '../../utils/errors.js'
-import { getDisplayPath } from '../../utils/file.js'
+import { getDisplayPath } from '../../utils/files/file.js'
 import {
   cloneFileStateCache,
   createFileStateCacheWithSizeLimit,
   READ_FILE_STATE_CACHE_SIZE,
-} from '../../utils/fileStateCache.js'
+} from '../../utils/files/fileStateCache.js'
 import {
   type CacheSafeParams,
   createSubagentContext,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import { registerFrontmatterHooks } from '../../utils/hooks/registerFrontmatterHooks.js'
 import { clearSessionHooks } from '../../utils/hooks/sessionHooks.js'
-import { executeSubagentStartHooks } from '../../utils/hooks.js'
-import { createUserMessage } from '../../utils/messages.js'
+import { executeSubagentStartHooks } from '../../utils/hooks/hooks.js'
+import { createUserMessage } from '../../utils/messages/messages.js'
 import { getAgentModel } from '../../utils/model/agent.js'
 import type { ModelAlias } from '../../utils/model/aliases.js'
 import {
@@ -63,7 +63,7 @@ import {
   recordSidechainTranscript,
   setAgentTranscriptSubdir,
   writeAgentMetadata,
-} from '../../utils/sessionStorage.js'
+} from '../../utils/session/sessionStorage.js'
 import {
   isRestrictedToPluginOnly,
   isSourceAdminTrusted,
@@ -71,14 +71,14 @@ import {
 import {
   asSystemPrompt,
   type SystemPrompt,
-} from '../../utils/systemPromptType.js'
+} from '../../utils/agent/systemPromptType.js'
 import {
   isPerfettoTracingEnabled,
   registerAgent as registerPerfettoAgent,
   unregisterAgent as unregisterPerfettoAgent,
 } from '../../utils/telemetry/perfettoTracing.js'
 import type { ContentReplacementState } from '../../utils/toolResultStorage.js'
-import { createAgentId } from '../../utils/uuid.js'
+import { createAgentId } from '../../utils/text/uuid.js'
 import { resolveAgentTools } from './agentToolUtils.js'
 import { type AgentDefinition, isBuiltInAgent } from './loadAgentsDir.js'
 

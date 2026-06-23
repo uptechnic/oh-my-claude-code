@@ -4,14 +4,14 @@ import { isPolicyAllowed } from '../../services/policyLimits/index.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { ASK_USER_QUESTION_TOOL_NAME } from '../../tools/AskUserQuestionTool/prompt.js'
 import { REMOTE_TRIGGER_TOOL_NAME } from '../../tools/RemoteTriggerTool/prompt.js'
-import { getClaudeAIOAuthTokens } from '../../utils/auth.js'
+import { getClaudeAIOAuthTokens } from '../../utils/auth/auth.js'
 import { checkRepoForRemoteAccess } from '../../utils/background/remote/preconditions.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   detectCurrentRepositoryWithHost,
   parseGitRemote,
 } from '../../utils/detectRepository.js'
-import { getRemoteUrl } from '../../utils/git.js'
+import { getRemoteUrl } from '../../utils/git/git.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   createDefaultCloudEnvironment,

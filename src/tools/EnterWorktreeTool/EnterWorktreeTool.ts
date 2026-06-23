@@ -4,13 +4,13 @@ import { clearSystemPromptSections } from '../../constants/systemPromptSections.
 import { logEvent } from '../../services/analytics/index.js'
 import type { Tool } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { clearMemoryFileCaches } from '../../utils/claudemd.js'
-import { getCwd } from '../../utils/cwd.js'
-import { findCanonicalGitRoot } from '../../utils/git.js'
+import { clearMemoryFileCaches } from '../../utils/config/claudemd.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { findCanonicalGitRoot } from '../../utils/git/git.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { getPlanSlug, getPlansDirectory } from '../../utils/plans.js'
 import { setCwd } from '../../utils/Shell.js'
-import { saveWorktreeState } from '../../utils/sessionStorage.js'
+import { saveWorktreeState } from '../../utils/session/sessionStorage.js'
 import {
   createWorktreeForSession,
   getCurrentWorktreeSession,

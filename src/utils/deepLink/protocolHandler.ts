@@ -12,11 +12,11 @@
  */
 
 import { homedir } from 'os'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import {
   filterExistingPaths,
   getKnownPathsForRepo,
-} from '../githubRepoPathMapping.js'
+} from '../github/githubRepoPathMapping.js'
 import { jsonStringify } from '../slowOperations.js'
 import { readLastFetchTime } from './banner.js'
 import { parseDeepLink } from './parseDeepLink.js'

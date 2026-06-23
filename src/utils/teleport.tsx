@@ -8,35 +8,35 @@ import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEve
 import { isPolicyAllowed } from 'src/services/policyLimits/index.js';
 import { z } from 'zod/v4';
 import { getTeleportErrors, TeleportError, type TeleportLocalErrorType } from '../components/TeleportError.js';
-import { getOauthConfig } from '../constants/oauth.js';
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js';
 import type { Root } from '../ink.js';
 import { KeybindingSetup } from '../keybindings/KeybindingProviderSetup.js';
 import { queryHaiku } from '../services/api/claude.js';
 import { getSessionLogsViaOAuth, getTeleportEvents } from '../services/api/sessionIngress.js';
-import { getOrganizationUUID } from '../services/oauth/client.js';
+import { getOrganizationUUID } from './auth/auth.js';
 import { AppStateProvider } from '../state/AppState.js';
 import type { Message, SystemMessage } from '../types/message.js';
 import type { PermissionMode } from '../types/permissions.js';
-import { checkAndRefreshOAuthTokenIfNeeded, getClaudeAIOAuthTokens } from './auth.js';
+import { checkAndRefreshOAuthTokenIfNeeded, getClaudeAIOAuthTokens } from './auth/auth.js';
 import { checkGithubAppInstalled } from './background/remote/preconditions.js';
-import { deserializeMessages, type TeleportRemoteResponse } from './conversationRecovery.js';
-import { getCwd } from './cwd.js';
-import { logForDebugging } from './debug.js';
+import { deserializeMessages, type TeleportRemoteResponse } from './session/conversationRecovery.js';
+import { getCwd } from './platform/cwd.js';
+import { logForDebugging } from './debug/debug.js';
 import { detectCurrentRepositoryWithHost, parseGitHubRepository, parseGitRemote } from './detectRepository.js';
-import { isEnvTruthy } from './envUtils.js';
+import { isEnvTruthy } from './platform/envUtils.js';
 import { TeleportOperationError, toError } from './errors.js';
 import { execFileNoThrow } from './execFileNoThrow.js';
-import { truncateToWidth } from './format.js';
-import { findGitRoot, getDefaultBranch, getIsClean, gitExe } from './git.js';
-import { safeParseJSON } from './json.js';
-import { logError } from './log.js';
-import { createSystemMessage, createUserMessage } from './messages.js';
+import { truncateToWidth } from './text/format.js';
+import { findGitRoot, getDefaultBranch, getIsClean, gitExe } from './git/git.js';
+import { safeParseJSON } from './text/json.js';
+import { logError } from './debug/log.js';
+import { createSystemMessage, createUserMessage } from './messages/messages.js';
 import { getMainLoopModel } from './model/model.js';
-import { isTranscriptMessage } from './sessionStorage.js';
+import { isTranscriptMessage } from './session/sessionStorage.js';
 import { getSettings_DEPRECATED } from './settings/settings.js';
 import { jsonStringify } from './slowOperations.js';
-import { asSystemPrompt } from './systemPromptType.js';
+import { asSystemPrompt } from './agent/systemPromptType.js';
 import { fetchSession, type GitRepositoryOutcome, type GitSource, getBranchFromSession, getOAuthHeaders, type SessionResource } from './teleport/api.js';
 import { fetchEnvironments } from './teleport/environments.js';
 import { createAndUploadGitBundle } from './teleport/gitBundle.js';
@@ -646,7 +646,7 @@ export async function pollRemoteSessionEvents(sessionId: string, afterId: string
     'anthropic-beta': 'ccr-byoc-2025-07-29',
     'x-organization-uuid': orgUUID
   };
-  const eventsUrl = `${getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}/events`;
+  const eventsUrl = `${getBaseApiUrl()}/v1/sessions/${sessionId}/events`;
   type EventsResponse = {
     data: unknown[];
     has_more: boolean;
@@ -819,7 +819,7 @@ export async function teleportToRemote(options: {
     // (bughunter.go:520 sets a git source too; env-manager does the checkout
     // before the SessionStart hook fires).
     if (options.environmentId) {
-      const url = `${getOauthConfig().BASE_API_URL}/v1/sessions`;
+      const url = `${getBaseApiUrl()}/v1/sessions`;
       const headers = {
         ...getOAuthHeaders(accessToken),
         'anthropic-beta': 'ccr-byoc-2025-07-29',
@@ -839,7 +839,7 @@ export async function teleportToRemote(options: {
         const bundle = await createAndUploadGitBundle({
           oauthToken: accessToken,
           sessionId: getSessionId(),
-          baseUrl: getOauthConfig().BASE_API_URL
+          baseUrl: getBaseApiUrl()
         }, {
           signal
         });
@@ -1003,7 +1003,7 @@ export async function teleportToRemote(options: {
       const bundle = await createAndUploadGitBundle({
         oauthToken: accessToken,
         sessionId: getSessionId(),
-        baseUrl: getOauthConfig().BASE_API_URL
+        baseUrl: getBaseApiUrl()
       }, {
         signal
       });
@@ -1093,7 +1093,7 @@ export async function teleportToRemote(options: {
     logForDebugging(`Selected environment: ${environmentId} (${selectedEnvironment.name}, ${selectedEnvironment.kind})`);
 
     // Prepare API request for Sessions API
-    const url = `${getOauthConfig().BASE_API_URL}/v1/sessions`;
+    const url = `${getBaseApiUrl()}/v1/sessions`;
     const headers = {
       ...getOAuthHeaders(accessToken),
       'anthropic-beta': 'ccr-byoc-2025-07-29',
@@ -1207,7 +1207,7 @@ export async function archiveRemoteSession(sessionId: string): Promise<void> {
     'anthropic-beta': 'ccr-byoc-2025-07-29',
     'x-organization-uuid': orgUUID
   };
-  const url = `${getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}/archive`;
+  const url = `${getBaseApiUrl()}/v1/sessions/${sessionId}/archive`;
   try {
     const resp = await axios.post(url, {}, {
       headers,

@@ -15,13 +15,13 @@ import type { HookCallbackMatcher } from 'src/types/hooks.js'
 // zero circular-dep risk. Path-alias import bypasses bootstrap-isolation
 // (rule only checks ./ and / prefixes); explicit disable documents intent.
 // eslint-disable-next-line custom-rules/bootstrap-isolation
-import { randomUUID } from 'src/utils/crypto.js'
+import { randomUUID } from 'src/utils/auth/crypto.js'
 import type { ModelSetting } from 'src/utils/model/model.js'
 import type { ModelStrings } from 'src/utils/model/modelStrings.js'
 import type { SettingSource } from 'src/utils/settings/constants.js'
 import { resetSettingsCache } from 'src/utils/settings/settingsCache.js'
 import type { PluginHookMatcher } from 'src/utils/settings/types.js'
-import { createSignal } from 'src/utils/signal.js'
+import { createSignal } from 'src/utils/platform/signal.js'
 
 // Union type for registered hooks - can be SDK callbacks or native plugin hooks
 type RegisteredHookMatcher = HookCallbackMatcher | PluginHookMatcher
@@ -125,8 +125,6 @@ type State = {
   inMemoryErrorLog: Array<{ error: string; timestamp: string }>
   // Session-only plugins from --plugin-dir flag
   inlinePlugins: Array<string>
-  // Explicit --chrome / --no-chrome flag value (undefined = not set on CLI)
-  chromeFlagOverride: boolean | undefined
   // Use cowork_plugins directory instead of plugins (--cowork flag or env var)
   useCoworkPlugins: boolean
   // Session-only bypass permissions mode flag (not persisted)
@@ -349,8 +347,6 @@ function getInitialState(): State {
     inMemoryErrorLog: [],
     // Session-only plugins from --plugin-dir flag
     inlinePlugins: [],
-    // Explicit --chrome / --no-chrome flag value (undefined = not set on CLI)
-    chromeFlagOverride: undefined,
     // Use cowork_plugins directory instead of plugins
     useCoworkPlugins: false,
     // Session-only bypass permissions mode flag (not persisted)
@@ -1242,14 +1238,6 @@ export function setInlinePlugins(plugins: Array<string>): void {
 
 export function getInlinePlugins(): Array<string> {
   return STATE.inlinePlugins
-}
-
-export function setChromeFlagOverride(value: boolean | undefined): void {
-  STATE.chromeFlagOverride = value
-}
-
-export function getChromeFlagOverride(): boolean | undefined {
-  return STATE.chromeFlagOverride
 }
 
 export function setUseCoworkPlugins(value: boolean): void {

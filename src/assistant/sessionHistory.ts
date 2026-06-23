@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { getOauthConfig } from '../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { getOAuthHeaders, prepareApiRequest } from '../utils/teleport/api.js'
 
 export const HISTORY_PAGE_SIZE = 100
@@ -33,7 +33,7 @@ export async function createHistoryAuthCtx(
 ): Promise<HistoryAuthCtx> {
   const { accessToken, orgUUID } = await prepareApiRequest()
   return {
-    baseUrl: `${getOauthConfig().BASE_API_URL}/v1/sessions/${sessionId}/events`,
+    baseUrl: `${getBaseApiUrl()}/v1/sessions/${sessionId}/events`,
     headers: {
       ...getOAuthHeaders(accessToken),
       'anthropic-beta': 'ccr-byoc-2025-07-29',

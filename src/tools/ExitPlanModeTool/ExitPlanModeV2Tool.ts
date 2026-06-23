@@ -16,15 +16,15 @@ import {
   type ToolDef,
   toolMatchesName,
 } from '../../Tool.js'
-import { formatAgentId, generateRequestId } from '../../utils/agentId.js'
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { formatAgentId, generateRequestId } from '../../utils/agent/agentId.js'
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   findInProcessTeammateTaskId,
   setAwaitingPlanApproval,
-} from '../../utils/inProcessTeammateHelpers.js'
+} from '../../utils/agent/inProcessTeammateHelpers.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   getPlan,
   getPlanFilePath,
@@ -36,8 +36,8 @@ import {
   getTeamName,
   isPlanModeRequired,
   isTeammate,
-} from '../../utils/teammate.js'
-import { writeToMailbox } from '../../utils/teammateMailbox.js'
+} from '../../utils/swarm/teammate.js'
+import { writeToMailbox } from '../../utils/swarm/teammateMailbox.js'
 import { AGENT_TOOL_NAME } from '../AgentTool/constants.js'
 import { TEAM_CREATE_TOOL_NAME } from '../TeamCreateTool/constants.js'
 import { EXIT_PLAN_MODE_V2_TOOL_NAME } from './constants.js'

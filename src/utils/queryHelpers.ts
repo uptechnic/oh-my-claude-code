@@ -18,23 +18,23 @@ import {
 import { FILE_WRITE_TOOL_NAME } from '../tools/FileWriteTool/prompt.js'
 import type { Message } from '../types/message.js'
 import type { OrphanedPermission } from '../types/textInputTypes.js'
-import { logForDebugging } from './debug.js'
-import { isEnvTruthy } from './envUtils.js'
+import { logForDebugging } from './debug/debug.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import { isFsInaccessible } from './errors.js'
-import { getFileModificationTime, stripLineNumberPrefix } from './file.js'
-import { readFileSyncWithMetadata } from './fileRead.js'
+import { getFileModificationTime, stripLineNumberPrefix } from './files/file.js'
+import { readFileSyncWithMetadata } from './files/fileRead.js'
 import {
   createFileStateCacheWithSizeLimit,
   type FileStateCache,
-} from './fileStateCache.js'
-import { isNotEmptyMessage, normalizeMessages } from './messages.js'
-import { expandPath } from './path.js'
+} from './files/fileStateCache.js'
+import { isNotEmptyMessage, normalizeMessages } from './messages/messages.js'
+import { expandPath } from './platform/path.js'
 import type {
   inputSchema as permissionToolInputSchema,
   outputSchema as permissionToolOutputSchema,
 } from './permissions/PermissionPromptToolResultSchema.js'
 import type { ProcessUserInputContext } from './processUserInput/processUserInput.js'
-import { recordTranscript } from './sessionStorage.js'
+import { recordTranscript } from './session/sessionStorage.js'
 
 export type PermissionPromptTool = Tool<
   ReturnType<typeof permissionToolInputSchema>,

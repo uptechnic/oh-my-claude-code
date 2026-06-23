@@ -14,12 +14,12 @@ import {
   getSkillsPath,
   onDynamicSkillsLoaded,
 } from '../../skills/loadSkillsDir.js'
-import { resetSentSkillNames } from '../attachments.js'
-import { registerCleanup } from '../cleanupRegistry.js'
-import { logForDebugging } from '../debug.js'
-import { getFsImplementation } from '../fsOperations.js'
-import { executeConfigChangeHooks, hasBlockingResult } from '../hooks.js'
-import { createSignal } from '../signal.js'
+import { resetSentSkillNames } from '../media/attachments.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../debug/debug.js'
+import { getFsImplementation } from '../files/fsOperations.js'
+import { executeConfigChangeHooks, hasBlockingResult } from '../hooks/hooks.js'
+import { createSignal } from '../platform/signal.js'
 
 /**
  * Time in milliseconds to wait for file writes to stabilize before processing.

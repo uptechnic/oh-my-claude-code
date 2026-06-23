@@ -1,4 +1,4 @@
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { which } from './which.js'
 
 // Session cache to avoid repeated checks

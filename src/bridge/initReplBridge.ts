@@ -19,7 +19,7 @@ import { getOriginalCwd, getSessionId } from '../bootstrap/state.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
 import type { SDKControlResponse } from '../entrypoints/sdk/controlTypes.js'
 import { getFeatureValue_CACHED_WITH_REFRESH } from '../services/analytics/growthbook.js'
-import { getOrganizationUUID } from '../services/oauth/client.js'
+import { getOrganizationUUID } from '../utils/auth/auth.js'
 import {
   isPolicyAllowed,
   waitForPolicyLimitsToLoad,
@@ -29,25 +29,25 @@ import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
-} from '../utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js'
-import { logForDebugging } from '../utils/debug.js'
-import { stripDisplayTagsAllowEmpty } from '../utils/displayTags.js'
+} from '../utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from '../utils/config/config.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { stripDisplayTagsAllowEmpty } from '../utils/rendering/displayTags.js'
 import { errorMessage } from '../utils/errors.js'
-import { getBranch, getRemoteUrl } from '../utils/git.js'
+import { getBranch, getRemoteUrl } from '../utils/git/git.js'
 import { toSDKMessages } from '../utils/messages/mappers.js'
 import {
   getContentText,
   getMessagesAfterCompactBoundary,
   isSyntheticMessage,
-} from '../utils/messages.js'
+} from '../utils/messages/messages.js'
 import type { PermissionMode } from '../utils/permissions/PermissionMode.js'
-import { getCurrentSessionTitle } from '../utils/sessionStorage.js'
+import { getCurrentSessionTitle } from '../utils/session/sessionStorage.js'
 import {
   extractConversationText,
   generateSessionTitle,
-} from '../utils/sessionTitle.js'
-import { generateShortWordSlug } from '../utils/words.js'
+} from '../utils/session/sessionTitle.js'
+import { generateShortWordSlug } from '../utils/text/words.js'
 import {
   getBridgeAccessToken,
   getBridgeBaseUrl,

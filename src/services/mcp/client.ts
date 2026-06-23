@@ -42,7 +42,6 @@ import zipObject from 'lodash-es/zipObject.js'
 import pMap from 'p-map'
 import { getOriginalCwd, getSessionId } from '../../bootstrap/state.js'
 import type { Command } from '../../commands.js'
-import { getOauthConfig } from '../../constants/oauth.js'
 import { PRODUCT_URL } from '../../constants/product.js'
 import type { AppState } from '../../state/AppState.js'
 import {
@@ -54,47 +53,47 @@ import { ListMcpResourcesTool } from '../../tools/ListMcpResourcesTool/ListMcpRe
 import { type MCPProgress, MCPTool } from '../../tools/MCPTool/MCPTool.js'
 import { createMcpAuthTool } from '../../tools/McpAuthTool/McpAuthTool.js'
 import { ReadMcpResourceTool } from '../../tools/ReadMcpResourceTool/ReadMcpResourceTool.js'
-import { createAbortController } from '../../utils/abortController.js'
-import { count } from '../../utils/array.js'
+import { createAbortController } from '../../utils/concurrency/abortController.js'
+import { count } from '../../utils/text/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
-} from '../../utils/auth.js'
-import { registerCleanup } from '../../utils/cleanupRegistry.js'
-import { detectCodeIndexingFromMcpServerName } from '../../utils/codeIndexing.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/envUtils.js'
+} from '../../utils/auth/auth.js'
+import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
+import { detectCodeIndexingFromMcpServerName } from '../../utils/ide/codeIndexing.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/platform/envUtils.js'
 import {
   errorMessage,
   TelemetrySafeError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from '../../utils/errors.js'
-import { getMCPUserAgent } from '../../utils/http.js'
-import { maybeNotifyIDEConnected } from '../../utils/ide.js'
-import { maybeResizeAndDownsampleImageBuffer } from '../../utils/imageResizer.js'
-import { logMCPDebug, logMCPError } from '../../utils/log.js'
+import { getMCPUserAgent } from '../../utils/api/http.js'
+import { maybeNotifyIDEConnected } from '../../utils/ide/ide.js'
+import { maybeResizeAndDownsampleImageBuffer } from '../../utils/media/imageResizer.js'
+import { logMCPDebug, logMCPError } from '../../utils/debug/log.js'
 import {
   getBinaryBlobSavedMessage,
   getFormatDescription,
   getLargeOutputInstructions,
   persistBinaryContent,
-} from '../../utils/mcpOutputStorage.js'
+} from '../../utils/mcp/mcpOutputStorage.js'
 import {
   getContentSizeEstimate,
   type MCPToolResult,
   mcpContentNeedsTruncation,
   truncateMcpContentIfNeeded,
-} from '../../utils/mcpValidation.js'
-import { WebSocketTransport } from '../../utils/mcpWebSocketTransport.js'
-import { memoizeWithLRU } from '../../utils/memoize.js'
-import { getWebSocketTLSOptions } from '../../utils/mtls.js'
+} from '../../utils/mcp/mcpValidation.js'
+import { WebSocketTransport } from '../../utils/mcp/mcpWebSocketTransport.js'
+import { memoizeWithLRU } from '../../utils/concurrency/memoize.js'
+import { getWebSocketTLSOptions } from '../../utils/auth/mtls.js'
 import {
   getProxyFetchOptions,
   getWebSocketProxyAgent,
   getWebSocketProxyUrl,
-} from '../../utils/proxy.js'
+} from '../../utils/auth/proxy.js'
 import { recursivelySanitizeUnicode } from '../../utils/sanitization.js'
-import { getSessionIngressAuthToken } from '../../utils/sessionIngressAuth.js'
+import { getSessionIngressAuthToken } from '../../utils/session/sessionIngressAuth.js'
 import { subprocessEnv } from '../../utils/subprocessEnv.js'
 import {
   isPersistError,
@@ -125,7 +124,7 @@ import type { AssistantMessage } from 'src/types/message.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { classifyMcpToolForCollapse } from '../../tools/MCPTool/classifyForCollapse.js'
 import { clearKeychainCache } from '../../utils/secureStorage/macOsKeychainHelpers.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import {
   ClaudeAuthProvider,
   hasMcpDiscoveryButNoToken,
@@ -228,29 +227,9 @@ function getMcpToolTimeoutMs(): number {
   )
 }
 
-import { isClaudeInChromeMCPServer } from '../../utils/claudeInChrome/common.js'
-
-// Lazy: toolRendering.tsx pulls React/ink; only needed when Claude-in-Chrome MCP server is connected
-/* eslint-disable @typescript-eslint/no-require-imports */
-const claudeInChromeToolRendering =
-  (): typeof import('../../utils/claudeInChrome/toolRendering.js') =>
-    require('../../utils/claudeInChrome/toolRendering.js')
-// Lazy: wrapper.tsx → hostAdapter.ts → executor.ts pulls both native modules
-// (@ant/computer-use-input + @ant/computer-use-swift). Runtime-gated by
-// GrowthBook tengu_malort_pedway (see gates.ts).
-const computerUseWrapper = feature('CHICAGO_MCP')
-  ? (): typeof import('../../utils/computerUse/wrapper.js') =>
-      require('../../utils/computerUse/wrapper.js')
-  : undefined
-const isComputerUseMCPServer = feature('CHICAGO_MCP')
-  ? (
-      require('../../utils/computerUse/common.js') as typeof import('../../utils/computerUse/common.js')
-    ).isComputerUseMCPServer
-  : undefined
-
 import { mkdir, readFile, unlink, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js'
 
@@ -876,8 +855,7 @@ export const connectToServer = memoize(
           throw new Error('No claude.ai OAuth token found')
         }
 
-        const oauthConfig = getOauthConfig()
-        const proxyUrl = `${oauthConfig.MCP_PROXY_URL}${oauthConfig.MCP_PROXY_PATH.replace('{server_id}', serverRef.id)}`
+        const proxyUrl = `https://mcp-proxy.anthropic.com/v1/mcp/${serverRef.id}`
 
         logMCPDebug(name, `Using claude.ai proxy at ${proxyUrl}`)
 
@@ -902,45 +880,6 @@ export const connectToServer = memoize(
           transportOptions,
         )
         logMCPDebug(name, `claude.ai proxy transport created successfully`)
-      } else if (
-        (serverRef.type === 'stdio' || !serverRef.type) &&
-        isClaudeInChromeMCPServer(name)
-      ) {
-        // Run the Chrome MCP server in-process to avoid spawning a ~325 MB subprocess
-        const { createChromeContext } = await import(
-          '../../utils/claudeInChrome/mcpServer.js'
-        )
-        const { createClaudeForChromeMcpServer } = await import(
-          '@ant/claude-for-chrome-mcp'
-        )
-        const { createLinkedTransportPair } = await import(
-          './InProcessTransport.js'
-        )
-        const context = createChromeContext(serverRef.env)
-        inProcessServer = createClaudeForChromeMcpServer(context)
-        const [clientTransport, serverTransport] = createLinkedTransportPair()
-        await inProcessServer.connect(serverTransport)
-        transport = clientTransport
-        logMCPDebug(name, `In-process Chrome MCP server started`)
-      } else if (
-        feature('CHICAGO_MCP') &&
-        (serverRef.type === 'stdio' || !serverRef.type) &&
-        isComputerUseMCPServer!(name)
-      ) {
-        // Run the Computer Use MCP server in-process — same rationale as
-        // Chrome above. The package's CallTool handler is a stub; real
-        // dispatch goes through wrapper.tsx's .call() override.
-        const { createComputerUseMcpServerForCli } = await import(
-          '../../utils/computerUse/mcpServer.js'
-        )
-        const { createLinkedTransportPair } = await import(
-          './InProcessTransport.js'
-        )
-        inProcessServer = await createComputerUseMcpServerForCli()
-        const [clientTransport, serverTransport] = createLinkedTransportPair()
-        await inProcessServer.connect(serverTransport)
-        transport = clientTransport
-        logMCPDebug(name, `In-process Computer Use MCP server started`)
       } else if (serverRef.type === 'stdio' || !serverRef.type) {
         const finalCommand =
           process.env.CLAUDE_CODE_SHELL_PREFIX || serverRef.command
@@ -1402,7 +1341,7 @@ export const connectToServer = memoize(
       }
 
       const cleanup = async () => {
-        // In-process servers (e.g. Chrome MCP) don't have child processes or stderr
+        // In-process servers don't have child processes or stderr
         if (inProcessServer) {
           try {
             await inProcessServer.close()
@@ -1974,17 +1913,6 @@ export const fetchToolsForClient = memoizeWithLRU(
               const displayName = tool.annotations?.title || tool.name
               return `${client.name} - ${displayName} (MCP)`
             },
-            ...(isClaudeInChromeMCPServer(client.name) &&
-            (client.config.type === 'stdio' || !client.config.type)
-              ? claudeInChromeToolRendering().getClaudeInChromeMCPToolOverrides(
-                  tool.name,
-                )
-              : {}),
-            ...(feature('CHICAGO_MCP') &&
-            (client.config.type === 'stdio' || !client.config.type) &&
-            isComputerUseMCPServer!(client.name)
-              ? computerUseWrapper!().getComputerUseMCPToolOverrides(tool.name)
-              : {}),
           }
         })
         .filter(isIncludedMcpTool)

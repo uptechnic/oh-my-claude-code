@@ -10,10 +10,10 @@ import {
   getGlobalConfig,
   getRemoteControlAtStartup,
   saveGlobalConfig,
-} from '../../utils/config.js'
+} from '../../utils/config/config.js'
 import { errorMessage } from '../../utils/errors.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   getInitialSettings,
   updateSettingsForSource,
@@ -238,7 +238,7 @@ export const ConfigTool = buildTool({
         '../../voice/voiceModeEnabled.js'
       )
       if (!isVoiceModeEnabled()) {
-        const { isAnthropicAuthEnabled } = await import('../../utils/auth.js')
+        const { isAnthropicAuthEnabled } = await import('../../utils/auth/auth.js')
         return {
           data: {
             success: false,

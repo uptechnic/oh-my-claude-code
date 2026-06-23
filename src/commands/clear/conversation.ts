@@ -24,21 +24,21 @@ import { isLocalShellTask } from '../../tasks/LocalShellTask/guards.js'
 import { asAgentId } from '../../types/ids.js'
 import type { Message } from '../../types/message.js'
 import { createEmptyAttributionState } from '../../utils/commitAttribution.js'
-import type { FileStateCache } from '../../utils/fileStateCache.js'
+import type { FileStateCache } from '../../utils/files/fileStateCache.js'
 import {
   executeSessionEndHooks,
   getSessionEndHookTimeoutMs,
-} from '../../utils/hooks.js'
-import { logError } from '../../utils/log.js'
+} from '../../utils/hooks/hooks.js'
+import { logError } from '../../utils/debug/log.js'
 import { clearAllPlanSlugs } from '../../utils/plans.js'
 import { setCwd } from '../../utils/Shell.js'
-import { processSessionStartHooks } from '../../utils/sessionStart.js'
+import { processSessionStartHooks } from '../../utils/session/sessionStart.js'
 import {
   clearSessionMetadata,
   getAgentTranscriptPath,
   resetSessionFilePointer,
   saveWorktreeState,
-} from '../../utils/sessionStorage.js'
+} from '../../utils/session/sessionStorage.js'
 import {
   evictTaskOutput,
   initTaskOutputAsSymlink,
@@ -229,7 +229,7 @@ export async function clearConversation({
   // and (if applicable) the same worktree directory.
   if (feature('COORDINATOR_MODE')) {
     /* eslint-disable @typescript-eslint/no-require-imports */
-    const { saveMode } = require('../../utils/sessionStorage.js')
+    const { saveMode } = require('../../utils/session/sessionStorage.js')
     const {
       isCoordinatorMode,
     } = require('../../coordinator/coordinatorMode.js')

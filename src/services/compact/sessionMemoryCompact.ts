@@ -4,20 +4,20 @@
 
 import type { AgentId } from '../../types/ids.js'
 import type { HookResultMessage, Message } from '../../types/message.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import {
   createCompactBoundaryMessage,
   createUserMessage,
   isCompactBoundaryMessage,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import { getMainLoopModel } from '../../utils/model/model.js'
 import { getSessionMemoryPath } from '../../utils/permissions/filesystem.js'
-import { processSessionStartHooks } from '../../utils/sessionStart.js'
-import { getTranscriptPath } from '../../utils/sessionStorage.js'
+import { processSessionStartHooks } from '../../utils/session/sessionStart.js'
+import { getTranscriptPath } from '../../utils/session/sessionStorage.js'
 import { tokenCountFromLastAPIResponse } from '../../utils/tokens.js'
-import { extractDiscoveredToolNames } from '../../utils/toolSearch.js'
+import { extractDiscoveredToolNames } from '../../utils/agent/toolSearch.js'
 import {
   getDynamicConfig_BLOCKS_ON_INIT,
   getFeatureValue_CACHED_MAY_BE_STALE,

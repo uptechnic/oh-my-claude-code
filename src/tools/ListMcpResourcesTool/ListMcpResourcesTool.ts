@@ -6,9 +6,9 @@ import {
 import { buildTool, type ToolDef } from '../../Tool.js'
 import { errorMessage } from '../../utils/errors.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logMCPError } from '../../utils/log.js'
+import { logMCPError } from '../../utils/debug/log.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { isOutputLineTruncated } from '../../utils/terminal.js'
+import { isOutputLineTruncated } from '../../utils/rendering/terminal.js'
 import { DESCRIPTION, LIST_MCP_RESOURCES_TOOL_NAME, PROMPT } from './prompt.js'
 import { renderToolResultMessage, renderToolUseMessage } from './UI.js'
 

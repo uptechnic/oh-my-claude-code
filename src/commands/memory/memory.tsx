@@ -6,11 +6,11 @@ import { MemoryFileSelector } from '../../components/memory/MemoryFileSelector.j
 import { getRelativeMemoryPath } from '../../components/memory/MemoryUpdateNotification.js';
 import { Box, Link, Text } from '../../ink.js';
 import type { LocalJSXCommandCall } from '../../types/command.js';
-import { clearMemoryFileCaches, getMemoryFiles } from '../../utils/claudemd.js';
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js';
+import { clearMemoryFileCaches, getMemoryFiles } from '../../utils/config/claudemd.js';
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js';
 import { getErrnoCode } from '../../utils/errors.js';
-import { logError } from '../../utils/log.js';
-import { editFileInEditor } from '../../utils/promptEditor.js';
+import { logError } from '../../utils/debug/log.js';
+import { editFileInEditor } from '../../utils/ide/promptEditor.js';
 function MemoryCommand({
   onDone
 }: {

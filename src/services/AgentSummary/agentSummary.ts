@@ -14,14 +14,14 @@ import type { TaskContext } from '../../Task.js'
 import { updateAgentSummary } from '../../tasks/LocalAgentTask/LocalAgentTask.js'
 import { filterIncompleteToolCalls } from '../../tools/AgentTool/runAgent.js'
 import type { AgentId } from '../../types/ids.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   type CacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
-import { logError } from '../../utils/log.js'
-import { createUserMessage } from '../../utils/messages.js'
-import { getAgentTranscript } from '../../utils/sessionStorage.js'
+} from '../../utils/agent/forkedAgent.js'
+import { logError } from '../../utils/debug/log.js'
+import { createUserMessage } from '../../utils/messages/messages.js'
+import { getAgentTranscript } from '../../utils/session/sessionStorage.js'
 
 const SUMMARY_INTERVAL_MS = 30_000
 

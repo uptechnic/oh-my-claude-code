@@ -20,16 +20,16 @@ import type { AgentDefinition } from '../tools/AgentTool/loadAgentsDir.js';
 import { asSessionId } from '../types/ids.js';
 import type { LogOption } from '../types/logs.js';
 import type { Message } from '../types/message.js';
-import { agenticSessionSearch } from '../utils/agenticSessionSearch.js';
-import { renameRecordingForSession } from '../utils/asciicast.js';
-import { updateSessionName } from '../utils/concurrentSessions.js';
-import { loadConversationForResume } from '../utils/conversationRecovery.js';
-import { checkCrossProjectResume } from '../utils/crossProjectResume.js';
-import type { FileHistorySnapshot } from '../utils/fileHistory.js';
-import { logError } from '../utils/log.js';
-import { createSystemMessage } from '../utils/messages.js';
-import { computeStandaloneAgentContext, restoreAgentFromSession, restoreWorktreeForResume } from '../utils/sessionRestore.js';
-import { adoptResumedSessionFile, enrichLogs, isCustomTitleEnabled, loadAllProjectsMessageLogsProgressive, loadSameRepoMessageLogsProgressive, recordContentReplacement, resetSessionFilePointer, restoreSessionMetadata, type SessionLogResult } from '../utils/sessionStorage.js';
+import { agenticSessionSearch } from '../utils/agent/agenticSessionSearch.js';
+import { renameRecordingForSession } from '../utils/media/asciicast.js';
+import { updateSessionName } from '../utils/session/concurrentSessions.js';
+import { loadConversationForResume } from '../utils/session/conversationRecovery.js';
+import { checkCrossProjectResume } from '../utils/session/crossProjectResume.js';
+import type { FileHistorySnapshot } from '../utils/files/fileHistory.js';
+import { logError } from '../utils/debug/log.js';
+import { createSystemMessage } from '../utils/messages/messages.js';
+import { computeStandaloneAgentContext, restoreAgentFromSession, restoreWorktreeForResume } from '../utils/session/sessionRestore.js';
+import { adoptResumedSessionFile, enrichLogs, isCustomTitleEnabled, loadAllProjectsMessageLogsProgressive, loadSameRepoMessageLogsProgressive, recordContentReplacement, resetSessionFilePointer, restoreSessionMetadata, type SessionLogResult } from '../utils/session/sessionStorage.js';
 import type { ThinkingConfig } from '../utils/thinking.js';
 import type { ContentReplacementRecord } from '../utils/toolResultStorage.js';
 import { REPL } from './REPL.js';
@@ -236,7 +236,7 @@ export function ResumeConversation({
         /* eslint-disable @typescript-eslint/no-require-imports */
         const {
           saveMode
-        } = require('../utils/sessionStorage.js');
+        } = require('../utils/session/sessionStorage.js');
         const {
           isCoordinatorMode
         } = require('../coordinator/coordinatorMode.js') as typeof import('../coordinator/coordinatorMode.js');

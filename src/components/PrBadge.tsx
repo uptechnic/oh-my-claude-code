@@ -1,7 +1,7 @@
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import { Link, Text } from '../ink.js';
-import type { PrReviewState } from '../utils/ghPrStatus.js';
+import type { PrReviewState } from '../utils/github/ghPrStatus.js';
 type Props = {
   number: number;
   url: string;

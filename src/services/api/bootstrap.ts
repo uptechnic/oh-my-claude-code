@@ -4,17 +4,17 @@ import {
   getAnthropicApiKey,
   getClaudeAIOAuthTokens,
   hasProfileScope,
-} from 'src/utils/auth.js'
+} from 'src/utils/auth/auth.js'
 import { z } from 'zod'
-import { getOauthConfig, OAUTH_BETA_HEADER } from '../../constants/oauth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { withOAuth401Retry } from '../../utils/http.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { withOAuth401Retry } from '../../utils/api/http.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { getAPIProvider } from '../../utils/model/providers.js'
-import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 const bootstrapResponseSchema = lazySchema(() =>
   z.object({
@@ -60,7 +60,7 @@ async function fetchBootstrapAPI(): Promise<BootstrapResponse | null> {
     return null
   }
 
-  const endpoint = `${getOauthConfig().BASE_API_URL}/api/claude_cli/bootstrap`
+  const endpoint = `${getBaseApiUrl()}/api/claude_cli/bootstrap`
 
   // withOAuth401Retry handles the refresh-and-retry. API key users fail
   // through on 401 (no refresh mechanism — no OAuth token to pass).
@@ -72,7 +72,6 @@ async function fetchBootstrapAPI(): Promise<BootstrapResponse | null> {
       if (token && hasProfileScope()) {
         authHeaders = {
           Authorization: `Bearer ${token}`,
-          'anthropic-beta': OAUTH_BETA_HEADER,
         }
       } else if (apiKey) {
         authHeaders = { 'x-api-key': apiKey }

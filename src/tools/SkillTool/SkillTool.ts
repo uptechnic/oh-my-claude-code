@@ -25,7 +25,7 @@ import type {
   SystemMessage,
   UserMessage,
 } from 'src/types/message.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import type { PermissionDecision } from 'src/utils/permissions/PermissionResult.js'
 import { getRuleByContentsForTool } from 'src/utils/permissions/permissions.js'
 import {
@@ -46,19 +46,19 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_PII_TAGGED,
   logEvent,
 } from '../../services/analytics/index.js'
-import { getAgentContext } from '../../utils/agentContext.js'
+import { getAgentContext } from '../../utils/agent/agentContext.js'
 import { errorMessage } from '../../utils/errors.js'
 import {
   extractResultText,
   prepareForkedCommandContext,
-} from '../../utils/forkedAgent.js'
-import { parseFrontmatter } from '../../utils/frontmatterParser.js'
+} from '../../utils/agent/forkedAgent.js'
+import { parseFrontmatter } from '../../utils/text/frontmatterParser.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { createUserMessage, normalizeMessages } from '../../utils/messages.js'
+import { createUserMessage, normalizeMessages } from '../../utils/messages/messages.js'
 import type { ModelAlias } from '../../utils/model/aliases.js'
 import { resolveSkillModelOverride } from '../../utils/model/model.js'
 import { recordSkillUsage } from '../../utils/suggestions/skillUsageTracking.js'
-import { createAgentId } from '../../utils/uuid.js'
+import { createAgentId } from '../../utils/text/uuid.js'
 import { runAgent } from '../AgentTool/runAgent.js'
 import {
   getToolUseIDFromParentMessage,

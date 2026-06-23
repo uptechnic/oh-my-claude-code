@@ -4,16 +4,16 @@ import {
   getLatestVersion,
   type InstallStatus,
   installGlobalPackage,
-} from 'src/utils/autoUpdater.js'
+} from 'src/utils/lifecycle/autoUpdater.js'
 import { regenerateCompletionCache } from 'src/utils/completionCache.js'
 import {
   getGlobalConfig,
   type InstallMethod,
   saveGlobalConfig,
-} from 'src/utils/config.js'
-import { logForDebugging } from 'src/utils/debug.js'
+} from 'src/utils/config/config.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { getDoctorDiagnostic } from 'src/utils/doctorDiagnostic.js'
-import { gracefulShutdown } from 'src/utils/gracefulShutdown.js'
+import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
 import {
   installOrUpdateClaudePackage,
   localInstallationExists,
@@ -23,8 +23,8 @@ import {
   removeInstalledSymlink,
 } from 'src/utils/nativeInstaller/index.js'
 import { getPackageManager } from 'src/utils/nativeInstaller/packageManagers.js'
-import { writeToStdout } from 'src/utils/process.js'
-import { gte } from 'src/utils/semver.js'
+import { writeToStdout } from 'src/utils/platform/process.js'
+import { gte } from 'src/utils/text/semver.js'
 import { getInitialSettings } from 'src/utils/settings/settings.js'
 
 export async function update() {

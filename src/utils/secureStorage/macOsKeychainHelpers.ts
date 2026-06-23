@@ -16,8 +16,7 @@
 
 import { createHash } from 'crypto'
 import { userInfo } from 'os'
-import { getOauthConfig } from 'src/constants/oauth.js'
-import { getClaudeConfigHomeDir } from '../envUtils.js'
+import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import type { SecureStorageData } from './types.js'
 
 // Suffix distinguishing the OAuth credentials keychain entry from the legacy
@@ -37,7 +36,7 @@ export function getMacOsKeychainStorageServiceName(
   const dirHash = isDefaultDir
     ? ''
     : `-${createHash('sha256').update(configDir).digest('hex').substring(0, 8)}`
-  return `Claude Code${getOauthConfig().OAUTH_FILE_SUFFIX}${serviceSuffix}${dirHash}`
+  return `Claude Code${serviceSuffix}${dirHash}`
 }
 
 export function getUsername(): string {

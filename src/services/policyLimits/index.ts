@@ -17,29 +17,25 @@ import { createHash } from 'crypto'
 import { readFileSync as fsReadFileSync } from 'fs'
 import { unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
-import {
-  CLAUDE_AI_INFERENCE_SCOPE,
-  getOauthConfig,
-  OAUTH_BETA_HEADER,
-} from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getAnthropicApiKeyWithSource,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
-import { registerCleanup } from '../../utils/cleanupRegistry.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+} from '../../utils/auth/auth.js'
+import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 import { classifyAxiosError } from '../../utils/errors.js'
-import { safeParseJSON } from '../../utils/json.js'
+import { safeParseJSON } from '../../utils/text/json.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
 } from '../../utils/model/providers.js'
-import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
-import { sleep } from '../../utils/sleep.js'
+import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { getRetryDelay } from '../api/withRetry.js'
 import {
   type PolicyLimitsFetchResult,
@@ -124,7 +120,7 @@ function getCachePath(): string {
  * Get the policy limits API endpoint
  */
 function getPolicyLimitsEndpoint(): string {
-  return `${getOauthConfig().BASE_API_URL}/api/claude_code/policy_limits`
+  return `${getBaseApiUrl()}/api/claude_code/policy_limits`
 }
 
 /**
@@ -250,7 +246,6 @@ function getAuthHeaders(): {
     return {
       headers: {
         Authorization: `Bearer ${oauthTokens.accessToken}`,
-        'anthropic-beta': OAUTH_BETA_HEADER,
       },
     }
   }

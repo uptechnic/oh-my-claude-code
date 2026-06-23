@@ -20,16 +20,16 @@ import type {
   PermissionDecisionReason,
   PermissionDenyDecision,
 } from '../../types/permissions.js'
-import { setClassifierApproval } from '../../utils/classifierApprovals.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { executePermissionRequestHooks } from '../../utils/hooks.js'
+import { setClassifierApproval } from '../../utils/permissions/classifierApprovals.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { executePermissionRequestHooks } from '../../utils/hooks/hooks.js'
 import {
   REJECT_MESSAGE,
   REJECT_MESSAGE_WITH_REASON_PREFIX,
   SUBAGENT_REJECT_MESSAGE,
   SUBAGENT_REJECT_MESSAGE_WITH_REASON_PREFIX,
   withMemoryCorrectionHint,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import type { PermissionDecision } from '../../utils/permissions/PermissionResult.js'
 import {
   applyPermissionUpdates,

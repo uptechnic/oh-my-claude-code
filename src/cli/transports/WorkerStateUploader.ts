@@ -1,4 +1,4 @@
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 
 /**
  * Coalescing uploader for PUT /worker (session state + metadata).

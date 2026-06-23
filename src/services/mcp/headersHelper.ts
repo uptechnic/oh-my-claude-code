@@ -1,9 +1,9 @@
 import { getIsNonInteractiveSession } from '../../bootstrap/state.js'
-import { checkHasTrustDialogAccepted } from '../../utils/config.js'
-import { logAntError } from '../../utils/debug.js'
+import { checkHasTrustDialogAccepted } from '../../utils/config/config.js'
+import { logAntError } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
 import { execFileNoThrowWithCwd } from '../../utils/execFileNoThrow.js'
-import { logError, logMCPDebug, logMCPError } from '../../utils/log.js'
+import { logError, logMCPDebug, logMCPError } from '../../utils/debug/log.js'
 import { jsonParse } from '../../utils/slowOperations.js'
 import { logEvent } from '../analytics/index.js'
 import type {

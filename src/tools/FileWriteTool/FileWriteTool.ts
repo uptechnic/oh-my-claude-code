@@ -14,26 +14,26 @@ import {
 } from '../../skills/loadSkillsDir.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { getCwd } from '../../utils/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { countLinesChanged, getPatchForDisplay } from '../../utils/diff.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { isENOENT } from '../../utils/errors.js'
-import { getFileModificationTime, writeTextContent } from '../../utils/file.js'
+import { getFileModificationTime, writeTextContent } from '../../utils/files/file.js'
 import {
   fileHistoryEnabled,
   fileHistoryTrackEdit,
-} from '../../utils/fileHistory.js'
+} from '../../utils/files/fileHistory.js'
 import { logFileOperation } from '../../utils/fileOperationAnalytics.js'
-import { readFileSyncWithMetadata } from '../../utils/fileRead.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
+import { readFileSyncWithMetadata } from '../../utils/files/fileRead.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   fetchSingleFileGitDiff,
   type ToolUseDiff,
-} from '../../utils/gitDiff.js'
+} from '../../utils/git/gitDiff.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
-import { expandPath } from '../../utils/path.js'
+import { logError } from '../../utils/debug/log.js'
+import { expandPath } from '../../utils/platform/path.js'
 import {
   checkWritePermissionForTool,
   matchingRuleForInput,

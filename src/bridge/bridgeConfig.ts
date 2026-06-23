@@ -11,8 +11,8 @@
  * using IPC auth) use the Override getters directly.
  */
 
-import { getOauthConfig } from '../constants/oauth.js'
-import { getClaudeAIOAuthTokens } from '../utils/auth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getClaudeAIOAuthTokens } from '../utils/auth/auth.js'
 
 /** Ant-only dev override: CLAUDE_BRIDGE_OAUTH_TOKEN, else undefined. */
 export function getBridgeTokenOverride(): string | undefined {
@@ -44,5 +44,5 @@ export function getBridgeAccessToken(): string | undefined {
  * OAuth config. Always returns a URL.
  */
 export function getBridgeBaseUrl(): string {
-  return getBridgeBaseUrlOverride() ?? getOauthConfig().BASE_API_URL
+  return getBridgeBaseUrlOverride() ?? getBaseApiUrl()
 }

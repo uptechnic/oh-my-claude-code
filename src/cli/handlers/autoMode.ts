@@ -14,7 +14,7 @@ import {
   getDefaultExternalAutoModeRules,
 } from '../../utils/permissions/yoloClassifier.js'
 import { getAutoModeConfig } from '../../utils/settings/settings.js'
-import { sideQuery } from '../../utils/sideQuery.js'
+import { sideQuery } from '../../utils/agent/sideQuery.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 
 function writeRules(rules: AutoModeRules): void {

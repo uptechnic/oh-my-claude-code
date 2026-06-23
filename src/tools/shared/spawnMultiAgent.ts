@@ -5,7 +5,6 @@
 
 import React from 'react'
 import {
-  getChromeFlagOverride,
   getFlagSettingsPath,
   getInlinePlugins,
   getMainLoopModelOverride,
@@ -16,12 +15,12 @@ import type { AppState } from '../../state/AppState.js'
 import { createTaskStateBase, generateTaskId } from '../../Task.js'
 import type { ToolUseContext } from '../../Tool.js'
 import type { InProcessTeammateTaskState } from '../../tasks/InProcessTeammateTask/types.js'
-import { formatAgentId } from '../../utils/agentId.js'
+import { formatAgentId } from '../../utils/agent/agentId.js'
 import { quote } from '../../utils/bash/shellQuote.js'
-import { isInBundledMode } from '../../utils/bundledMode.js'
-import { getGlobalConfig } from '../../utils/config.js'
-import { getCwd } from '../../utils/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { isInBundledMode } from '../../utils/config/bundledMode.js'
+import { getGlobalConfig } from '../../utils/config/config.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js'
 import { parseUserSpecifiedModel } from '../../utils/model/model.js'
@@ -65,7 +64,7 @@ import {
 } from '../../utils/swarm/teammateLayoutManager.js'
 import { getHardcodedTeammateModelFallback } from '../../utils/swarm/teammateModel.js'
 import { registerTask } from '../../utils/task/framework.js'
-import { writeToMailbox } from '../../utils/teammateMailbox.js'
+import { writeToMailbox } from '../../utils/swarm/teammateMailbox.js'
 import type { CustomAgentDefinition } from '../AgentTool/loadAgentsDir.js'
 import { isCustomAgent } from '../AgentTool/loadAgentsDir.js'
 
@@ -246,14 +245,6 @@ function buildInheritedCliFlags(options?: {
   const inlinePlugins = getInlinePlugins()
   for (const pluginDir of inlinePlugins) {
     flags.push(`--plugin-dir ${quote([pluginDir])}`)
-  }
-
-  // Propagate --chrome / --no-chrome if explicitly set on the CLI
-  const chromeFlagOverride = getChromeFlagOverride()
-  if (chromeFlagOverride === true) {
-    flags.push('--chrome')
-  } else if (chromeFlagOverride === false) {
-    flags.push('--no-chrome')
   }
 
   return flags.join(' ')

@@ -16,8 +16,8 @@ import type {
   TombstoneMessage,
   ToolUseSummaryMessage,
 } from '../types/message.js'
-import { createAttachmentMessage } from '../utils/attachments.js'
-import { logForDebugging } from '../utils/debug.js'
+import { createAttachmentMessage } from '../utils/media/attachments.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import type { REPLHookContext } from '../utils/hooks/postSamplingHooks.js'
 import {
@@ -27,16 +27,16 @@ import {
   getStopHookMessage,
   getTaskCompletedHookMessage,
   getTeammateIdleHookMessage,
-} from '../utils/hooks.js'
+} from '../utils/hooks/hooks.js'
 import {
   createStopHookSummaryMessage,
   createSystemMessage,
   createUserInterruptionMessage,
   createUserMessage,
-} from '../utils/messages.js'
-import type { SystemPrompt } from '../utils/systemPromptType.js'
-import { getTaskListId, listTasks } from '../utils/tasks.js'
-import { getAgentName, getTeamName, isTeammate } from '../utils/teammate.js'
+} from '../utils/messages/messages.js'
+import type { SystemPrompt } from '../utils/agent/systemPromptType.js'
+import { getTaskListId, listTasks } from '../utils/task/tasks.js'
+import { getAgentName, getTeamName, isTeammate } from '../utils/swarm/teammate.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const extractMemoriesModule = feature('EXTRACT_MEMORIES')
@@ -51,11 +51,11 @@ const jobClassifierModule = feature('TEMPLATES')
 import type { QuerySource } from '../constants/querySource.js'
 import { executeAutoDream } from '../services/autoDream/autoDream.js'
 import { executePromptSuggestion } from '../services/PromptSuggestion/promptSuggestion.js'
-import { isBareMode, isEnvDefinedFalsy } from '../utils/envUtils.js'
+import { isBareMode, isEnvDefinedFalsy } from '../utils/platform/envUtils.js'
 import {
   createCacheSafeParams,
   saveCacheSafeParams,
-} from '../utils/forkedAgent.js'
+} from '../utils/agent/forkedAgent.js'
 
 type StopHookResult = {
   blockingErrors: Message[]
@@ -158,19 +158,7 @@ export async function* handleStopHooks(
 
   // chicago MCP: auto-unhide + lock release at turn end.
   // Main thread only — the CU lock is a process-wide module-level variable,
-  // so a subagent's stopHooks releasing it leaves the main thread's cleanup
-  // seeing isLockHeldLocally()===false → no exit notification, and unhides
-  // mid-turn. Subagents don't start CU sessions so this is a pure skip.
-  if (feature('CHICAGO_MCP') && !toolUseContext.agentId) {
-    try {
-      const { cleanupComputerUseAfterTurn } = await import(
-        '../utils/computerUse/cleanup.js'
-      )
-      await cleanupComputerUseAfterTurn(toolUseContext)
-    } catch {
-      // Failures are silent — this is dogfooding cleanup, not critical path
-    }
-  }
+  // so a subagent's stopHooks ... is a pure skip.
 
   try {
     const blockingErrors = []

@@ -57,9 +57,9 @@ import type {
   ProgressMessage,
   StopHookInfo,
 } from '../../types/message.js'
-import { count } from '../../utils/array.js'
-import { createAttachmentMessage } from '../../utils/attachments.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { count } from '../../utils/text/array.js'
+import { createAttachmentMessage } from '../../utils/media/attachments.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   AbortError,
   errorMessage,
@@ -67,8 +67,8 @@ import {
   ShellError,
   TelemetrySafeError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from '../../utils/errors.js'
-import { executePermissionDeniedHooks } from '../../utils/hooks.js'
-import { logError } from '../../utils/log.js'
+import { executePermissionDeniedHooks } from '../../utils/hooks/hooks.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   CANCEL_MESSAGE,
   createProgressMessage,
@@ -76,7 +76,7 @@ import {
   createToolResultStopMessage,
   createUserMessage,
   withMemoryCorrectionHint,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import type {
   PermissionDecisionReason,
   PermissionResult,
@@ -84,9 +84,9 @@ import type {
 import {
   startSessionActivity,
   stopSessionActivity,
-} from '../../utils/sessionActivity.js'
+} from '../../utils/session/sessionActivity.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { Stream } from '../../utils/stream.js'
+import { Stream } from '../../utils/concurrency/stream.js'
 import { logOTelEvent } from '../../utils/telemetry/events.js'
 import {
   addToolContentEvent,
@@ -110,7 +110,7 @@ import {
   extractDiscoveredToolNames,
   isToolSearchEnabledOptimistic,
   isToolSearchToolAvailable,
-} from '../../utils/toolSearch.js'
+} from '../../utils/agent/toolSearch.js'
 import {
   McpAuthError,
   McpToolCallError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,

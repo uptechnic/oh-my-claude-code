@@ -2,13 +2,13 @@ import memoize from 'lodash-es/memoize.js'
 import { homedir } from 'os'
 import { dirname, isAbsolute, resolve } from 'path'
 import type { ToolPermissionContext } from '../../Tool.js'
-import { getPlatform } from '../../utils/platform.js'
+import { getPlatform } from '../platform/platform.js'
 import {
   getFsImplementation,
   getPathsForPermissionCheck,
   safeResolvePath,
-} from '../fsOperations.js'
-import { containsPathTraversal } from '../path.js'
+} from '../files/fsOperations.js'
+import { containsPathTraversal } from '../platform/path.js'
 import { SandboxManager } from '../sandbox/sandbox-adapter.js'
 import { containsVulnerableUncPath } from '../shell/readOnlyCommandValidation.js'
 import {

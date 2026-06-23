@@ -22,15 +22,15 @@ import type {
   ClassifierUsage,
   YoloClassifierResult,
 } from '../../types/permissions.js'
-import { isDebugMode, logForDebugging } from '../debug.js'
-import { isEnvDefinedFalsy, isEnvTruthy } from '../envUtils.js'
+import { isDebugMode, logForDebugging } from '../debug/debug.js'
+import { isEnvDefinedFalsy, isEnvTruthy } from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
 import { lazySchema } from '../lazySchema.js'
-import { extractTextContent } from '../messages.js'
+import { extractTextContent } from '../messages/messages.js'
 import { resolveAntModel } from '../model/antModels.js'
 import { getMainLoopModel } from '../model/model.js'
 import { getAutoModeConfig } from '../settings/settings.js'
-import { sideQuery } from '../sideQuery.js'
+import { sideQuery } from '../agent/sideQuery.js'
 import { jsonStringify } from '../slowOperations.js'
 import { tokenCountWithEstimation } from '../tokens.js'
 import {

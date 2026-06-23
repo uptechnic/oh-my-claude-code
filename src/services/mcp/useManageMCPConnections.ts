@@ -51,7 +51,7 @@ import {
 } from 'src/services/mcp/config.js'
 import type { AppState } from 'src/state/AppState.js'
 import type { PluginError } from 'src/types/plugin.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { getAllowedChannels } from '../../bootstrap/state.js'
 import { useNotifications } from '../../context/notifications.js'
 import {
@@ -61,7 +61,7 @@ import {
 } from '../../state/AppState.js'
 import { errorMessage } from '../../utils/errors.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
-import { logMCPDebug, logMCPError } from '../../utils/log.js'
+import { logMCPDebug, logMCPError } from '../../utils/debug/log.js'
 import { enqueue } from '../../utils/messageQueueManager.js'
 import {
   CHANNEL_PERMISSION_METHOD,

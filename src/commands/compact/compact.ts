@@ -22,14 +22,14 @@ import type { ToolUseContext } from '../../Tool.js'
 import type { LocalCommandCall } from '../../types/command.js'
 import type { Message } from '../../types/message.js'
 import { hasExactErrorMessage } from '../../utils/errors.js'
-import { executePreCompactHooks } from '../../utils/hooks.js'
-import { logError } from '../../utils/log.js'
-import { getMessagesAfterCompactBoundary } from '../../utils/messages.js'
+import { executePreCompactHooks } from '../../utils/hooks/hooks.js'
+import { logError } from '../../utils/debug/log.js'
+import { getMessagesAfterCompactBoundary } from '../../utils/messages/messages.js'
 import { getUpgradeMessage } from '../../utils/model/contextWindowUpgradeCheck.js'
 import {
   buildEffectiveSystemPrompt,
   type SystemPrompt,
-} from '../../utils/systemPrompt.js'
+} from '../../utils/agent/systemPrompt.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const reactiveCompact = feature('REACTIVE_COMPACT')

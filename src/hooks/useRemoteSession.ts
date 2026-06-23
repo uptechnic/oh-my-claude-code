@@ -21,15 +21,15 @@ import type { Tool } from '../Tool.js'
 import { findToolByName } from '../Tool.js'
 import type { Message as MessageType } from '../types/message.js'
 import type { PermissionAskDecision } from '../types/permissions.js'
-import { logForDebugging } from '../utils/debug.js'
-import { truncateToWidth } from '../utils/format.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { truncateToWidth } from '../utils/text/format.js'
 import {
   createSystemMessage,
   extractTextContent,
   handleMessageFromStream,
   type StreamingToolUse,
-} from '../utils/messages.js'
-import { generateSessionTitle } from '../utils/sessionTitle.js'
+} from '../utils/messages/messages.js'
+import { generateSessionTitle } from '../utils/session/sessionTitle.js'
 import type { RemoteMessageContent } from '../utils/teleport/api.js'
 import { updateSessionTitle } from '../utils/teleport/api.js'
 

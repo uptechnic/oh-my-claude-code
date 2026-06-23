@@ -54,24 +54,23 @@ import {
   logAPIPrefix,
   splitSysPromptPrefix,
   toolToAPISchema,
-} from '../../utils/api.js'
-import { getOauthAccountInfo } from '../../utils/auth.js'
+} from '../../utils/api/api.js'
+import { getOauthAccountInfo } from '../../utils/auth/auth.js'
 import {
-  getBedrockExtraBodyParamsBetas,
   getMergedBetas,
   getModelBetas,
-} from '../../utils/betas.js'
-import { getOrCreateUserID } from '../../utils/config.js'
+} from '../../utils/config/betas.js'
+import { getOrCreateUserID } from '../../utils/config/config.js'
 import {
   CAPPED_DEFAULT_MAX_TOKENS,
   getModelMaxOutputTokens,
   getSonnet1mExpTreatmentEnabled,
 } from '../../utils/context.js'
-import { resolveAppliedEffort } from '../../utils/effort.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { resolveAppliedEffort } from '../../utils/config/effort.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import { computeFingerprintFromMessages } from '../../utils/fingerprint.js'
-import { captureAPIRequest, logError } from '../../utils/log.js'
+import { captureAPIRequest, logError } from '../../utils/debug/log.js'
 import {
   createAssistantAPIErrorMessage,
   createUserMessage,
@@ -81,7 +80,7 @@ import {
   stripAdvisorBlocks,
   stripCallerFieldFromAssistantMessage,
   stripToolReferenceBlocksFromUserMessage,
-} from '../../utils/messages.js'
+} from '../../utils/messages/messages.js'
 import {
   getDefaultOpusModel,
   getDefaultSonnetModel,
@@ -91,7 +90,7 @@ import {
 import {
   asSystemPrompt,
   type SystemPrompt,
-} from '../../utils/systemPromptType.js'
+} from '../../utils/agent/systemPromptType.js'
 import { tokenCountFromLastAPIResponse } from '../../utils/tokens.js'
 import { getDynamicConfig_BLOCKS_ON_INIT } from '../analytics/growthbook.js'
 import {
@@ -153,30 +152,28 @@ import {
   isValidAdvisorModel,
   modelSupportsAdvisor,
 } from 'src/utils/advisor.js'
-import { getAgentContext } from 'src/utils/agentContext.js'
-import { isClaudeAISubscriber } from 'src/utils/auth.js'
+import { getAgentContext } from 'src/utils/agent/agentContext.js'
+import { isClaudeAISubscriber } from 'src/utils/auth/auth.js'
 import {
   getToolSearchBetaHeader,
   modelSupportsStructuredOutputs,
   shouldIncludeFirstPartyOnlyBetas,
   shouldUseGlobalCacheScope,
-} from 'src/utils/betas.js'
-import { CLAUDE_IN_CHROME_MCP_SERVER_NAME } from 'src/utils/claudeInChrome/common.js'
-import { CHROME_TOOL_SEARCH_INSTRUCTIONS } from 'src/utils/claudeInChrome/prompt.js'
+} from 'src/utils/config/betas.js'
 import { getMaxThinkingTokensForModel } from 'src/utils/context.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { logForDiagnosticsNoPII } from 'src/utils/diagLogs.js'
-import { type EffortValue, modelSupportsEffort } from 'src/utils/effort.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from 'src/utils/debug/diagLogs.js'
+import { type EffortValue, modelSupportsEffort } from 'src/utils/config/effort.js'
 import {
   isFastModeAvailable,
   isFastModeCooldown,
   isFastModeEnabled,
   isFastModeSupportedByModel,
-} from 'src/utils/fastMode.js'
+} from 'src/utils/config/fastMode.js'
 import { returnValue } from 'src/utils/generators.js'
 import { headlessProfilerCheckpoint } from 'src/utils/headlessProfiler.js'
-import { isMcpInstructionsDeltaEnabled } from 'src/utils/mcpInstructionsDelta.js'
-import { calculateUSDCost } from 'src/utils/modelCost.js'
+import { isMcpInstructionsDeltaEnabled } from 'src/utils/mcp/mcpInstructionsDelta.js'
+import { calculateUSDCost } from 'src/utils/api/modelCost.js'
 import { endQueryProfile, queryCheckpoint } from 'src/utils/queryProfiler.js'
 import {
   modelSupportsAdaptiveThinking,
@@ -187,7 +184,7 @@ import {
   extractDiscoveredToolNames,
   isDeferredToolsDeltaEnabled,
   isToolSearchEnabled,
-} from 'src/utils/toolSearch.js'
+} from 'src/utils/agent/toolSearch.js'
 import { API_MAX_MEDIA_PER_REQUEST } from '../../constants/apiLimits.js'
 import { ADVISOR_BETA_HEADER } from '../../constants/betas.js'
 import {
@@ -195,11 +192,10 @@ import {
   isDeferredTool,
   TOOL_SEARCH_TOOL_NAME,
 } from '../../tools/ToolSearchTool/prompt.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import { insertBlockAfterToolResults } from '../../utils/contentArray.js'
-import { validateBoundedIntEnvVar } from '../../utils/envValidation.js'
-import { safeParseJSON } from '../../utils/json.js'
-import { getInferenceProfileBackingModel } from '../../utils/model/bedrock.js'
+import { validateBoundedIntEnvVar } from '../../utils/platform/envValidation.js'
+import { safeParseJSON } from '../../utils/text/json.js'
 import {
   normalizeModelStringForAPI,
   parseUserSpecifiedModel,
@@ -207,7 +203,7 @@ import {
 import {
   startSessionActivity,
   stopSessionActivity,
-} from '../../utils/sessionActivity.js'
+} from '../../utils/session/sessionActivity.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   isBetaTracingEnabled,
@@ -1054,12 +1050,7 @@ async function* queryModel(
   // Also naturally handles rollback/undo since removed messages won't be in the array.
   const previousRequestId = getPreviousRequestIdFromMessages(messages)
 
-  const resolvedModel =
-    getAPIProvider() === 'bedrock' &&
-    options.model.includes('application-inference-profile')
-      ? ((await getInferenceProfileBackingModel(options.model)) ??
-        options.model)
-      : options.model
+  const resolvedModel = options.model
 
   queryCheckpoint('query_tool_schema_build_start')
   const isAgenticQuery =
@@ -1175,7 +1166,7 @@ async function* queryModel(
   // Header differs by provider: 1P/Foundry use advanced-tool-use, Vertex/Bedrock use tool-search-tool
   // For Bedrock, this header must go in extraBodyParams, not the betas array
   const toolSearchHeader = useToolSearch ? getToolSearchBetaHeader() : null
-  if (toolSearchHeader && getAPIProvider() !== 'bedrock') {
+  if (toolSearchHeader) {
     if (!betas.includes(toolSearchHeader)) {
       betas.push(toolSearchHeader)
     }
@@ -1344,16 +1335,6 @@ async function* queryModel(
     }
   }
 
-  // Chrome tool-search instructions: when the delta attachment is enabled,
-  // these are carried as a client-side block in mcp_instructions_delta
-  // (attachments.ts) instead of here. This per-request sys-prompt append
-  // busts the prompt cache when chrome connects late.
-  const hasChromeTools = filteredTools.some(t =>
-    isToolFromMcpServer(t.name, CLAUDE_IN_CHROME_MCP_SERVER_NAME),
-  )
-  const injectChromeHere =
-    useToolSearch && hasChromeTools && !isMcpInstructionsDeltaEnabled()
-
   // filter(Boolean) works by converting each element to a boolean - empty strings become false and are filtered out.
   systemPrompt = asSystemPrompt(
     [
@@ -1364,7 +1345,6 @@ async function* queryModel(
       }),
       ...systemPrompt,
       ...(advisorModel ? [ADVISOR_TOOL_INSTRUCTIONS] : []),
-      ...(injectChromeHere ? [CHROME_TOOL_SEARCH_INSTRUCTIONS] : []),
     ].filter(Boolean),
   )
 
@@ -1547,14 +1527,7 @@ async function* queryModel(
     }
 
     // For Bedrock, include both model-based betas and dynamically-added tool search header
-    const bedrockBetas =
-      getAPIProvider() === 'bedrock'
-        ? [
-            ...getBedrockExtraBodyParamsBetas(retryContext.model),
-            ...(toolSearchHeader ? [toolSearchHeader] : []),
-          ]
-        : []
-    const extraBodyParams = getExtraBodyParams(bedrockBetas)
+    const extraBodyParams = getExtraBodyParams([])
 
     const outputConfig: BetaOutputConfig = {
       ...((extraBodyParams.output_config as BetaOutputConfig) ?? {}),

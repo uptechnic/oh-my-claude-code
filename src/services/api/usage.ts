@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { getOauthConfig } from '../../constants/oauth.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   getClaudeAIOAuthTokens,
   hasProfileScope,
   isClaudeAISubscriber,
-} from '../../utils/auth.js'
-import { getAuthHeaders } from '../../utils/http.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
-import { isOAuthTokenExpired } from '../oauth/client.js'
+} from '../../utils/auth/auth.js'
+import { getAuthHeaders } from '../../utils/api/http.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 export type RateLimit = {
   utilization: number | null // a percentage from 0 to 100
@@ -31,33 +30,6 @@ export type Utilization = {
 }
 
 export async function fetchUtilization(): Promise<Utilization | null> {
-  if (!isClaudeAISubscriber() || !hasProfileScope()) {
-    return {}
-  }
-
-  // Skip API call if OAuth token is expired to avoid 401 errors
-  const tokens = getClaudeAIOAuthTokens()
-  if (tokens && isOAuthTokenExpired(tokens.expiresAt)) {
-    return null
-  }
-
-  const authResult = getAuthHeaders()
-  if (authResult.error) {
-    throw new Error(`Auth error: ${authResult.error}`)
-  }
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'User-Agent': getClaudeCodeUserAgent(),
-    ...authResult.headers,
-  }
-
-  const url = `${getOauthConfig().BASE_API_URL}/api/oauth/usage`
-
-  const response = await axios.get<Utilization>(url, {
-    headers,
-    timeout: 5000, // 5 second timeout
-  })
-
-  return response.data
+  // Offline mode — API key users don't fetch utilization
+  return {}
 }

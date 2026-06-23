@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { getOauthConfig } from '../../constants/oauth.js'
-import { getOauthAccountInfo } from '../../utils/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
-import { logError } from '../../utils/log.js'
-import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getOauthAccountInfo } from '../../utils/auth/auth.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
+import { logError } from '../../utils/debug/log.js'
+import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 
 export type OverageCreditGrantInfo = {
@@ -29,7 +29,7 @@ const CACHE_TTL_MS = 60 * 60 * 1000 // 1 hour
 async function fetchOverageCreditGrant(): Promise<OverageCreditGrantInfo | null> {
   try {
     const { accessToken, orgUUID } = await prepareApiRequest()
-    const url = `${getOauthConfig().BASE_API_URL}/api/oauth/organizations/${orgUUID}/overage_credit_grant`
+    const url = `${getBaseApiUrl()}/api/oauth/organizations/${orgUUID}/overage_credit_grant`
     const response = await axios.get<OverageCreditGrantInfo>(url, {
       headers: getOAuthHeaders(accessToken),
     })

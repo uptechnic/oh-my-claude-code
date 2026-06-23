@@ -11,9 +11,9 @@ import { Ansi, Box, Text } from '../../ink.js';
 import type { ToolProgressData } from '../../Tool.js';
 import type { ProgressMessage } from '../../types/message.js';
 import type { MCPProgress } from '../../types/tools.js';
-import { formatNumber } from '../../utils/format.js';
+import { formatNumber } from '../../utils/text/format.js';
 import { createHyperlink } from '../../utils/hyperlink.js';
-import { getContentSizeEstimate, type MCPToolResult } from '../../utils/mcpValidation.js';
+import { getContentSizeEstimate, type MCPToolResult } from '../../utils/mcp/mcpValidation.js';
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js';
 import type { inputSchema } from './MCPTool.js';
 

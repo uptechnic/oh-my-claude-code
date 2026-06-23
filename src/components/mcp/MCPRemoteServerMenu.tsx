@@ -2,7 +2,6 @@ import figures from 'figures';
 import React, { useEffect, useRef, useState } from 'react';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from 'src/services/analytics/index.js';
 import type { CommandResultDisplay } from '../../commands.js';
-import { getOauthConfig } from '../../constants/oauth.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
 import { setClipboard } from '../../ink/termio/osc.js';
@@ -14,11 +13,11 @@ import { clearServerCache } from '../../services/mcp/client.js';
 import { useMcpReconnect, useMcpToggleEnabled } from '../../services/mcp/MCPConnectionManager.js';
 import { describeMcpConfigFilePath, excludeCommandsByServer, excludeResourcesByServer, excludeToolsByServer, filterMcpPromptsByServer } from '../../services/mcp/utils.js';
 import { useAppState, useSetAppState } from '../../state/AppState.js';
-import { getOauthAccountInfo } from '../../utils/auth.js';
+import { getOauthAccountInfo } from '../../utils/auth/auth.js';
 import { openBrowser } from '../../utils/browser.js';
 import { errorMessage } from '../../utils/errors.js';
-import { logMCPDebug } from '../../utils/log.js';
-import { capitalize } from '../../utils/stringUtils.js';
+import { logMCPDebug } from '../../utils/debug/log.js';
+import { capitalize } from '../../utils/text/stringUtils.js';
 import { ConfigurableShortcutHint } from '../ConfigurableShortcutHint.js';
 import { Select } from '../CustomSelect/index.js';
 import { Byline } from '../design-system/Byline.js';
@@ -186,7 +185,7 @@ export function MCPRemoteServerMenu({
         void handleClaudeAIClearAuthComplete();
       } else {
         // First Enter: open the browser
-        const connectorsUrl = `${getOauthConfig().CLAUDE_AI_ORIGIN}/settings/connectors`;
+        const connectorsUrl = `/settings/connectors`;
         setClaudeAIClearAuthUrl(connectorsUrl);
         setClaudeAIClearAuthBrowserOpened(true);
         void openBrowser(connectorsUrl);
@@ -213,7 +212,7 @@ export function MCPRemoteServerMenu({
   const serverCommandsCount = filterMcpPromptsByServer(mcp.commands, server.name).length;
   const toggleMcpServer = useMcpToggleEnabled();
   const handleClaudeAIAuth = React.useCallback(async () => {
-    const claudeAiBaseUrl = getOauthConfig().CLAUDE_AI_ORIGIN;
+    const claudeAiBaseUrl = '';
     const accountInfo = getOauthAccountInfo();
     const orgUuid = accountInfo?.organizationUuid;
     let authUrl: string;

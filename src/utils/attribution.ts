@@ -21,18 +21,18 @@ import {
   isInternalModelRepoCached,
   sanitizeModelName,
 } from './commitAttribution.js'
-import { logForDebugging } from './debug.js'
-import { parseJSONL } from './json.js'
-import { logError } from './log.js'
+import { logForDebugging } from './debug/debug.js'
+import { parseJSONL } from './text/json.js'
+import { logError } from './debug/log.js'
 import {
   getCanonicalName,
   getMainLoopModel,
   getPublicModelDisplayName,
   getPublicModelName,
 } from './model/model.js'
-import { isMemoryFileAccess } from './sessionFileAccessHooks.js'
-import { getTranscriptPath } from './sessionStorage.js'
-import { readTranscriptForLoad } from './sessionStoragePortable.js'
+import { isMemoryFileAccess } from './session/sessionFileAccessHooks.js'
+import { getTranscriptPath } from './session/sessionStorage.js'
+import { readTranscriptForLoad } from './session/sessionStoragePortable.js'
 import { getInitialSettings } from './settings/settings.js'
 import { isUndercover } from './undercover.js'
 

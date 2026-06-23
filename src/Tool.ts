@@ -56,9 +56,9 @@ import type {
   ToolProgressData,
   WebSearchProgress,
 } from './types/tools.js'
-import type { FileStateCache } from './utils/fileStateCache.js'
+import type { FileStateCache } from './utils/files/fileStateCache.js'
 import type { DenialTrackingState } from './utils/permissions/denialTracking.js'
-import type { SystemPrompt } from './utils/systemPromptType.js'
+import type { SystemPrompt } from './utils/agent/systemPromptType.js'
 import type { ContentReplacementState } from './utils/toolResultStorage.js'
 
 // Re-export progress types for backwards compatibility
@@ -84,8 +84,8 @@ import type {
 import type { AgentId } from './types/ids.js'
 import type { DeepImmutable } from './types/utils.js'
 import type { AttributionState } from './utils/commitAttribution.js'
-import type { FileHistoryState } from './utils/fileHistory.js'
-import type { Theme, ThemeName } from './utils/theme.js'
+import type { FileHistoryState } from './utils/files/fileHistory.js'
+import type { Theme, ThemeName } from './utils/rendering/theme.js'
 
 export type QueryChainTracking = {
   chainId: string

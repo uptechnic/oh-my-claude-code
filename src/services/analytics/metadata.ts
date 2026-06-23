@@ -8,9 +8,9 @@
 
 import { extname } from 'path'
 import memoize from 'lodash-es/memoize.js'
-import { env, getHostPlatformForAnalytics } from '../../utils/env.js'
-import { envDynamic } from '../../utils/envDynamic.js'
-import { getModelBetas } from '../../utils/betas.js'
+import { env, getHostPlatformForAnalytics } from '../../utils/platform/env.js'
+import { envDynamic } from '../../utils/platform/envDynamic.js'
+import { getModelBetas } from '../../utils/config/betas.js'
 import { getMainLoopModel } from '../../utils/model/model.js'
 import {
   getSessionId,
@@ -19,17 +19,17 @@ import {
   getClientType,
   getParentSessionId as getParentSessionIdFromState,
 } from '../../bootstrap/state.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { isOfficialMcpUrl } from '../mcp/officialRegistry.js'
-import { isClaudeAISubscriber, getSubscriptionType } from '../../utils/auth.js'
-import { getRepoRemoteHash } from '../../utils/git.js'
+import { isClaudeAISubscriber, getSubscriptionType } from '../../utils/auth/auth.js'
+import { getRepoRemoteHash } from '../../utils/git/git.js'
 import {
   getWslVersion,
   getLinuxDistroInfo,
   detectVcs,
-} from '../../utils/platform.js'
+} from '../../utils/platform/platform.js'
 import type { CoreUserData } from 'src/utils/user.js'
-import { getAgentContext } from '../../utils/agentContext.js'
+import { getAgentContext } from '../../utils/agent/agentContext.js'
 import type { EnvironmentMetadata } from '../../types/generated/events_mono/claude_code/v1/claude_code_internal_event.js'
 import type { PublicApiAuth } from '../../types/generated/events_mono/common/v1/auth.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
@@ -38,7 +38,7 @@ import {
   getParentSessionId as getTeammateParentSessionId,
   getTeamName,
   isTeammate,
-} from '../../utils/teammate.js'
+} from '../../utils/swarm/teammate.js'
 import { feature } from 'bun:bundle'
 
 /**
@@ -122,20 +122,7 @@ export function isAnalyticsToolDetailsLoggingEnabled(
  * built-in would otherwise fail.
  *
  * Feature-gated so the set is empty when the feature is off: the name
- * reservation (main.tsx, config.ts addMcpServer) is itself feature-gated, so
- * a user-configured 'computer-use' is possible in builds without the feature.
  */
-/* eslint-disable @typescript-eslint/no-require-imports */
-const BUILTIN_MCP_SERVER_NAMES: ReadonlySet<string> = new Set(
-  feature('CHICAGO_MCP')
-    ? [
-        (
-          require('../../utils/computerUse/common.js') as typeof import('../../utils/computerUse/common.js')
-        ).COMPUTER_USE_MCP_SERVER_NAME,
-      ]
-    : [],
-)
-/* eslint-enable @typescript-eslint/no-require-imports */
 
 /**
  * Spreadable helper for logEvent payloads — returns {mcpServerName, mcpToolName}
@@ -155,7 +142,6 @@ export function mcpToolDetailsForAnalytics(
     return {}
   }
   if (
-    !BUILTIN_MCP_SERVER_NAMES.has(details.serverName) &&
     !isAnalyticsToolDetailsLoggingEnabled(mcpServerType, mcpServerBaseUrl)
   ) {
     return {}

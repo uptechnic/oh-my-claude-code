@@ -16,9 +16,9 @@ import {
 } from '../../services/analytics/index.js'
 import { queryHaiku } from '../../services/api/claude.js'
 import { startsWithApiErrorPrefix } from '../../services/api/errors.js'
-import { memoizeWithLRU } from '../memoize.js'
+import { memoizeWithLRU } from '../concurrency/memoize.js'
 import { jsonStringify } from '../slowOperations.js'
-import { asSystemPrompt } from '../systemPromptType.js'
+import { asSystemPrompt } from '../agent/systemPromptType.js'
 
 /**
  * Shell executables that must never be accepted as bare prefixes.

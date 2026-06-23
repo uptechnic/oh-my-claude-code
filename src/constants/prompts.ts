@@ -1,8 +1,8 @@
 // biome-ignore-all assist/source/organizeImports: ANT-ONLY import markers must not be reordered
 import { type as osType, version as osVersion, release as osRelease } from 'os'
-import { env } from '../utils/env.js'
-import { getIsGit } from '../utils/git.js'
-import { getCwd } from '../utils/cwd.js'
+import { env } from '../utils/platform/env.js'
+import { getIsGit } from '../utils/git/git.js'
+import { getCwd } from '../utils/platform/cwd.js'
 import { getIsNonInteractiveSession } from '../bootstrap/state.js'
 import { getCurrentWorktreeSession } from '../utils/worktree.js'
 import { getSessionStartDate } from './common.js'
@@ -32,7 +32,7 @@ import type {
 } from '../services/mcp/types.js'
 import { GLOB_TOOL_NAME } from 'src/tools/GlobTool/prompt.js'
 import { GREP_TOOL_NAME } from 'src/tools/GrepTool/prompt.js'
-import { hasEmbeddedSearchTools } from 'src/utils/embeddedTools.js'
+import { hasEmbeddedSearchTools } from 'src/utils/agent/embeddedTools.js'
 import { ASK_USER_QUESTION_TOOL_NAME } from '../tools/AskUserQuestionTool/prompt.js'
 import {
   EXPLORE_AGENT,
@@ -43,11 +43,11 @@ import {
   isScratchpadEnabled,
   getScratchpadDir,
 } from '../utils/permissions/filesystem.js'
-import { isEnvTruthy } from '../utils/envUtils.js'
+import { isEnvTruthy } from '../utils/platform/envUtils.js'
 import { isReplModeEnabled } from '../tools/REPLTool/constants.js'
 import { feature } from 'bun:bundle'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from 'src/services/analytics/growthbook.js'
-import { shouldUseGlobalCacheScope } from '../utils/betas.js'
+import { shouldUseGlobalCacheScope } from '../utils/config/betas.js'
 import { isForkSubagentEnabled } from '../tools/AgentTool/forkSubagent.js'
 import {
   systemPromptSection,
@@ -56,10 +56,10 @@ import {
 } from './systemPromptSections.js'
 import { SLEEP_TOOL_NAME } from '../tools/SleepTool/prompt.js'
 import { TICK_TAG } from './xml.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { loadMemoryPrompt } from '../memdir/memdir.js'
 import { isUndercover } from '../utils/undercover.js'
-import { isMcpInstructionsDeltaEnabled } from '../utils/mcpInstructionsDelta.js'
+import { isMcpInstructionsDeltaEnabled } from '../utils/mcp/mcpInstructionsDelta.js'
 
 // Dead code elimination: conditional imports for feature-gated modules
 /* eslint-disable @typescript-eslint/no-require-imports */
