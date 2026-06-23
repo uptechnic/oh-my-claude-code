@@ -22,7 +22,17 @@ The source map file in the published npm package contained a reference to the fu
 
 - **[Bun](https://bun.sh)** v1.3+ (the project's runtime)
 - **Node.js** v18+ (for npm package installation)
-- An **Anthropic API key** (set as `ANTHROPIC_API_KEY` environment variable)
+- An **Anthropic API key** (set as `ANTHROPIC_API_KEY` environment variable) or third party provider such as deepseek.
+
+> ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+> ANTHROPIC_AUTH_TOKEN=sk-xxx
+> ANTHROPIC_MODEL=deepseek-v4-pro[1m]
+> ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]
+> ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]
+> ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
+> ANTHROPIC_SMALL_FAST_MODEL=deepseek-v4-flash
+> CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
+> CLAUDE_CODE_EFFORT_LEVEL=max
 
 ### Install & Run
 
@@ -34,8 +44,21 @@ source ~/.bash_profile  # or restart your terminal
 # 2. Install dependencies
 npm install --legacy-peer-deps
 
+# 3. Setup .env
+cat << EOF
+ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+ANTHROPIC_AUTH_TOKEN=sk-xxx
+ANTHROPIC_MODEL=deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro[1m]
+ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
+ANTHROPIC_SMALL_FAST_MODEL=deepseek-v4-flash
+CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
+CLAUDE_CODE_EFFORT_LEVEL=max
+EOF >> .env
+
 # 3. Run Claude Code
-bun run start
+source .env && bun run start
 
 # Or with arguments:
 bun run start -- --help
@@ -85,12 +108,13 @@ This repository contains the leaked `src/` directory.
 
 ```
 src/
-├── main.tsx                 # Entrypoint (Commander.js-based CLI parser)
-├── commands.ts              # Command registry
-├── tools.ts                 # Tool registry
-├── Tool.ts                  # Tool type definitions
-├── QueryEngine.ts           # LLM query engine (core Anthropic API caller)
+├── entrypoints/cli.tsx       # Bootstrap + fast-path routing
+├── main.tsx                 # Full CLI startup + REPL launch
+├── query.ts                 # LLM query loop (Anthropic API + tool calling)
 ├── context.ts               # System/user context collection
+├── commands.ts              # Command registry (~80+ slash commands)
+├── tools.ts                 # Tool registry (~50+ agent tools)
+├── Tool.ts                  # Tool type definitions
 ├── cost-tracker.ts          # Token cost tracking
 │
 ├── commands/                # Slash command implementations (~50)
@@ -123,6 +147,212 @@ src/
 ├── outputStyles/            # Output styling
 ├── query/                   # Query pipeline
 └── upstreamproxy/           # Proxy configuration
+```
+
+---
+
+## Core Execution Flow
+
+### 一、入口路由（`src/entrypoints/cli.tsx`）
+
+进程启动后立即进入 `main()` 函数，按优先级依次检查命令行参数。每个分支都是**动态 import**，只加载所需模块：
+
+```
+1. --version / -v        → 零导入，直接打印版本退出
+2. --dump-system-prompt  → 加载 model/config，输出系统提示词退出
+3. --daemon-worker       → 启动守护进程 worker 退出
+4. remote-control/bridge → Bridge 远程控制模式（认证 → 策略检查 → bridgeMain）
+5. daemon                → 守护进程主管模式
+6. ps/logs/attach/kill   → 后台会话管理（~/.claude/sessions/ 注册表）
+7. new/list/reply        → 模板任务命令
+8. environment-runner    → headless BYOC 执行器
+9. --worktree --tmux     → 先 exec 进 tmux，再走正常 CLI
+10. 无特殊标志匹配        → 加载完整 CLI：import('../main.js') → cliMain()
+```
+
+### 二、完整 CLI 启动（`src/main.tsx` — `main()`）
+
+```
+main()
+  ├── 安全设置（PATH 注入防护）
+  ├── 信号处理（SIGINT / SIGTERM）
+  ├── 协议/URI 处理（cc:// 直连、deep link、assistant、ssh）
+  ├── 判断交互模式
+  │   ├── -p / --print / --init-only → 非交互（headless）模式
+  │   └── 有 TTY → 交互模式
+  ├── 并行初始化阶段
+  │   ├── init()                         ← 配置 + GrowthBook + 遥测
+  │   ├── MDM 托管配置读取（提前启动子进程）
+  │   └── keychain 凭证预取（macOS）
+  ├── 配置迁移（model 名、权限设置等 11 项历史迁移）
+  ├── Commander.js CLI 选项解析（权限模式、model、工具列表等）
+  ├── 加载启动数据
+  │   ├── fetchBootstrapData()           ← API 调用（用户信息、配额等）
+  │   ├── getCommands()                  ← 加载所有斜杠命令
+  │   │   ├── 内置命令（COMMANDS）
+  │   │   ├── Skills 目录命令（用户自定义 SKILL.md）
+  │   │   ├── Plugin 命令
+  │   │   └── 动态发现的 skills
+  │   ├── getTools()                     ← 组装工具注册表
+  │   │   ├── getAllBaseTools()          ← 核心工具（按 feature flag 条件包含）
+  │   │   ├── filterToolsByDenyRules()   ← 权限黑名单过滤
+  │   │   └── isEnabled() 检查           ← 运行时启用检查
+  │   ├── initBundledSkills()            ← 内置技能
+  │   └── initBuiltinPlugins()           ← 内置插件
+  ├── IDE Bridge / REPL Bridge 初始化（可选）
+  └── renderAndRun(AppStateProvider → REPL)
+       └── launchRepl()                  ← 启动 Ink TUI 主循环
+```
+
+### 三、三大注册器（程序骨架）
+
+程序的核心能力由三个注册器提供，均在启动阶段加载完成：
+
+| 注册器 | 源文件 | 加载来源 | 说明 |
+|--------|--------|----------|------|
+| **Commands** | [src/commands.ts](src/commands.ts) | 内置 + Skills目录 + Plugin + 动态发现 | ~80+ 斜杠命令 |
+| **Tools** | [src/tools.ts](src/tools.ts) | 内置 + MCP服务器 | ~50+ 工具，按 feature flag 条件包含 |
+| **Skills** | [src/skills/](src/skills/) + [src/plugins/](src/plugins/) | Bundled + 用户目录 + Plugin | 通过 SkillTool 调用 |
+
+重要特性：
+- Commands 和 Tools 都使用 `feature()` 做**编译期死代码消除（DCE）**——特定功能的代码在构建时按 flag 和 `USER_TYPE` 移除
+- Skills 分为三个来源：`bundled`（内置打包）、skills 目录（用户自定义 `SKILL.md`）、`plugin`（插件提供）
+- 工具也来自 MCP 服务器——通过 `assembleToolPool()` 合并内置工具与 MCP 工具（内置优先去重）
+
+### 四、REPL 主循环（用户输入 → 模型响应）
+
+```
+用户输入
+  │
+  ▼
+REPL.tsx: handlePromptSubmit()
+  │  检查输入是否为斜杠命令
+  ├── 是 → findCommand() → command.invoke() → 显示结果 → 等待下次输入
+  │
+  └── 否（普通消息）→ 进入查询循环
+       │
+       ▼
+  context.ts  收集上下文
+  ├── getSystemContext()
+  │   ├── CLAUDE.md 项目指令文件
+  │   ├── Git 状态（分支、最近提交、变更文件）
+  │   ├── 记忆文件（~/.claude/memory/）
+  │   └── 平台信息（OS、Shell、日期）
+  └── getUserContext()
+      ├── 项目目录结构
+      └── 环境变量
+       │
+       ▼
+  query.ts: query() → queryLoop()
+  ┌──────────────────────────────────────────────────┐
+  │  while (true) {                                   │
+  │    ├── 构造消息列表（含压缩边界处理）                │
+  │    │                                             │
+  │    ├── POST /v1/messages（流式 SSE）              │
+  │    │                                             │
+  │    ├── 流式响应处理                                │
+  │    │   ├── text_delta  → 渐进渲染到终端            │
+  │    │   ├── thinking_delta → 思考过程（可选显示）    │
+  │    │   └── tool_use 块 → 进入工具调用流程          │
+  │    │                                             │
+  │    ├── 工具调用流程（每个 tool_use 块）             │
+  │    │   ├── findToolByName() → 查找工具             │
+  │    │   ├── 权限检查（详见第五节）                   │
+  │    │   │   ├── bypassPermissions → 直接执行        │
+  │    │   │   ├── plan 模式 → Plan 审批              │
+  │    │   │   ├── auto 模式 → 自动放行安全操作         │
+  │    │   │   └── default → 匹配规则/弹出权限对话框    │
+  │    │   ├── tool.invoke(input, context)            │
+  │    │   └── 结果作为 tool_result 返回 API 继续循环   │
+  │    │                                             │
+  │    ├── Token 阈值触发                              │
+  │    │   ├── 触发条件：剩余上下文窗口不足             │
+  │    │   ├── autoCompact → 自动压缩                  │
+  │    │   └── reactiveCompact → 响应式压缩             │
+  │    │                                             │
+  │    ├── stop_reason: end_turn → 当前轮完成          │
+  │    └── stop_reason: max_tokens → 自动继续          │
+  │  }                                               │
+  └──────────────────────────────────────────────────┘
+       │
+       ▼
+  记录会话（transcript + cost + usage）
+  生成会话标题 → 等待下一次用户输入
+```
+
+### 五、权限系统（每次工具调用必经之路）
+
+```
+canUseTool(tool, args, context)
+  │
+  ├── Step 1a: 匹配 deny 规则（黑名单优先）
+  │   └── 命中 → 直接拒绝，不弹窗，记录拒绝
+  │
+  ├── Step 1b: 匹配 allow 规则（白名单）
+  │   └── 命中 → 直接允许
+  │
+  ├── Step 2: Bash 分类器（危险模式检测）
+  │   └── 检测到危险命令模式 → 标记需用户审批
+  │
+  └── Step 3: 无规则匹配 → 弹出权限对话框（组件在 components/permissions/）
+      ├── 允许一次   → 执行
+      ├── 始终允许   → 写入 allowlist 规则 → 执行
+      └── 拒绝       → 记录拒绝 → 返回错误
+```
+
+四种权限模式：`default`（交互弹窗）、`plan`（Plan 模式审批）、`bypassPermissions`（全部放行）、`auto`（自动放行已分类为安全的操作）。
+
+### 六、Feature Flags 体系
+
+使用 Bun 的 `bun:bundle` 实现**编译期死代码消除**，而非运行时检查：
+
+```typescript
+import { feature } from 'bun:bundle'
+
+// feature('VOICE_MODE') 在构建时被替换为 true 或 false
+// false 时整个 if 块从产物中删除，零运行时开销
+const voiceCommand = feature('VOICE_MODE')
+  ? require('./commands/voice/index.js').default  // 仅 flag=true 时保留
+  : null
+```
+
+这确保：
+- 外部构建（非 Anthropic 内部）**不含**任何内部工具代码
+- 按需包含可选功能（Bridge、Daemon、Cron、Voice 等）
+- 二进制体积最小化
+
+### 七、整体数据流
+
+```
+CLI args → cli.tsx（路由分发）
+              │
+              ▼
+         main.tsx（初始化 + 三大注册器加载 + REPL 渲染）
+              │
+    ┌─────────┼─────────┐
+    ▼         ▼         ▼
+Commands   Tools     Skills
+ (80+)     (50+)    (bundled/dir/plugin)
+    │         │         │
+    └─────────┼─────────┘
+              ▼
+         REPL.tsx（Ink TUI 主循环）
+              │
+        用户输入处理
+              │
+              ▼
+     query.ts: queryLoop()
+              │
+    ┌─────────┼──────────┐
+    ▼         ▼          ▼
+context.ts  Anthropic  权限系统
+(Git/MD/)    API      (hooks/)
+    └─────────┼──────────┘
+              ▼
+         工具执行 → 结果返回 API → 循环
+              │
+              ▼
+         结果渲染 → 等待下次输入
 ```
 
 ---
@@ -237,21 +467,29 @@ Notable flags: `PROACTIVE`, `KAIROS`, `BRIDGE_MODE`, `DAEMON`, `VOICE_MODE`, `AG
 
 ## Key Files in Detail
 
-### `QueryEngine.ts` (~46K lines)
+### `query.ts` (~1,500 lines)
 
-The core engine for LLM API calls. Handles streaming responses, tool-call loops, thinking mode, retry logic, and token counting.
+The core query loop that drives the agentic conversation. Handles: message construction, Anthropic API streaming (SSE), tool-call dispatch → permission check → execution → result collection, automatic context compaction (autoCompact / reactiveCompact), max-token continuation, and interleaved thinking. Uses a `while (true)` loop with mutable state to support multi-turn tool calling within a single user message.
 
-### `Tool.ts` (~29K lines)
+### `entrypoints/cli.tsx` (~280 lines)
 
-Defines base types and interfaces for all tools — input schemas, permission models, and progress state types.
+Bootstrap entrypoint with fast-path routing. Checks for special flags (`--version`, `--dump-system-prompt`, `--daemon-worker`, `remote-control`, `daemon`, `ps/logs/attach/kill`, etc.) and conditionally loads only the modules needed for each path. Falls through to `main.tsx` when no special flags match.
 
-### `commands.ts` (~25K lines)
+### `main.tsx` (~780K, ~15,000 lines)
 
-Manages registration and execution of all slash commands. Uses conditional imports to load different command sets per environment.
+Full CLI startup orchestration: parallel initialization (MDM, keychain, GrowthBook), config migrations (11 historical migration steps), Commander.js CLI argument parsing, bootstrap data loading (commands, tools, skills, plugins), IDE Bridge setup, and REPL launch via Ink renderer.
 
-### `main.tsx`
+### `commands.ts` (~700 lines)
 
-Commander.js-based CLI parser + React/Ink renderer initialization. At startup, parallelizes MDM settings, keychain prefetch, and GrowthBook initialization for faster boot.
+Command registry: loads all slash commands from multiple sources (built-in, skills directories, plugins, dynamic discovery), filters by availability/auth requirements, deduplicates, and provides lookup functions. Exports `getCommands()`, `getSkillToolCommands()`, `getSlashCommandToolSkills()`.
+
+### `tools.ts` (~390 lines)
+
+Tool registry: assembles all agent-callable tools via `getAllBaseTools()`, filters by permission deny rules, handles REPL-mode tool substitution, and merges built-in tools with MCP server tools via `assembleToolPool()`.
+
+### `context.ts` (~200 lines)
+
+Collects system and user context for the LLM: reads `CLAUDE.md` / `GEMINI.md` / `AGENTS.md` project instructions, collects git status (branch, recent commits, working tree), loads memory files, and gathers platform/environment information.
 
 ---
 
@@ -275,31 +513,32 @@ Commander.js-based CLI parser + React/Ink renderer initialization. At startup, p
 
 ## Notable Design Patterns
 
-### Parallel Prefetch
+### 启动并行化
 
-Startup time is optimized by prefetching MDM settings, keychain reads, and API preconnect in parallel — before heavy module evaluation begins.
+启动时三项操作并行执行以减少延迟：
 
 ```typescript
-// main.tsx — fired as side-effects before other imports
-startMdmRawRead()
-startKeychainPrefetch()
+// main.tsx — 在模块导入完成前即作为副作用启动
+profileCheckpoint('main_tsx_entry')
+startMdmRawRead()        // MDM 配置子进程（plutil / reg query）
+startKeychainPrefetch()  // macOS Keychain 凭证预取
 ```
 
-### Lazy Loading
+### 模块懒加载
 
-Heavy modules (OpenTelemetry ~400KB, gRPC ~700KB) are deferred via dynamic `import()` until actually needed.
+重型模块延迟加载，仅在需要时 `import()`：OpenTelemetry ~400KB、gRPC ~700KB 延迟到遥测首次使用时加载；Insights（113KB / 3200 行）延迟到 `/insights` 命令首次调用时加载。
 
-### Agent Swarms
+### Agent 并行（Swarm）
 
-Sub-agents are spawned via `AgentTool`, with `coordinator/` handling multi-agent orchestration. `TeamCreateTool` enables team-level parallel work.
+子 Agent 通过 `AgentTool` 生成，`coordinator/` 处理多 Agent 编排。`TeamCreateTool` / `TeamDeleteTool` 实现团队级并行工作。子 Agent 之间通过 `SendMessageTool` 通信。
 
-### Skill System
+### 自定义 Ink 渲染器
 
-Reusable workflows defined in `skills/` and executed through `SkillTool`. Users can add custom skills.
+`src/ink/` 包含约 50 个文件的定制 Ink fork：自有 reconciler、DOM、布局引擎、虚拟滚动、文本换行、bidi 支持。
 
-### Plugin Architecture
+### 权限系统架构
 
-Built-in and third-party plugins are loaded through the `plugins/` subsystem.
+`src/hooks/toolPermission/` 中的所有内容：每次工具调用均执行权限检查。使用 Bash/Shell 分类器进行危险模式检测。权限规则通过 allowlist/denylist 持久化。模式：`default`（交互弹窗）、`plan`（Plan 模式审批）、`bypassPermissions`（全部放行）、`auto`（自动放行安全操作）。
 
 ---
 
