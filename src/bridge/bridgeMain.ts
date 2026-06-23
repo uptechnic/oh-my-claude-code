@@ -2038,7 +2038,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
   // The bridge fast-path bypasses init.ts, so we must enable config reading
   // before any code that transitively calls getGlobalConfig()
   const { enableConfigs, checkHasTrustDialogAccepted } = await import(
-    '../utils/config.js'
+    '../utils/config/config.js'
   )
   enableConfigs()
 
@@ -2204,7 +2204,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
       : baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
-    '../utils/git.js'
+    '../utils/git/git.js'
   )
 
   // Precheck worktree availability for the first-run dialog and the `w`
@@ -2822,7 +2822,7 @@ export async function runBridgeHeadless(
   setCwdState(dir)
 
   const { enableConfigs, checkHasTrustDialogAccepted } = await import(
-    '../utils/config.js'
+    '../utils/config/config.js'
   )
   enableConfigs()
   const { initSinks } = await import('../utils/debug/sinks.js')
@@ -2857,7 +2857,7 @@ export async function runBridgeHeadless(
       : baseUrl
 
   const { getBranch, getRemoteUrl, findGitRoot } = await import(
-    '../utils/git.js'
+    '../utils/git/git.js'
   )
   const { hasWorktreeCreateHook } = await import('../utils/hooks/hooks.js')
 

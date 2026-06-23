@@ -201,7 +201,7 @@ async function* allSourceFiles(): AsyncGenerator<string> {
   while (dirs.length > 0) {
     const dir = dirs.pop()!;
     const entries = await readdir(dir, { withFileTypes: true });
-    for (const entry of entries) {
+    for (const             entry of entries) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
         // Skip node_modules, dist, .git
@@ -222,7 +222,7 @@ async function* allSourceFiles(): AsyncGenerator<string> {
  * Handles: import ... from '...', import('...'), require('...'), export ... from '...'
  * Group 1: the full specifier string (e.g., 'src/utils/auth.js', '../../utils/auth.js', './auth.js')
  */
-const IMPORT_SPECIFIER_RE = /(?:from\s+['"]|import\(['"]|require\(['"])([^'"]+\.js)['"]/g;
+const IMPORT_SPECIFIER_RE = /(?:from\s+['"]|import\s+['"]|import\s*\(\s*['"]|require\s*\(\s*['"])([^'"]+\.js)['"]/g;
 
 interface Replacement {
   index: number;
@@ -298,15 +298,17 @@ function findReplacements(
           targetRel = path.relative(ROOT, oldTarget + '.tsx');
           targetExists = existsSync(path.resolve(ROOT, targetRel));
         }
-        // If target doesn't exist at old path, it might have been moved too — check manifest
+        // If target doesn't exist at old path, it might have been moved
+        // in an earlier phase — check the FULL manifest (not just current phase)
         if (!targetExists) {
           const tsKey = path.relative(ROOT, oldTarget + '.ts');
           const tsxKey = path.relative(ROOT, oldTarget + '.tsx');
-          if (manifest[tsKey]) {
-            targetRel = tsKey;
-            targetExists = true;
-          } else if (manifest[tsxKey]) {
-            targetRel = tsxKey;
+          // Check current-phase manifest first, then full manifest
+          const fullManifestEntry = manifest[tsKey] ?? manifest[tsxKey]
+            ?? MANIFEST[tsKey] ?? MANIFEST[tsxKey];
+          if (fullManifestEntry) {
+            // Use the new location from the manifest (not the old key)
+            targetRel = fullManifestEntry;
             targetExists = true;
           }
         }
