@@ -3,7 +3,7 @@ import { logForDebugging } from '../../../utils/debug.js'
 import { execFileNoThrow } from '../../../utils/execFileNoThrow.js'
 import { logError } from '../../../utils/log.js'
 import { count } from '../../array.js'
-import { sleep } from '../../sleep.js'
+import { sleep } from '../../concurrency/sleep.js'
 import {
   getSwarmSocketName,
   HIDDEN_SESSION_NAME,

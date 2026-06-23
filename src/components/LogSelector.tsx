@@ -18,7 +18,7 @@ import { getWorktreePaths } from '../utils/getWorktreePaths.js';
 import { getBranch } from '../utils/git/git.js';
 import { getLogDisplayTitle } from '../utils/log.js';
 import { getFirstMeaningfulUserMessageTextContent, getSessionIdFromLog, isCustomTitleEnabled, saveCustomTitle } from '../utils/sessionStorage.js';
-import { getTheme } from '../utils/theme.js';
+import { getTheme } from '../utils/rendering/theme.js';
 import { ConfigurableShortcutHint } from './ConfigurableShortcutHint.js';
 import { Select } from './CustomSelect/select.js';
 import { Byline } from './design-system/Byline.js';

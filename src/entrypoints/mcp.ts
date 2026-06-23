@@ -16,8 +16,8 @@ import {
   type ToolUseContext,
 } from '../Tool.js'
 import { getTools } from '../tools.js'
-import { createAbortController } from '../utils/abortController.js'
-import { createFileStateCacheWithSizeLimit } from '../utils/fileStateCache.js'
+import { createAbortController } from '../utils/concurrency/abortController.js'
+import { createFileStateCacheWithSizeLimit } from '../utils/files/fileStateCache.js'
 import { logError } from '../utils/log.js'
 import { createAssistantMessage } from '../utils/messages/messages.js'
 import { getMainLoopModel } from '../utils/model/model.js'

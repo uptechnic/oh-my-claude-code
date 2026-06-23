@@ -4,7 +4,7 @@ import {
   getOauthAccountInfo,
   getSubscriptionType,
   isClaudeAISubscriber,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { logError } from '../../utils/log.js'
@@ -15,7 +15,7 @@ import type {
   ReferralEligibilityResponse,
   ReferralRedemptionsResponse,
   ReferrerRewardInfo,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 
 // Cache expiration time: 24 hours (eligibility changes only on subscription/experiment changes)
 const CACHE_EXPIRATION_MS = 24 * 60 * 60 * 1000

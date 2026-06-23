@@ -9,7 +9,7 @@ import { logForDebugging } from './debug.js'
 import { isENOENT } from './errors.js'
 import { execFileNoThrow } from './execFileNoThrow.js'
 import { logError } from './log.js'
-import type { ThemeName } from './theme.js'
+import type { ThemeName } from './rendering/theme.js'
 
 const EOL = '\n'
 

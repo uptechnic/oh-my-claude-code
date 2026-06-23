@@ -4,7 +4,7 @@ import {
   getAnthropicApiKey,
   getClaudeAIOAuthTokens,
   hasProfileScope,
-} from 'src/utils/auth.js'
+} from 'src/utils/auth/auth.js'
 import { z } from 'zod'
 import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'

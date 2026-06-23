@@ -23,7 +23,7 @@ import {
   createSubagentContext,
   runForkedAgent,
 } from '../../utils/forkedAgent.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   type REPLHookContext,
   registerPostSamplingHook,
@@ -36,7 +36,7 @@ import {
   getSessionMemoryDir,
   getSessionMemoryPath,
 } from '../../utils/permissions/filesystem.js'
-import { sequential } from '../../utils/sequential.js'
+import { sequential } from '../../utils/concurrency/sequential.js'
 import { asSystemPrompt } from '../../utils/systemPromptType.js'
 import { getTokenUsage, tokenCountWithEstimation } from '../../utils/tokens.js'
 import { logEvent } from '../analytics/index.js'

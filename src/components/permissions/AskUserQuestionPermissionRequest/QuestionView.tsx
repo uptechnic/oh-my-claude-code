@@ -8,7 +8,7 @@ import type { Question, QuestionOption } from '../../../tools/AskUserQuestionToo
 import type { PastedContent } from '../../../utils/config.js';
 import { getExternalEditor } from '../../../utils/editor.js';
 import { toIDEDisplayName } from '../../../utils/ide.js';
-import type { ImageDimensions } from '../../../utils/imageResizer.js';
+import type { ImageDimensions } from '../../../utils/media/imageResizer.js';
 import { editPromptInEditor } from '../../../utils/promptEditor.js';
 import { type OptionWithDescription, Select, SelectMulti } from '../../CustomSelect/index.js';
 import { Divider } from '../../design-system/Divider.js';

@@ -36,10 +36,10 @@ import {
   findSimilarFile,
   getFileModificationTimeAsync,
   suggestPathUnderCwd,
-} from '../../utils/file.js'
+} from '../../utils/files/file.js'
 import { logFileOperation } from '../../utils/fileOperationAnalytics.js'
 import { formatFileSize } from '../../utils/format.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   compressImageBufferWithTokenLimit,
   createImageMetadataText,
@@ -47,7 +47,7 @@ import {
   type ImageDimensions,
   ImageResizeError,
   maybeResizeAndDownsampleImageBuffer,
-} from '../../utils/imageResizer.js'
+} from '../../utils/media/imageResizer.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { logError } from '../../utils/log.js'
 import { isAutoMemFile } from '../../utils/memoryFileDetection.js'
@@ -58,19 +58,19 @@ import {
   readNotebook,
 } from '../../utils/notebook.js'
 import { expandPath } from '../../utils/path.js'
-import { extractPDFPages, getPDFPageCount, readPDF } from '../../utils/pdf.js'
+import { extractPDFPages, getPDFPageCount, readPDF } from '../../utils/media/pdf.js'
 import {
   isPDFExtension,
   isPDFSupported,
   parsePDFPageRange,
-} from '../../utils/pdfUtils.js'
+} from '../../utils/media/pdfUtils.js'
 import {
   checkReadPermissionForTool,
   matchingRuleForInput,
 } from '../../utils/permissions/filesystem.js'
 import type { PermissionDecision } from '../../utils/permissions/PermissionResult.js'
 import { matchWildcardPattern } from '../../utils/permissions/shellRuleMatching.js'
-import { readFileInRange } from '../../utils/readFileInRange.js'
+import { readFileInRange } from '../../utils/files/readFileInRange.js'
 import { semanticNumber } from '../../utils/semanticNumber.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { BASH_TOOL_NAME } from '../BashTool/toolName.js'

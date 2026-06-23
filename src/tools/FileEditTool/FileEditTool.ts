@@ -24,18 +24,18 @@ import {
   getFileModificationTime,
   suggestPathUnderCwd,
   writeTextContent,
-} from '../../utils/file.js'
+} from '../../utils/files/file.js'
 import {
   fileHistoryEnabled,
   fileHistoryTrackEdit,
-} from '../../utils/fileHistory.js'
+} from '../../utils/files/fileHistory.js'
 import { logFileOperation } from '../../utils/fileOperationAnalytics.js'
 import {
   type LineEndingType,
   readFileSyncWithMetadata,
-} from '../../utils/fileRead.js'
+} from '../../utils/files/fileRead.js'
 import { formatFileSize } from '../../utils/format.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   fetchSingleFileGitDiff,
   type ToolUseDiff,

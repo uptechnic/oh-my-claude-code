@@ -1,6 +1,6 @@
 import { feature } from 'bun:bundle'
 import { join } from 'path'
-import { getFsImplementation } from '../utils/fsOperations.js'
+import { getFsImplementation } from '../utils/files/fsOperations.js'
 import { getAutoMemPath, isAutoMemoryEnabled } from './paths.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */

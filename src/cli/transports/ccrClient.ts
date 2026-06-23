@@ -7,7 +7,7 @@ import { decodeJwtExpiry } from '../../bridge/jwtUtils.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { logForDiagnosticsNoPII } from '../../utils/diagLogs.js'
 import { errorMessage, getErrnoCode } from '../../utils/errors.js'
-import { createAxiosInstance } from '../../utils/proxy.js'
+import { createAxiosInstance } from '../../utils/auth/proxy.js'
 import {
   registerSessionActivityCallback,
   unregisterSessionActivityCallback,
@@ -20,7 +20,7 @@ import type {
   RequiresActionDetails,
   SessionState,
 } from '../../utils/sessionState.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
 import {
   RetryableError,

@@ -7,7 +7,7 @@ import {
   getFsImplementation,
   getPathsForPermissionCheck,
   safeResolvePath,
-} from '../fsOperations.js'
+} from '../files/fsOperations.js'
 import { containsPathTraversal } from '../path.js'
 import { SandboxManager } from '../sandbox/sandbox-adapter.js'
 import { containsVulnerableUncPath } from '../shell/readOnlyCommandValidation.js'

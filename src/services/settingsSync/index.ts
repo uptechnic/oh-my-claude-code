@@ -19,7 +19,7 @@ import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { clearMemoryFileCaches } from '../../utils/claudemd.js'
 import { getMemoryPath } from '../../utils/config.js'
 import { logForDiagnosticsNoPII } from '../../utils/diagLogs.js'
@@ -32,7 +32,7 @@ import {
 import { markInternalWrite } from '../../utils/settings/internalWrites.js'
 import { getSettingsFilePathForSource } from '../../utils/settings/settings.js'
 import { resetSettingsCache } from '../../utils/settings/settingsCache.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import { logEvent } from '../analytics/index.js'

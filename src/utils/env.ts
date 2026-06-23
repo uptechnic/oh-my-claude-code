@@ -4,7 +4,7 @@ import { join } from 'path'
 import { isRunningWithBun } from './bundledMode.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from './envUtils.js'
 import { findExecutable } from './findExecutable.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { which } from './which.js'
 
 type Platform = 'win32' | 'darwin' | 'linux'

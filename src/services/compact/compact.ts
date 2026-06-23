@@ -37,7 +37,7 @@ import {
   getAgentListingDeltaAttachment,
   getDeferredToolsDeltaAttachment,
   getMcpInstructionsDeltaAttachment,
-} from '../../utils/attachments.js'
+} from '../../utils/media/attachments.js'
 import { getMemoryPath } from '../../utils/config.js'
 import { COMPACT_MAX_OUTPUT_TOKENS } from '../../utils/context.js'
 import {
@@ -46,7 +46,7 @@ import {
 } from '../../utils/contextAnalysis.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { hasExactErrorMessage } from '../../utils/errors.js'
-import { cacheToObject } from '../../utils/fileStateCache.js'
+import { cacheToObject } from '../../utils/files/fileStateCache.js'
 import {
   type CacheSafeParams,
   runForkedAgent,
@@ -77,7 +77,7 @@ import {
   getTranscriptPath,
   reAppendSessionMetadata,
 } from '../../utils/sessionStorage.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { asSystemPrompt } from '../../utils/systemPromptType.js'

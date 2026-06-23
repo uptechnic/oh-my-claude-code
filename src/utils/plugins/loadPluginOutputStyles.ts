@@ -7,7 +7,7 @@ import {
   coerceDescriptionToString,
   parseFrontmatter,
 } from '../frontmatterParser.js'
-import { getFsImplementation, isDuplicatePath } from '../fsOperations.js'
+import { getFsImplementation, isDuplicatePath } from '../files/fsOperations.js'
 import { extractDescriptionFromMarkdown } from '../markdownConfigLoader.js'
 import { loadAllPluginsCacheOnly } from './pluginLoader.js'
 import { walkPluginMarkdown } from './walkPluginMarkdown.js'

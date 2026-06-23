@@ -1,6 +1,6 @@
 import { feature } from 'bun:bundle'
 import type { Message } from '../types/message.js'
-import type { Attachment } from '../utils/attachments.js'
+import type { Attachment } from '../utils/media/attachments.js'
 import { getGlobalConfig } from '../utils/config.js'
 import { getCompanion } from './companion.js'
 

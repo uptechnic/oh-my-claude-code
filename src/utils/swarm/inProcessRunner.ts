@@ -64,11 +64,11 @@ import {
 import { evictTaskOutput } from '../../utils/task/diskOutput.js'
 import { evictTerminalTask } from '../../utils/task/framework.js'
 import { tokenCountWithEstimation } from '../../utils/tokens.js'
-import { createAbortController } from '../abortController.js'
+import { createAbortController } from '../concurrency/abortController.js'
 import { type AgentContext, runWithAgentContext } from '../agentContext.js'
 import { count } from '../array.js'
 import { logForDebugging } from '../debug.js'
-import { cloneFileStateCache } from '../fileStateCache.js'
+import { cloneFileStateCache } from '../files/fileStateCache.js'
 import {
   SUBAGENT_REJECT_MESSAGE,
   SUBAGENT_REJECT_MESSAGE_WITH_REASON_PREFIX,
@@ -81,7 +81,7 @@ import {
 import type { PermissionUpdate } from '../permissions/PermissionUpdateSchema.js'
 import { hasPermissionsToUseTool } from '../permissions/permissions.js'
 import { emitTaskTerminatedSdk } from '../sdkEventQueue.js'
-import { sleep } from '../sleep.js'
+import { sleep } from '../concurrency/sleep.js'
 import { jsonStringify } from '../slowOperations.js'
 import { asSystemPrompt } from '../systemPromptType.js'
 import { claimTask, listTasks, type Task, updateTask } from '../task/tasks.js'

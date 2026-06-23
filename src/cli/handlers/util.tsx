@@ -16,7 +16,7 @@ import { logEvent } from '../../services/analytics/index.js';
 import { MCPConnectionManager } from '../../services/mcp/MCPConnectionManager.js';
 import { AppStateProvider } from '../../state/AppState.js';
 import { onChangeAppState } from '../../state/onChangeAppState.js';
-import { isAnthropicAuthEnabled } from '../../utils/auth.js';
+import { isAnthropicAuthEnabled } from '../../utils/auth/auth.js';
 export async function setupTokenHandler(_root: Root): Promise<void> {
   // OAuth token setup is not available in offline mode
   process.stderr.write(

@@ -12,9 +12,9 @@ import type { Question } from '../../../tools/AskUserQuestionTool/AskUserQuestio
 import { AskUserQuestionTool } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
 import { type CliHighlight, getCliHighlightPromise } from '../../../utils/cliHighlight.js';
 import type { PastedContent } from '../../../utils/config.js';
-import type { ImageDimensions } from '../../../utils/imageResizer.js';
-import { maybeResizeAndDownsampleImageBlock } from '../../../utils/imageResizer.js';
-import { cacheImagePath, storeImage } from '../../../utils/imageStore.js';
+import type { ImageDimensions } from '../../../utils/media/imageResizer.js';
+import { maybeResizeAndDownsampleImageBlock } from '../../../utils/media/imageResizer.js';
+import { cacheImagePath, storeImage } from '../../../utils/media/imageStore.js';
 import { logError } from '../../../utils/log.js';
 import { applyMarkdown } from '../../../utils/markdown.js';
 import { isPlanModeInterviewPhaseEnabled } from '../../../utils/planModeV2.js';

@@ -6,7 +6,7 @@ import { color } from '../../ink.js';
 import { getPlatform } from '../../utils/platform.js';
 import { addToExcludedCommands, SandboxManager } from '../../utils/sandbox/sandbox-adapter.js';
 import { getSettings_DEPRECATED, getSettingsFilePathForSource } from '../../utils/settings/settings.js';
-import type { ThemeName } from '../../utils/theme.js';
+import type { ThemeName } from '../../utils/rendering/theme.js';
 export async function call(onDone: (result?: string) => void, _context: unknown, args?: string): Promise<React.ReactNode | null> {
   const settings = getSettings_DEPRECATED();
   const themeName: ThemeName = settings.theme as ThemeName || 'light';

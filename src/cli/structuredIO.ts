@@ -38,7 +38,7 @@ import { hasPermissionsToUseTool } from 'src/utils/permissions/permissions.js'
 import { writeToStdout } from 'src/utils/process.js'
 import { jsonStringify } from 'src/utils/slowOperations.js'
 import { z } from 'zod/v4'
-import { notifyCommandLifecycle } from '../utils/commandLifecycle.js'
+import { notifyCommandLifecycle } from '../utils/lifecycle/commandLifecycle.js'
 import { normalizeControlMessageKeys } from '../utils/controlMessageCompat.js'
 import { executePermissionRequestHooks } from '../utils/hooks/hooks.js'
 import {
@@ -51,7 +51,7 @@ import {
   type SessionExternalMetadata,
 } from '../utils/sessionState.js'
 import { jsonParse } from '../utils/slowOperations.js'
-import { Stream } from '../utils/stream.js'
+import { Stream } from '../utils/concurrency/stream.js'
 import { ndjsonSafeStringify } from './ndjsonSafeStringify.js'
 
 /**

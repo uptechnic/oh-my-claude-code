@@ -41,7 +41,7 @@ import type {
   SystemLocalCommandMessage,
   SystemMessage,
 } from '../../types/message.js'
-import { createAbortController } from '../../utils/abortController.js'
+import { createAbortController } from '../../utils/concurrency/abortController.js'
 import { count, uniq } from '../../utils/array.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {

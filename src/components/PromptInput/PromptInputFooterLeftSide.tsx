@@ -35,7 +35,7 @@ import { formatDuration } from '../../utils/format.js';
 import { VoiceWarmupHint } from './VoiceIndicator.js';
 import { useVoiceEnabled } from '../../hooks/useVoiceEnabled.js';
 import { useVoiceState } from '../../context/voice.js';
-import { isFullscreenEnvEnabled } from '../../utils/fullscreen.js';
+import { isFullscreenEnvEnabled } from '../../utils/rendering/fullscreen.js';
 import { isXtermJs } from '../../ink/terminal.js';
 import { useHasSelection, useSelection } from '../../ink/hooks/use-selection.js';
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js';

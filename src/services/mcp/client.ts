@@ -53,14 +53,14 @@ import { ListMcpResourcesTool } from '../../tools/ListMcpResourcesTool/ListMcpRe
 import { type MCPProgress, MCPTool } from '../../tools/MCPTool/MCPTool.js'
 import { createMcpAuthTool } from '../../tools/McpAuthTool/McpAuthTool.js'
 import { ReadMcpResourceTool } from '../../tools/ReadMcpResourceTool/ReadMcpResourceTool.js'
-import { createAbortController } from '../../utils/abortController.js'
+import { createAbortController } from '../../utils/concurrency/abortController.js'
 import { count } from '../../utils/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
-} from '../../utils/auth.js'
-import { registerCleanup } from '../../utils/cleanupRegistry.js'
+} from '../../utils/auth/auth.js'
+import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
 import { detectCodeIndexingFromMcpServerName } from '../../utils/codeIndexing.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/envUtils.js'
@@ -70,7 +70,7 @@ import {
 } from '../../utils/errors.js'
 import { getMCPUserAgent } from '../../utils/http.js'
 import { maybeNotifyIDEConnected } from '../../utils/ide.js'
-import { maybeResizeAndDownsampleImageBuffer } from '../../utils/imageResizer.js'
+import { maybeResizeAndDownsampleImageBuffer } from '../../utils/media/imageResizer.js'
 import { logMCPDebug, logMCPError } from '../../utils/log.js'
 import {
   getBinaryBlobSavedMessage,
@@ -85,13 +85,13 @@ import {
   truncateMcpContentIfNeeded,
 } from '../../utils/mcp/mcpValidation.js'
 import { WebSocketTransport } from '../../utils/mcp/mcpWebSocketTransport.js'
-import { memoizeWithLRU } from '../../utils/memoize.js'
-import { getWebSocketTLSOptions } from '../../utils/mtls.js'
+import { memoizeWithLRU } from '../../utils/concurrency/memoize.js'
+import { getWebSocketTLSOptions } from '../../utils/auth/mtls.js'
 import {
   getProxyFetchOptions,
   getWebSocketProxyAgent,
   getWebSocketProxyUrl,
-} from '../../utils/proxy.js'
+} from '../../utils/auth/proxy.js'
 import { recursivelySanitizeUnicode } from '../../utils/sanitization.js'
 import { getSessionIngressAuthToken } from '../../utils/sessionIngressAuth.js'
 import { subprocessEnv } from '../../utils/subprocessEnv.js'
@@ -124,7 +124,7 @@ import type { AssistantMessage } from 'src/types/message.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { classifyMcpToolForCollapse } from '../../tools/MCPTool/classifyForCollapse.js'
 import { clearKeychainCache } from '../../utils/secureStorage/macOsKeychainHelpers.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import {
   ClaudeAuthProvider,
   hasMcpDiscoveryButNoToken,

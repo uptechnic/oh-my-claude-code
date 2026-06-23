@@ -15,7 +15,7 @@ import {
 } from '../../services/analytics/index.js'
 import { getCwd } from '../cwd.js'
 import { toError } from '../errors.js'
-import { getFsImplementation } from '../fsOperations.js'
+import { getFsImplementation } from '../files/fsOperations.js'
 import { logError } from '../log.js'
 import {
   getSettingsForSource,

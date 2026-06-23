@@ -5,7 +5,7 @@ import {
 } from '../../services/api/adminRequests.js'
 import { invalidateOverageCreditGrantCache } from '../../services/api/overageCreditGrant.js'
 import { type ExtraUsage, fetchUtilization } from '../../services/api/usage.js'
-import { getSubscriptionType } from '../../utils/auth.js'
+import { getSubscriptionType } from '../../utils/auth/auth.js'
 import { hasClaudeAiBillingAccess } from '../../utils/billing.js'
 import { openBrowser } from '../../utils/browser.js'
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'

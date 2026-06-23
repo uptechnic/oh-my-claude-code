@@ -3,14 +3,14 @@ import { extname, isAbsolute, resolve } from 'path'
 import {
   fileHistoryEnabled,
   fileHistoryTrackEdit,
-} from 'src/utils/fileHistory.js'
+} from 'src/utils/files/fileHistory.js'
 import { z } from 'zod/v4'
 import { buildTool, type ToolDef, type ToolUseContext } from '../../Tool.js'
 import type { NotebookCell, NotebookContent } from '../../types/notebook.js'
 import { getCwd } from '../../utils/cwd.js'
 import { isENOENT } from '../../utils/errors.js'
-import { getFileModificationTime, writeTextContent } from '../../utils/file.js'
-import { readFileSyncWithMetadata } from '../../utils/fileRead.js'
+import { getFileModificationTime, writeTextContent } from '../../utils/files/file.js'
+import { readFileSyncWithMetadata } from '../../utils/files/fileRead.js'
 import { safeParseJSON } from '../../utils/json.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { parseCellId } from '../../utils/notebook.js'

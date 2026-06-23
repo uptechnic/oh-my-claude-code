@@ -1,7 +1,7 @@
 import { unlink } from 'fs/promises'
 import { CircularBuffer } from '../CircularBuffer.js'
 import { logForDebugging } from '../debug.js'
-import { readFileRange, tailFile } from '../fsOperations.js'
+import { readFileRange, tailFile } from '../files/fsOperations.js'
 import { getMaxOutputLength } from '../shell/outputLimits.js'
 import { safeJoinLines } from '../stringUtils.js'
 import { DiskTaskOutput, getTaskOutputPath } from './diskOutput.js'

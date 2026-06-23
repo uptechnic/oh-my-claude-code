@@ -41,7 +41,7 @@ import type { AgentDefinition } from './tools/AgentTool/loadAgentsDir.js'
 import { SYNTHETIC_OUTPUT_TOOL_NAME } from './tools/SyntheticOutputTool/SyntheticOutputTool.js'
 import type { Message } from './types/message.js'
 import type { OrphanedPermission } from './types/textInputTypes.js'
-import { createAbortController } from './utils/abortController.js'
+import { createAbortController } from './utils/concurrency/abortController.js'
 import type { AttributionState } from './utils/commitAttribution.js'
 import { getGlobalConfig } from './utils/config.js'
 import { getCwd } from './utils/cwd.js'
@@ -51,11 +51,11 @@ import {
   type FileHistoryState,
   fileHistoryEnabled,
   fileHistoryMakeSnapshot,
-} from './utils/fileHistory.js'
+} from './utils/files/fileHistory.js'
 import {
   cloneFileStateCache,
   type FileStateCache,
-} from './utils/fileStateCache.js'
+} from './utils/files/fileStateCache.js'
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import { registerStructuredOutputEnforcement } from './utils/hooks/hookHelpers.js'
 import { getInMemoryErrors } from './utils/log.js'
@@ -76,7 +76,7 @@ import {
   recordTranscript,
 } from './utils/sessionStorage.js'
 import { asSystemPrompt } from './utils/systemPromptType.js'
-import { resolveThemeSetting } from './utils/systemTheme.js'
+import { resolveThemeSetting } from './utils/rendering/systemTheme.js'
 import {
   shouldEnableThinkingByDefault,
   type ThinkingConfig,

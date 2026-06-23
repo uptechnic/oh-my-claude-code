@@ -30,7 +30,7 @@ import type { PermissionResult } from '../../utils/permissions/PermissionResult.
 import { filterDeniedAgents, getDenyRuleForAgent } from '../../utils/permissions/permissions.js';
 import { enqueueSdkEvent } from '../../utils/sdkEventQueue.js';
 import { writeAgentMetadata } from '../../utils/sessionStorage.js';
-import { sleep } from '../../utils/sleep.js';
+import { sleep } from '../../utils/concurrency/sleep.js';
 import { buildEffectiveSystemPrompt } from '../../utils/systemPrompt.js';
 import { asSystemPrompt } from '../../utils/systemPromptType.js';
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js';

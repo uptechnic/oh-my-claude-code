@@ -6,9 +6,9 @@ import { isENOENT } from '../../utils/errors.js'
 import {
   FILE_NOT_FOUND_CWD_NOTE,
   suggestPathUnderCwd,
-} from '../../utils/file.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
-import { glob } from '../../utils/glob.js'
+} from '../../utils/files/file.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
+import { glob } from '../../utils/files/glob.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { expandPath, toRelativePath } from '../../utils/path.js'
 import { checkReadPermissionForTool } from '../../utils/permissions/filesystem.js'

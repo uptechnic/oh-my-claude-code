@@ -5,7 +5,7 @@ import { Box, Text } from '../../../ink.js';
 import type { ToolUseContext } from '../../../Tool.js';
 import { getLanguageName } from '../../../utils/cliHighlight.js';
 import { getCwd } from '../../../utils/cwd.js';
-import { getFsImplementation, safeResolvePath } from '../../../utils/fsOperations.js';
+import { getFsImplementation, safeResolvePath } from '../../../utils/files/fsOperations.js';
 import { expandPath } from '../../../utils/path.js';
 import type { CompletionType } from '../../../utils/unaryLogging.js';
 import { Select } from '../../CustomSelect/index.js';

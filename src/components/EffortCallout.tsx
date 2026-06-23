@@ -1,7 +1,7 @@
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Box, Text } from '../ink.js';
-import { isMaxSubscriber, isProSubscriber, isTeamSubscriber } from '../utils/auth.js';
+import { isMaxSubscriber, isProSubscriber, isTeamSubscriber } from '../utils/auth/auth.js';
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js';
 import type { EffortLevel } from '../utils/effort.js';
 import { convertEffortValueToLevel, getDefaultEffortForModel, getOpusDefaultEffortConfig, toPersistableEffort } from '../utils/effort.js';

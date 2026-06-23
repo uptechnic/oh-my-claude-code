@@ -40,14 +40,14 @@ import type {
   ToolUseSummaryMessage,
   UserMessage,
 } from '../../types/message.js'
-import { createAttachmentMessage } from '../../utils/attachments.js'
+import { createAttachmentMessage } from '../../utils/media/attachments.js'
 import { AbortError } from '../../utils/errors.js'
-import { getDisplayPath } from '../../utils/file.js'
+import { getDisplayPath } from '../../utils/files/file.js'
 import {
   cloneFileStateCache,
   createFileStateCacheWithSizeLimit,
   READ_FILE_STATE_CACHE_SIZE,
-} from '../../utils/fileStateCache.js'
+} from '../../utils/files/fileStateCache.js'
 import {
   type CacheSafeParams,
   createSubagentContext,

@@ -22,8 +22,8 @@ import {
   checkAndRefreshOAuthTokenIfNeeded,
   getAnthropicApiKeyWithSource,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
-import { registerCleanup } from '../../utils/cleanupRegistry.js'
+} from '../../utils/auth/auth.js'
+import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
 import { classifyAxiosError } from '../../utils/errors.js'
@@ -33,7 +33,7 @@ import {
   isFirstPartyAnthropicBaseUrl,
 } from '../../utils/model/providers.js'
 import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
 import { getRetryDelay } from '../api/withRetry.js'

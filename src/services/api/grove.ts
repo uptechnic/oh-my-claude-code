@@ -4,9 +4,9 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth.js'
+import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth/auth.js'
 import { logForDebugging } from 'src/utils/debug.js'
-import { gracefulShutdown } from 'src/utils/gracefulShutdown.js'
+import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
 import { isEssentialTrafficOnly } from 'src/utils/privacyLevel.js'
 import { writeToStderr } from 'src/utils/process.js'
 import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'

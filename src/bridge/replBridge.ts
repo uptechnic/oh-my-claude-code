@@ -13,7 +13,7 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from '../services/analytics/index.js'
-import { registerCleanup } from '../utils/cleanupRegistry.js'
+import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
 import {
   handleIngressMessage,
   handleServerControlRequest,
@@ -59,7 +59,7 @@ import {
   type PollIntervalConfig,
 } from './pollConfigDefaults.js'
 import { errorMessage } from '../utils/errors.js'
-import { sleep } from '../utils/sleep.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 import {
   wrapApiForFaultInjection,
   registerBridgeDebugHandle,

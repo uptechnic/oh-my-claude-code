@@ -26,7 +26,7 @@ import { collapseReadSearchGroups } from '../utils/collapseReadSearch.js';
 import { collapseTeammateShutdowns } from '../utils/collapseTeammateShutdowns.js';
 import { getGlobalConfig } from '../utils/config.js';
 import { isEnvTruthy } from '../utils/envUtils.js';
-import { isFullscreenEnvEnabled } from '../utils/fullscreen.js';
+import { isFullscreenEnvEnabled } from '../utils/rendering/fullscreen.js';
 import { applyGrouping } from '../utils/groupToolUses.js';
 import { buildMessageLookups, createAssistantMessage, deriveUUID, getMessagesAfterCompactBoundary, getToolUseID, getToolUseIDs, hasUnresolvedHooksFromLookup, isNotEmptyMessage, normalizeMessages, reorderMessagesInUI, type StreamingThinking, type StreamingToolUse, shouldShowUserMessage } from '../utils/messages/messages.js';
 import { plural } from '../utils/stringUtils.js';

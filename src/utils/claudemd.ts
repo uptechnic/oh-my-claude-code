@@ -58,13 +58,13 @@ import { logForDebugging } from './debug.js'
 import { logForDiagnosticsNoPII } from './diagLogs.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from './envUtils.js'
 import { getErrnoCode } from './errors.js'
-import { normalizePathForComparison } from './file.js'
-import { cacheKeys, type FileStateCache } from './fileStateCache.js'
+import { normalizePathForComparison } from './files/file.js'
+import { cacheKeys, type FileStateCache } from './files/fileStateCache.js'
 import {
   parseFrontmatter,
   splitPathInFrontmatter,
 } from './frontmatterParser.js'
-import { getFsImplementation, safeResolvePath } from './fsOperations.js'
+import { getFsImplementation, safeResolvePath } from './files/fsOperations.js'
 import { findCanonicalGitRoot, findGitRoot } from './git/git.js'
 import {
   executeInstructionsLoadedHooks,

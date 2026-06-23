@@ -5,7 +5,7 @@ import { logEvent } from '../../services/analytics/index.js'
 import {
   getAnthropicApiKeyWithSource,
   saveApiKey,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { saveGlobalConfig } from '../../utils/config.js'
 import { isRunningOnHomespace } from '../../utils/envUtils.js'
 import {
@@ -18,7 +18,7 @@ import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   buildAccountProperties,
   buildAPIProviderProperties,
-} from '../../utils/status.js'
+} from '../../utils/rendering/status.js'
 
 /**
  * Login by reading configuration from environment variables

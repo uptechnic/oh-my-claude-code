@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text } from '../../ink.js';
-import { removeApiKey } from '../../utils/auth.js';
-import { gracefulShutdownSync } from '../../utils/gracefulShutdown.js';
+import { removeApiKey } from '../../utils/auth/auth.js';
+import { gracefulShutdownSync } from '../../utils/lifecycle/gracefulShutdown.js';
 
 export async function performLogout(): Promise<void> {
   // Flush telemetry BEFORE clearing credentials to prevent data leakage

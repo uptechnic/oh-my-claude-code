@@ -4,14 +4,14 @@ import { dirname, join } from 'path'
 import { getSessionId } from 'src/bootstrap/state.js'
 
 import { type BufferedWriter, createBufferedWriter } from './bufferedWriter.js'
-import { registerCleanup } from './cleanupRegistry.js'
+import { registerCleanup } from './lifecycle/cleanupRegistry.js'
 import {
   type DebugFilter,
   parseDebugFilter,
   shouldShowDebugMessage,
 } from './debugFilter.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from './envUtils.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { writeToStderr } from './process.js'
 import { jsonStringify } from './slowOperations.js'
 

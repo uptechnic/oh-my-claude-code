@@ -10,7 +10,7 @@ import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   getDefaultBashTimeoutMs,
   getMaxBashTimeoutMs,
-} from '../../utils/timeouts.js'
+} from '../../utils/lifecycle/timeouts.js'
 import {
   getUndercoverInstructions,
   isUndercover,

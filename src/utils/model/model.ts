@@ -12,7 +12,7 @@ import {
   isMaxSubscriber,
   isProSubscriber,
   isTeamPremiumSubscriber,
-} from '../auth.js'
+} from '../auth/auth.js'
 import {
   has1mContext,
   is1mContextDisabled,

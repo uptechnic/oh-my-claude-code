@@ -19,7 +19,7 @@ import { getOriginalCwd, getSessionId } from '../bootstrap/state.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
 import type { SDKControlResponse } from '../entrypoints/sdk/controlTypes.js'
 import { getFeatureValue_CACHED_WITH_REFRESH } from '../services/analytics/growthbook.js'
-import { getOrganizationUUID } from '../utils/auth.js'
+import { getOrganizationUUID } from '../utils/auth/auth.js'
 import {
   isPolicyAllowed,
   waitForPolicyLimitsToLoad,
@@ -29,10 +29,10 @@ import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
-} from '../utils/auth.js'
+} from '../utils/auth/auth.js'
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js'
 import { logForDebugging } from '../utils/debug.js'
-import { stripDisplayTagsAllowEmpty } from '../utils/displayTags.js'
+import { stripDisplayTagsAllowEmpty } from '../utils/rendering/displayTags.js'
 import { errorMessage } from '../utils/errors.js'
 import { getBranch, getRemoteUrl } from '../utils/git/git.js'
 import { toSDKMessages } from '../utils/messages/mappers.js'

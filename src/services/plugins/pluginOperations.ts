@@ -16,7 +16,7 @@ import { getOriginalCwd } from '../../bootstrap/state.js'
 import { isBuiltinPluginId } from '../../plugins/builtinPlugins.js'
 import type { LoadedPlugin, PluginManifest } from '../../types/plugin.js'
 import { isENOENT, toError } from '../../utils/errors.js'
-import { getFsImplementation } from '../../utils/fsOperations.js'
+import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import { logError } from '../../utils/log.js'
 import {
   clearAllCaches,

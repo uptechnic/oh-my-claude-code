@@ -13,7 +13,7 @@ import type {
   NotebookContent,
   NotebookOutputImage,
 } from '../types/notebook.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { expandPath } from './path.js'
 import { jsonParse } from './slowOperations.js'
 

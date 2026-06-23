@@ -6,7 +6,7 @@ import { stringWidth } from '../../ink/stringWidth.js';
 import { Ansi, Box, Text } from '../../ink.js';
 import { count } from '../../utils/array.js';
 import type { PastedContent } from '../../utils/config.js';
-import type { ImageDimensions } from '../../utils/imageResizer.js';
+import type { ImageDimensions } from '../../utils/media/imageResizer.js';
 import { SelectInputOption } from './select-input-option.js';
 import { SelectOption } from './select-option.js';
 import { useSelectInput } from './use-select-input.js';

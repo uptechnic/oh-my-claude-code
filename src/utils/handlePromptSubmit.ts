@@ -17,13 +17,13 @@ import {
   type PromptInputMode,
   type QueuedCommand,
 } from '../types/textInputTypes.js'
-import { createAbortController } from './abortController.js'
+import { createAbortController } from './concurrency/abortController.js'
 import type { PastedContent } from './config.js'
 import { logForDebugging } from './debug.js'
 import type { EffortValue } from './effort.js'
-import type { FileHistoryState } from './fileHistory.js'
-import { fileHistoryEnabled, fileHistoryMakeSnapshot } from './fileHistory.js'
-import { gracefulShutdownSync } from './gracefulShutdown.js'
+import type { FileHistoryState } from './files/fileHistory.js'
+import { fileHistoryEnabled, fileHistoryMakeSnapshot } from './files/fileHistory.js'
+import { gracefulShutdownSync } from './lifecycle/gracefulShutdown.js'
 import { enqueue } from './messageQueueManager.js'
 import { resolveSkillModelOverride } from './model/model.js'
 import type { ProcessUserInputContext } from './processUserInput/processUserInput.js'

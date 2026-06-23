@@ -8,7 +8,7 @@ import { useState, useCallback } from 'react';
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import figures from 'figures';
 import { type GlobalConfig, saveGlobalConfig, getCurrentProjectConfig, type OutputStyle } from '../../utils/config.js';
-import { normalizeApiKeyForConfig } from '../../utils/authPortable.js';
+import { normalizeApiKeyForConfig } from '../../utils/auth/authPortable.js';
 import { getGlobalConfig, getAutoUpdaterDisabledReason, formatAutoUpdaterDisabledReason, getRemoteControlAtStartup } from '../../utils/config.js';
 import chalk from 'chalk';
 import { permissionModeTitle, permissionModeFromString, toExternalPermissionMode, isExternalPermissionMode, EXTERNAL_PERMISSION_MODES, PERMISSION_MODES, type ExternalPermissionMode, type PermissionMode } from '../../utils/permissions/PermissionMode.js';
@@ -47,7 +47,7 @@ import { getHardcodedTeammateModelFallback } from '../../utils/swarm/teammateMod
 import { useSearchInput } from '../../hooks/useSearchInput.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
 import { clearFastModeCooldown, FAST_MODE_MODEL_DISPLAY, isFastModeAvailable, isFastModeEnabled, getFastModeModel, isFastModeSupportedByModel } from '../../utils/fastMode.js';
-import { isFullscreenEnvEnabled } from '../../utils/fullscreen.js';
+import { isFullscreenEnvEnabled } from '../../utils/rendering/fullscreen.js';
 type Props = {
   onClose: (result?: string, options?: {
     display?: CommandResultDisplay;

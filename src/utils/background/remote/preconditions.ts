@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
-import { getOrganizationUUID } from 'src/utils/auth.js'
+import { getOrganizationUUID } from 'src/utils/auth/auth.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../../services/analytics/growthbook.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   isClaudeAISubscriber,
-} from '../../auth.js'
+} from '../../auth/auth.js'
 import { getCwd } from '../../cwd.js'
 import { logForDebugging } from '../../debug.js'
 import { detectCurrentRepository } from '../../detectRepository.js'

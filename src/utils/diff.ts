@@ -4,7 +4,7 @@ import { getLocCounter } from '../bootstrap/state.js'
 import { addToTotalLinesChanged } from '../cost-tracker.js'
 import type { FileEdit } from '../tools/FileEditTool/types.js'
 import { count } from './array.js'
-import { convertLeadingTabsToSpaces } from './file.js'
+import { convertLeadingTabsToSpaces } from './files/file.js'
 
 export const CONTEXT_LINES = 3
 export const DIFF_TIMEOUT_MS = 5_000

@@ -9,10 +9,10 @@ import { enterTeammateView, exitTeammateView } from 'src/state/teammateViewHelpe
 import { isPanelAgentTask } from 'src/tasks/LocalAgentTask/LocalAgentTask.js';
 import { getPillLabel, pillNeedsCta } from 'src/tasks/pillLabel.js';
 import { type BackgroundTaskState, isBackgroundTask, type TaskState } from 'src/tasks/types.js';
-import { calculateHorizontalScrollWindow } from 'src/utils/horizontalScroll.js';
+import { calculateHorizontalScrollWindow } from 'src/utils/rendering/horizontalScroll.js';
 import { Box, Text } from '../../ink.js';
 import { AGENT_COLOR_TO_THEME_COLOR, AGENT_COLORS, type AgentColorName } from '../../tools/AgentTool/agentColorManager.js';
-import type { Theme } from '../../utils/theme.js';
+import type { Theme } from '../../utils/rendering/theme.js';
 import { KeyboardShortcutHint } from '../design-system/KeyboardShortcutHint.js';
 import { shouldHideTasksFooter } from './taskStatusUtils.js';
 type Props = {

@@ -112,7 +112,7 @@ async function main(): Promise<void> {
     // (not the stale disk cache), but init still needs auth headers to work.
     const {
       getClaudeAIOAuthTokens
-    } = await import('../utils/auth.js');
+    } = await import('../utils/auth/auth.js');
     if (!getClaudeAIOAuthTokens()?.accessToken) {
       exitWithError(BRIDGE_LOGIN_ERROR);
     }
@@ -264,7 +264,7 @@ async function main(): Promise<void> {
   // No special flags detected, load and run the full CLI
   const {
     startCapturingEarlyInput
-  } = await import('../utils/earlyInput.js');
+  } = await import('../utils/lifecycle/earlyInput.js');
   startCapturingEarlyInput();
   profileCheckpoint('cli_before_main_import');
   const {

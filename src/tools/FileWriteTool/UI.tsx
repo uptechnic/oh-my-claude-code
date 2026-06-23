@@ -18,7 +18,7 @@ import type { ToolProgressData } from '../../Tool.js';
 import type { ProgressMessage } from '../../types/message.js';
 import { getCwd } from '../../utils/cwd.js';
 import { getPatchForDisplay } from '../../utils/diff.js';
-import { getDisplayPath } from '../../utils/file.js';
+import { getDisplayPath } from '../../utils/files/file.js';
 import { logError } from '../../utils/log.js';
 import { getPlansDirectory } from '../../utils/plans.js';
 import { openForScan, readCapped } from '../../utils/readEditContext.js';

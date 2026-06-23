@@ -24,12 +24,12 @@ import { runPostCompactCleanup } from '../../services/compact/postCompactCleanup
 import { resetAllLSPDiagnosticState } from '../../services/lsp/LSPDiagnosticRegistry.js'
 import { clearTrackedMagicDocs } from '../../services/MagicDocs/magicDocs.js'
 import { clearDynamicSkills } from '../../skills/loadSkillsDir.js'
-import { resetSentSkillNames } from '../../utils/attachments.js'
+import { resetSentSkillNames } from '../../utils/media/attachments.js'
 import { clearCommandPrefixCaches } from '../../utils/bash/commands.js'
 import { resetGetMemoryFilesCache } from '../../utils/claudemd.js'
 import { clearRepositoryCaches } from '../../utils/detectRepository.js'
 import { clearResolveGitDirCache } from '../../utils/git/gitFilesystem.js'
-import { clearStoredImagePaths } from '../../utils/imageStore.js'
+import { clearStoredImagePaths } from '../../utils/media/imageStore.js'
 import { clearSessionEnvVars } from '../../utils/sessionEnvVars.js'
 
 /**

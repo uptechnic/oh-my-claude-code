@@ -5,7 +5,7 @@
  */
 import { basename } from 'path'
 import { spawn, type ChildProcessWithoutNullStreams } from 'child_process'
-import { pathExists } from '../file.js'
+import { pathExists } from '../files/file.js'
 import { wrapSpawn } from '../ShellCommand.js'
 import { TaskOutput } from '../task/TaskOutput.js'
 import { getCwd } from '../cwd.js'
@@ -128,7 +128,7 @@ import {
   permissionRuleValueFromString,
 } from '../permissions/permissionRuleParser.js'
 import { logError } from '../log.js'
-import { createCombinedAbortSignal } from '../combinedAbortSignal.js'
+import { createCombinedAbortSignal } from '../concurrency/combinedAbortSignal.js'
 import type { PermissionResult } from '../permissions/PermissionResult.js'
 import { registerPendingAsyncHook } from './AsyncHookRegistry.js'
 import { enqueuePendingNotification } from '../messageQueueManager.js'
@@ -142,7 +142,7 @@ import {
   emitHookResponse,
   startHookProgressInterval,
 } from './hookEvents.js'
-import { createAttachmentMessage } from '../attachments.js'
+import { createAttachmentMessage } from '../media/attachments.js'
 import { all } from '../generators.js'
 import { findToolByName, type Tools, type ToolUseContext } from '../../Tool.js'
 import { execPromptHook } from './execPromptHook.js'

@@ -1,15 +1,15 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { randomUUID } from 'crypto'
 import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
-import { getOrganizationUUID } from '../auth.js'
+import { getOrganizationUUID } from '../auth/auth.js'
 import z from 'zod/v4'
-import { getClaudeAIOAuthTokens } from '../auth.js'
+import { getClaudeAIOAuthTokens } from '../auth/auth.js'
 import { logForDebugging } from '../debug.js'
 import { parseGitHubRepository } from '../detectRepository.js'
 import { errorMessage, toError } from '../errors.js'
 import { lazySchema } from '../lazySchema.js'
 import { logError } from '../log.js'
-import { sleep } from '../sleep.js'
+import { sleep } from '../concurrency/sleep.js'
 import { jsonStringify } from '../slowOperations.js'
 
 // Retry configuration for teleport API requests

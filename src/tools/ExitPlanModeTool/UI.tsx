@@ -7,9 +7,9 @@ import { getModeColor } from 'src/utils/permissions/PermissionMode.js';
 import { Box, Text } from '../../ink.js';
 import type { ToolProgressData } from '../../Tool.js';
 import type { ProgressMessage } from '../../types/message.js';
-import { getDisplayPath } from '../../utils/file.js';
+import { getDisplayPath } from '../../utils/files/file.js';
 import { getPlan } from '../../utils/plans.js';
-import type { ThemeName } from '../../utils/theme.js';
+import type { ThemeName } from '../../utils/rendering/theme.js';
 import type { Output } from './ExitPlanModeV2Tool.js';
 export function renderToolUseMessage(): React.ReactNode {
   return null;

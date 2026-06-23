@@ -10,7 +10,7 @@ import { applyPermissionUpdate } from '../../utils/permissions/PermissionUpdate.
 import { prepareContextForPlanMode } from '../../utils/permissions/permissionSetup.js';
 import { getPlan, getPlanFilePath } from '../../utils/plans.js';
 import { editFileInEditor } from '../../utils/promptEditor.js';
-import { renderToString } from '../../utils/staticRender.js';
+import { renderToString } from '../../utils/rendering/staticRender.js';
 function PlanDisplay(t0) {
   const $ = _c(11);
   const {

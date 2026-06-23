@@ -8,7 +8,7 @@ import { getCwd } from '../cwd.js'
 import { logForDebugging } from '../debug.js'
 import { logForDiagnosticsNoPII } from '../diagLogs.js'
 import { execFileNoThrow } from '../execFileNoThrow.js'
-import { getFsImplementation } from '../fsOperations.js'
+import { getFsImplementation } from '../files/fsOperations.js'
 import {
   getCachedBranch,
   getCachedDefaultBranch,
@@ -19,7 +19,7 @@ import {
   resolveGitDir,
 } from './gitFilesystem.js'
 import { logError } from '../log.js'
-import { memoizeWithLRU } from '../memoize.js'
+import { memoizeWithLRU } from '../concurrency/memoize.js'
 import { whichSync } from '../which.js'
 
 const GIT_ROOT_NOT_FOUND = Symbol('git-root-not-found')

@@ -21,7 +21,7 @@ import { getClaudeConfigHomeDir } from '../envUtils.js'
 import {
   getFsImplementation,
   getPathsForPermissionCheck,
-} from '../fsOperations.js'
+} from '../files/fsOperations.js'
 import {
   containsPathTraversal,
   expandPath,

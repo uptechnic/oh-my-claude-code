@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { logForDebugging } from 'src/utils/debug.js'
-import { fileHistoryEnabled } from 'src/utils/fileHistory.js'
+import { fileHistoryEnabled } from 'src/utils/files/fileHistory.js'
 import {
   getInitialSettings,
   getSettings_DEPRECATED,
@@ -12,7 +12,7 @@ import { color } from '../../components/design-system/color.js'
 import { shouldShowOverageCreditUpsell } from '../../components/LogoV2/OverageCreditUpsell.js'
 import { getShortcutDisplay } from '../../keybindings/shortcutFormat.js'
 import { isKairosCronEnabled } from '../../tools/ScheduleCronTool/prompt.js'
-import { is1PApiCustomer } from '../../utils/auth.js'
+import { is1PApiCustomer } from '../../utils/auth/auth.js'
 import { countConcurrentSessions } from '../../utils/concurrentSessions.js'
 import { getGlobalConfig } from '../../utils/config.js'
 import {
@@ -20,7 +20,7 @@ import {
   modelSupportsEffort,
 } from '../../utils/effort.js'
 import { env } from '../../utils/env.js'
-import { cacheKeys } from '../../utils/fileStateCache.js'
+import { cacheKeys } from '../../utils/files/fileStateCache.js'
 import { getWorktreeCount } from '../../utils/git/git.js'
 import {
   detectRunningIDEsCached,

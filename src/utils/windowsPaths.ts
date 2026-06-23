@@ -4,7 +4,7 @@ import * as pathWin32 from 'path/win32'
 import { getCwd } from './cwd.js'
 import { logForDebugging } from './debug.js'
 import { execSync_DEPRECATED } from './execSyncWrapper.js'
-import { memoizeWithLRU } from './memoize.js'
+import { memoizeWithLRU } from './concurrency/memoize.js'
 import { getPlatform } from './platform.js'
 
 /**

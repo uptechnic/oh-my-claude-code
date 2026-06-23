@@ -14,7 +14,7 @@ import { enablePluginOp } from '../../services/plugins/pluginOperations.js';
 import { logForDebugging } from '../../utils/debug.js';
 import { isENOENT, toError } from '../../utils/errors.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
-import { pathExists } from '../../utils/file.js';
+import { pathExists } from '../../utils/files/file.js';
 import { logError } from '../../utils/log.js';
 import { getPlatform } from '../../utils/platform.js';
 import { clearAllCaches } from '../../utils/plugins/cacheUtils.js';

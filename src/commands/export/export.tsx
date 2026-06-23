@@ -5,7 +5,7 @@ import type { ToolUseContext } from '../../Tool.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import type { Message } from '../../types/message.js';
 import { getCwd } from '../../utils/cwd.js';
-import { renderMessagesToPlainText } from '../../utils/exportRenderer.js';
+import { renderMessagesToPlainText } from '../../utils/rendering/exportRenderer.js';
 import { writeFileSync_DEPRECATED } from '../../utils/slowOperations.js';
 function formatTimestamp(date: Date): string {
   const year = date.getFullYear();

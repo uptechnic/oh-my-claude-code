@@ -18,7 +18,7 @@ import { isEnvTruthy, isInProtectedNamespace } from '../utils/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
 import { truncateToWidth } from '../utils/format.js'
 import { logError } from '../utils/log.js'
-import { sleep } from '../utils/sleep.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 import { createAgentWorktree, removeAgentWorktree } from '../utils/worktree.js'
 import {
   BridgeFatalError,
@@ -2094,7 +2094,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
 
   // Resolve auth
   const { clearOAuthTokenCache, checkAndRefreshOAuthTokenIfNeeded } =
-    await import('../utils/auth.js')
+    await import('../utils/auth/auth.js')
   const { getBridgeAccessToken, getBridgeBaseUrl } = await import(
     './bridgeConfig.js'
   )
@@ -2342,7 +2342,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
   const machineName = hostname()
   const bridgeId = randomUUID()
 
-  const { handleOAuth401Error } = await import('../utils/auth.js')
+  const { handleOAuth401Error } = await import('../utils/auth/auth.js')
   const api = createBridgeApiClient({
     baseUrl,
     getAccessToken: getBridgeAccessToken,

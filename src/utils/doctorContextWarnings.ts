@@ -14,7 +14,7 @@ import { SandboxManager } from './sandbox/sandbox-adapter.js'
 import {
   AGENT_DESCRIPTIONS_THRESHOLD,
   getAgentDescriptionsTotalTokens,
-} from './statusNoticeHelpers.js'
+} from './rendering/statusNoticeHelpers.js'
 import { plural } from './stringUtils.js'
 
 // Thresholds (matching status notices and existing patterns)

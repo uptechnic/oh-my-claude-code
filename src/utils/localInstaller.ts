@@ -8,7 +8,7 @@ import { type ReleaseChannel, saveGlobalConfig } from './config.js'
 import { getClaudeConfigHomeDir } from './envUtils.js'
 import { getErrnoCode } from './errors.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { logError } from './log.js'
 import { jsonStringify } from './slowOperations.js'
 

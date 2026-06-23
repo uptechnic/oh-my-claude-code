@@ -14,7 +14,7 @@ import { useSearchInput } from '../hooks/useSearchInput.js';
 import { useTerminalSize } from '../hooks/useTerminalSize.js';
 import { useSearchHighlight } from '../ink/hooks/use-search-highlight.js';
 import type { JumpHandle } from '../components/VirtualMessageList.js';
-import { renderMessagesToPlainText } from '../utils/exportRenderer.js';
+import { renderMessagesToPlainText } from '../utils/rendering/exportRenderer.js';
 import { openFileInExternalEditor } from '../utils/editor.js';
 import { writeFile } from 'fs/promises';
 import { Box, Text, useStdin, useTheme, useTerminalFocus, useTerminalTitle, useTabStatus } from '../ink.js';
@@ -28,14 +28,14 @@ import { sendNotification } from '../services/notifier.js';
 import { startPreventSleep, stopPreventSleep } from '../services/preventSleep.js';
 import { useTerminalNotification } from '../ink/useTerminalNotification.js';
 import { hasCursorUpViewportYankBug } from '../ink/terminal.js';
-import { createFileStateCacheWithSizeLimit, mergeFileStateCaches, READ_FILE_STATE_CACHE_SIZE } from '../utils/fileStateCache.js';
+import { createFileStateCacheWithSizeLimit, mergeFileStateCaches, READ_FILE_STATE_CACHE_SIZE } from '../utils/files/fileStateCache.js';
 import { updateLastInteractionTime, getLastInteractionTime, getOriginalCwd, getProjectRoot, getSessionId, switchSession, setCostStateForRestore, getTurnHookDurationMs, getTurnHookCount, resetTurnHookDuration, getTurnToolDurationMs, getTurnToolCount, resetTurnToolDuration, getTurnClassifierDurationMs, getTurnClassifierCount, resetTurnClassifierDuration } from '../bootstrap/state.js';
 import { asSessionId, asAgentId } from '../types/ids.js';
 import { logForDebugging } from '../utils/debug.js';
 import { QueryGuard } from '../utils/QueryGuard.js';
 import { isEnvTruthy } from '../utils/envUtils.js';
 import { formatTokens, truncateToWidth } from '../utils/format.js';
-import { consumeEarlyInput } from '../utils/earlyInput.js';
+import { consumeEarlyInput } from '../utils/lifecycle/earlyInput.js';
 import { setMemberActive } from '../utils/swarm/teamHelpers.js';
 import { isSwarmWorker, generateSandboxRequestId, sendSandboxPermissionRequestViaMailbox, sendSandboxPermissionResponseViaMailbox } from '../utils/swarm/permissionSync.js';
 import { registerSandboxPermissionCallback } from '../hooks/useSwarmPermissionPoller.js';
@@ -71,7 +71,7 @@ import { getSystemPrompt } from '../constants/prompts.js';
 import { buildEffectiveSystemPrompt } from '../utils/systemPrompt.js';
 import { getSystemContext, getUserContext } from '../context.js';
 import { getMemoryFiles } from '../utils/claudemd.js';
-import { startBackgroundHousekeeping } from '../utils/backgroundHousekeeping.js';
+import { startBackgroundHousekeeping } from '../utils/lifecycle/backgroundHousekeeping.js';
 import { getTotalCost, saveCurrentSessionCosts, resetCostState, getStoredSessionCosts } from '../cost-tracker.js';
 import { useCostSummary } from '../costHook.js';
 import { useFpsMetrics } from '../context/fpsMetrics.js';
@@ -127,7 +127,7 @@ import { getScratchpadDir, isScratchpadEnabled } from '../utils/permissions/file
 import { WEB_FETCH_TOOL_NAME } from '../tools/WebFetchTool/prompt.js';
 import { SLEEP_TOOL_NAME } from '../tools/SleepTool/prompt.js';
 import { clearSpeculativeChecks } from '../tools/BashTool/bashPermissions.js';
-import type { AutoUpdaterResult } from '../utils/autoUpdater.js';
+import type { AutoUpdaterResult } from '../utils/lifecycle/autoUpdater.js';
 import { getGlobalConfig, saveGlobalConfig, getGlobalConfigWriteCount } from '../utils/config.js';
 import { hasConsoleBillingAccess } from '../utils/billing.js';
 import { logEvent, type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS } from 'src/services/analytics/index.js';
@@ -137,7 +137,7 @@ import { generateSessionTitle } from '../utils/sessionTitle.js';
 import { BASH_INPUT_TAG, COMMAND_MESSAGE_TAG, COMMAND_NAME_TAG, LOCAL_COMMAND_STDOUT_TAG } from '../constants/xml.js';
 import { escapeXml } from '../utils/xml.js';
 import type { ThinkingConfig } from '../utils/thinking.js';
-import { gracefulShutdownSync } from '../utils/gracefulShutdown.js';
+import { gracefulShutdownSync } from '../utils/lifecycle/gracefulShutdown.js';
 import { handlePromptSubmit, type PromptInputHelpers } from '../utils/handlePromptSubmit.js';
 import { useQueueProcessor } from '../hooks/useQueueProcessor.js';
 import { useMailboxBridge } from '../hooks/useMailboxBridge.js';
@@ -181,7 +181,7 @@ import { provisionContentReplacementState, reconstructContentReplacementState, t
 import { partialCompactConversation } from '../services/compact/compact.js';
 import type { LogOption } from '../types/logs.js';
 import type { AgentColorName } from '../tools/AgentTool/agentColorManager.js';
-import { fileHistoryMakeSnapshot, type FileHistoryState, fileHistoryRewind, type FileHistorySnapshot, copyFileHistoryForResume, fileHistoryEnabled, fileHistoryHasAnyChanges } from '../utils/fileHistory.js';
+import { fileHistoryMakeSnapshot, type FileHistoryState, fileHistoryRewind, type FileHistorySnapshot, copyFileHistoryForResume, fileHistoryEnabled, fileHistoryHasAnyChanges } from '../utils/files/fileHistory.js';
 import { type AttributionState, incrementPromptCount } from '../utils/commitAttribution.js';
 import { recordAttributionSnapshot } from '../utils/sessionStorage.js';
 import { computeStandaloneAgentContext, restoreAgentFromSession, restoreSessionStateFromLog, restoreWorktreeForResume, exitRestoredWorktree } from '../utils/sessionRestore.js';
@@ -223,7 +223,7 @@ const shouldShowAntModelSwitch = "external" === 'ant' ? require('../components/A
 const UndercoverAutoCallout = "external" === 'ant' ? require('../components/UndercoverAutoCallout.js').UndercoverAutoCallout : null;
 /* eslint-enable custom-rules/no-process-env-top-level, @typescript-eslint/no-require-imports */
 import { activityManager } from '../utils/activityManager.js';
-import { createAbortController } from '../utils/abortController.js';
+import { createAbortController } from '../utils/concurrency/abortController.js';
 import { MCPConnectionManager } from 'src/services/mcp/MCPConnectionManager.js';
 import { useFeedbackSurvey } from 'src/components/FeedbackSurvey/useFeedbackSurvey.js';
 import { useMemorySurvey } from 'src/components/FeedbackSurvey/useMemorySurvey.js';
@@ -233,7 +233,7 @@ import { useInstallMessages } from 'src/hooks/notifs/useInstallMessages.js';
 import { useAwaySummary } from 'src/hooks/useAwaySummary.js';
 import { useOfficialMarketplaceNotification } from 'src/hooks/useOfficialMarketplaceNotification.js';
 import { getTipToShowOnSpinner, recordShownTip } from 'src/services/tips/tipScheduler.js';
-import type { Theme } from 'src/utils/theme.js';
+import type { Theme } from 'src/utils/rendering/theme.js';
 import { checkAndDisableBypassPermissionsIfNeeded, checkAndDisableAutoModeIfNeeded, useKickOffCheckAndDisableBypassPermissionsIfNeeded, useKickOffCheckAndDisableAutoModeIfNeeded } from 'src/utils/permissions/bypassPermissionsKillswitch.js';
 import { SandboxManager } from 'src/utils/sandbox/sandbox-adapter.js';
 import { SANDBOX_NETWORK_ACCESS_TOOL_NAME } from 'src/cli/structuredIO.js';
@@ -263,7 +263,7 @@ import { useModelMigrationNotifications } from 'src/hooks/notifs/useModelMigrati
 import { useCanSwitchToExistingSubscription } from 'src/hooks/notifs/useCanSwitchToExistingSubscription.js';
 import { useTeammateLifecycleNotification } from 'src/hooks/notifs/useTeammateShutdownNotification.js';
 import { useFastModeNotification } from 'src/hooks/notifs/useFastModeNotification.js';
-import { AutoRunIssueNotification, shouldAutoRunIssue, getAutoRunIssueReasonText, getAutoRunCommand, type AutoRunIssueReason } from '../utils/autoRunIssue.js';
+import { AutoRunIssueNotification, shouldAutoRunIssue, getAutoRunIssueReasonText, getAutoRunCommand, type AutoRunIssueReason } from '../utils/rendering/autoRunIssue.js';
 import type { HookProgress } from '../types/hooks.js';
 import { TungstenLiveMonitor } from '../tools/TungstenTool/TungstenLiveMonitor.js';
 /* eslint-disable @typescript-eslint/no-require-imports */
@@ -278,13 +278,13 @@ import type { RemoteSessionConfig } from '../remote/RemoteSessionManager.js';
 import { REMOTE_SAFE_COMMANDS } from '../commands.js';
 import type { RemoteMessageContent } from '../utils/teleport/api.js';
 import { FullscreenLayout, useUnseenDivider, computeUnseenDivider } from '../components/FullscreenLayout.js';
-import { isFullscreenEnvEnabled, maybeGetTmuxMouseHint, isMouseTrackingEnabled } from '../utils/fullscreen.js';
+import { isFullscreenEnvEnabled, maybeGetTmuxMouseHint, isMouseTrackingEnabled } from '../utils/rendering/fullscreen.js';
 import { AlternateScreen } from '../ink/components/AlternateScreen.js';
 import { ScrollKeybindingHandler } from '../components/ScrollKeybindingHandler.js';
 import { useMessageActions, MessageActionsKeybindings, MessageActionsBar, type MessageActionsState, type MessageActionsNav, type MessageActionCaps } from '../components/messageActions.js';
 import { setClipboard } from '../ink/termio/osc.js';
 import type { ScrollBoxHandle } from '../ink/components/ScrollBox.js';
-import { createAttachmentMessage, getQueuedCommandAttachments } from '../utils/attachments.js';
+import { createAttachmentMessage, getQueuedCommandAttachments } from '../utils/media/attachments.js';
 
 // Stable empty array for hooks that accept MCPServerConnection[] — avoids
 // creating a new [] literal on every render in remote mode, which would
@@ -1840,7 +1840,7 @@ export function REPL({
       // Rename asciicast recording to match the resumed session ID
       const {
         renameRecordingForSession
-      } = await import('../utils/asciicast.js');
+      } = await import('../utils/media/asciicast.js');
       await renameRecordingForSession();
       await resetSessionFilePointer();
 

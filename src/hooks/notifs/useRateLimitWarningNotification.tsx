@@ -5,7 +5,7 @@ import { useNotifications } from 'src/context/notifications.js';
 import { Text } from 'src/ink.js';
 import { getRateLimitWarning, getUsingOverageText } from 'src/services/claudeAiLimits.js';
 import { useClaudeAiLimits } from 'src/services/claudeAiLimitsHook.js';
-import { getSubscriptionType } from 'src/utils/auth.js';
+import { getSubscriptionType } from 'src/utils/auth/auth.js';
 import { hasClaudeAiBillingAccess } from 'src/utils/billing.js';
 import { getIsRemoteMode } from '../../bootstrap/state.js';
 export function useRateLimitWarningNotification(model) {

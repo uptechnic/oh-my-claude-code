@@ -10,7 +10,7 @@ import instances from '../ink/instances.js';
 import { Box, Text } from '../ink.js';
 import type { Message } from '../types/message.js';
 import { openBrowser, openPath } from '../utils/browser.js';
-import { isFullscreenEnvEnabled } from '../utils/fullscreen.js';
+import { isFullscreenEnvEnabled } from '../utils/rendering/fullscreen.js';
 import { plural } from '../utils/stringUtils.js';
 import { isNullRenderingAttachment } from './messages/nullRenderingAttachments.js';
 import PromptInputFooterSuggestions from './PromptInput/PromptInputFooterSuggestions.js';

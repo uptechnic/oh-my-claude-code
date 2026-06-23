@@ -4,7 +4,7 @@ import {
   getLatestVersion,
   type InstallStatus,
   installGlobalPackage,
-} from 'src/utils/autoUpdater.js'
+} from 'src/utils/lifecycle/autoUpdater.js'
 import { regenerateCompletionCache } from 'src/utils/completionCache.js'
 import {
   getGlobalConfig,
@@ -13,7 +13,7 @@ import {
 } from 'src/utils/config.js'
 import { logForDebugging } from 'src/utils/debug.js'
 import { getDoctorDiagnostic } from 'src/utils/doctorDiagnostic.js'
-import { gracefulShutdown } from 'src/utils/gracefulShutdown.js'
+import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
 import {
   installOrUpdateClaudePackage,
   localInstallationExists,

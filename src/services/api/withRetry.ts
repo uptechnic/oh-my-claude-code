@@ -17,7 +17,7 @@ import {
   handleOAuth401Error,
   isClaudeAISubscriber,
   isEnterpriseSubscriber,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { isEnvTruthy } from '../../utils/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import {
@@ -29,8 +29,8 @@ import {
   triggerFastModeCooldown,
 } from '../../utils/fastMode.js'
 import { isNonCustomOpusModel } from '../../utils/model/model.js'
-import { disableKeepAlive } from '../../utils/proxy.js'
-import { sleep } from '../../utils/sleep.js'
+import { disableKeepAlive } from '../../utils/auth/proxy.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import type { ThinkingConfig } from '../../utils/thinking.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import {

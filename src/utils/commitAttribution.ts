@@ -9,13 +9,13 @@ import type {
 import { getCwd } from './cwd.js'
 import { logForDebugging } from './debug.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { isGeneratedFile } from './generatedFiles.js'
 import { getRemoteUrlForDir, resolveGitDir } from './git/gitFilesystem.js'
 import { findGitRoot, gitExe } from './git/git.js'
 import { logError } from './log.js'
 import { getCanonicalName, type ModelName } from './model/model.js'
-import { sequential } from './sequential.js'
+import { sequential } from './concurrency/sequential.js'
 
 /**
  * List of repos where internal model names are allowed in trailers.

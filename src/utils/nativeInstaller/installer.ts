@@ -34,8 +34,8 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { getMaxVersion, shouldSkipVersion } from '../autoUpdater.js'
-import { registerCleanup } from '../cleanupRegistry.js'
+import { getMaxVersion, shouldSkipVersion } from '../lifecycle/autoUpdater.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { getGlobalConfig, saveGlobalConfig } from '../config.js'
 import { logForDebugging } from '../debug.js'
 import { getCurrentInstallationType } from '../doctorDiagnostic.js'
@@ -45,7 +45,7 @@ import { isEnvTruthy } from '../envUtils.js'
 import { errorMessage, getErrnoCode, isENOENT, toError } from '../errors.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
 import { getShellType } from '../localInstaller.js'
-import * as lockfile from '../lockfile.js'
+import * as lockfile from '../files/lockfile.js'
 import { logError } from '../log.js'
 import { gt, gte } from '../semver.js'
 import {
@@ -54,7 +54,7 @@ import {
   readFileLines,
   writeFileLines,
 } from '../shellConfig.js'
-import { sleep } from '../sleep.js'
+import { sleep } from '../concurrency/sleep.js'
 import {
   getUserBinDir,
   getXDGCacheHome,

@@ -14,7 +14,7 @@ import { getCwd } from '../../utils/cwd.js'
 import {
   getFsImplementation,
   safeResolvePath,
-} from '../../utils/fsOperations.js'
+} from '../../utils/files/fsOperations.js'
 import { containsPathTraversal, getDirectoryForPath } from '../../utils/path.js'
 import {
   allWorkingDirectories,

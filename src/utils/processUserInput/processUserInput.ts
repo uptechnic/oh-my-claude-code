@@ -34,7 +34,7 @@ import {
   type AgentMentionAttachment,
   createAttachmentMessage,
   getAttachmentMessages,
-} from '../attachments.js'
+} from '../media/attachments.js'
 import type { PastedContent } from '../config.js'
 import type { EffortValue } from '../effort.js'
 import { toArray } from '../generators.js'
@@ -45,8 +45,8 @@ import {
 import {
   createImageMetadataText,
   maybeResizeAndDownsampleImageBlock,
-} from '../imageResizer.js'
-import { storeImages } from '../imageStore.js'
+} from '../media/imageResizer.js'
+import { storeImages } from '../media/imageStore.js'
 import {
   createCommandInputMessage,
   createSystemMessage,

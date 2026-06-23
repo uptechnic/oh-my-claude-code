@@ -21,7 +21,7 @@ import {
   execFileNoThrowWithCwd,
   execSyncWithDefaults_DEPRECATED,
 } from './execFileNoThrow.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import { getAncestorPidsAsync } from './genericProcessUtils.js'
 import { isJetBrainsPluginInstalledCached } from './jetbrains.js'
 import { logError } from './log.js'
@@ -34,7 +34,7 @@ const ideOnboardingDialog =
   (): typeof import('src/components/IdeOnboardingDialog.js') =>
     require('src/components/IdeOnboardingDialog.js')
 
-import { createAbortController } from './abortController.js'
+import { createAbortController } from './concurrency/abortController.js'
 import { logForDebugging } from './debug.js'
 import { envDynamic } from './envDynamic.js'
 import { errorMessage, isFsInaccessible } from './errors.js'
@@ -43,7 +43,7 @@ import {
   checkWSLDistroMatch,
   WindowsToWSLConverter,
 } from './idePathConversion.js'
-import { sleep } from './sleep.js'
+import { sleep } from './concurrency/sleep.js'
 import { jsonParse } from './slowOperations.js'
 
 function isProcessRunning(pid: number): boolean {

@@ -13,7 +13,7 @@ import type {
   ProgressMessage,
 } from '../../types/message.js'
 import type { PermissionDecision } from '../../types/permissions.js'
-import { createAttachmentMessage } from '../../utils/attachments.js'
+import { createAttachmentMessage } from '../../utils/media/attachments.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {
   executePostToolHooks,

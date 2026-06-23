@@ -79,7 +79,7 @@ import {
   type HookAttachment,
   type HookPermissionDecisionAttachment,
   memoryHeader,
-} from '../attachments.js'
+} from '../media/attachments.js'
 import { quote } from '../bash/shellQuote.js'
 import { formatNumber, formatTokens } from '../format.js'
 import { getPewterLedgerVariant } from '../planModeV2.js'
@@ -147,10 +147,10 @@ import type { PermissionMode } from '../../types/permissions.js'
 import { normalizeToolInput, normalizeToolInputForAPI } from '../api.js'
 import { getCurrentProjectConfig } from '../config.js'
 import { logAntError, logForDebugging } from '../debug.js'
-import { stripIdeContextTags } from '../displayTags.js'
+import { stripIdeContextTags } from '../rendering/displayTags.js'
 import { hasEmbeddedSearchTools } from '../embeddedTools.js'
 import { formatFileSize } from '../format.js'
-import { validateImagesForAPI } from '../imageValidation.js'
+import { validateImagesForAPI } from '../media/imageValidation.js'
 import { safeParseJSON } from '../json.js'
 import { logError, logMCPDebug } from '../log.js'
 import { normalizeLegacyToolName } from '../permissions/permissionRuleParser.js'

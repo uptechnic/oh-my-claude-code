@@ -10,7 +10,7 @@
 import {
   getAnthropicApiKeyWithSource,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,

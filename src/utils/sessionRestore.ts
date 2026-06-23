@@ -28,7 +28,7 @@ import type {
   PersistedWorktreeSession,
 } from '../types/logs.js'
 import type { Message } from '../types/message.js'
-import { renameRecordingForSession } from './asciicast.js'
+import { renameRecordingForSession } from './media/asciicast.js'
 import { clearMemoryFileCaches } from './claudemd.js'
 import {
   type AttributionState,
@@ -38,8 +38,8 @@ import {
 import { updateSessionName } from './concurrentSessions.js'
 import { getCwd } from './cwd.js'
 import { logForDebugging } from './debug.js'
-import type { FileHistorySnapshot } from './fileHistory.js'
-import { fileHistoryRestoreStateFromLog } from './fileHistory.js'
+import type { FileHistorySnapshot } from './files/fileHistory.js'
+import { fileHistoryRestoreStateFromLog } from './files/fileHistory.js'
 import { createSystemMessage } from './messages/messages.js'
 import { parseUserSpecifiedModel } from './model/model.js'
 import { getPlansDirectory } from './plans.js'

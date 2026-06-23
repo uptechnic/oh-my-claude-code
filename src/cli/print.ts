@@ -49,7 +49,7 @@ import {
   subscribeToCommandQueue,
   getCommandsByMaxPriority,
 } from 'src/utils/messageQueueManager.js'
-import { notifyCommandLifecycle } from 'src/utils/commandLifecycle.js'
+import { notifyCommandLifecycle } from 'src/utils/lifecycle/commandLifecycle.js'
 import {
   getSessionState,
   notifySessionStateChanged,
@@ -64,7 +64,7 @@ import {
   writeToStdout,
   registerProcessOutputErrorHandlers,
 } from 'src/utils/process.js'
-import type { Stream } from 'src/utils/stream.js'
+import type { Stream } from 'src/utils/concurrency/stream.js'
 import { EMPTY_USAGE } from 'src/services/api/logging.js'
 import {
   loadConversationForResume,
@@ -94,7 +94,7 @@ import {
   createFileStateCacheWithSizeLimit,
   mergeFileStateCaches,
   READ_FILE_STATE_CACHE_SIZE,
-} from 'src/utils/fileStateCache.js'
+} from 'src/utils/files/fileStateCache.js'
 import { expandPath } from 'src/utils/path.js'
 import { extractReadFilesFromMessages } from 'src/utils/queryHelpers.js'
 import { registerHookEventHandler } from 'src/utils/hooks/hookEvents.js'
@@ -104,9 +104,9 @@ import {
   gracefulShutdown,
   gracefulShutdownSync,
   isShuttingDown,
-} from 'src/utils/gracefulShutdown.js'
-import { registerCleanup } from 'src/utils/cleanupRegistry.js'
-import { createIdleTimeoutManager } from 'src/utils/idleTimeout.js'
+} from 'src/utils/lifecycle/gracefulShutdown.js'
+import { registerCleanup } from 'src/utils/lifecycle/cleanupRegistry.js'
+import { createIdleTimeoutManager } from 'src/utils/lifecycle/idleTimeout.js'
 import type {
   SDKStatus,
   ModelInfo,
@@ -146,8 +146,8 @@ import {
   outputSchema as permissionToolOutputSchema,
   permissionPromptToolResultToPermissionDecision,
 } from 'src/utils/permissions/PermissionPromptToolResultSchema.js'
-import { createAbortController } from 'src/utils/abortController.js'
-import { createCombinedAbortSignal } from 'src/utils/combinedAbortSignal.js'
+import { createAbortController } from 'src/utils/concurrency/abortController.js'
+import { createCombinedAbortSignal } from 'src/utils/concurrency/combinedAbortSignal.js'
 import { generateSessionTitle } from 'src/utils/sessionTitle.js'
 import { buildSideQuestionFallbackParams } from 'src/utils/queryContext.js'
 import { runSideQuestion } from 'src/utils/sideQuestion.js'
@@ -187,10 +187,10 @@ import {
   type PromptVariant,
 } from 'src/services/PromptSuggestion/promptSuggestion.js'
 import { getLastCacheSafeParams } from 'src/utils/forkedAgent.js'
-import { getAccountInformation } from 'src/utils/auth.js'
+import { getAccountInformation } from 'src/utils/auth/auth.js'
 import { getAPIProvider } from 'src/utils/model/providers.js'
 import type { HookCallbackMatcher } from 'src/types/hooks.js'
-import { AwsAuthStatusManager } from 'src/utils/awsAuthStatusManager.js'
+import { AwsAuthStatusManager } from 'src/utils/auth/awsAuthStatusManager.js'
 import type { HookEvent } from 'src/entrypoints/agentSdkTypes.js'
 import {
   registerHookCallbacks,
@@ -302,7 +302,7 @@ import {
   fileHistoryCanRestore,
   fileHistoryEnabled,
   fileHistoryGetDiffStats,
-} from 'src/utils/fileHistory.js'
+} from 'src/utils/files/fileHistory.js'
 import {
   restoreAgentFromSession,
   restoreSessionStateFromLog,
@@ -348,7 +348,7 @@ import { stopTask } from '../tasks/stopTask.js'
 import { drainSdkEvents } from '../utils/sdkEventQueue.js'
 import { initializeGrowthBook } from '../services/analytics/growthbook.js'
 import { errorMessage, toError } from '../utils/errors.js'
-import { sleep } from '../utils/sleep.js'
+import { sleep } from '../utils/concurrency/sleep.js'
 import { isExtractModeActive } from '../memdir/paths.js'
 
 // Dead code elimination: conditional imports
@@ -361,10 +361,10 @@ const proactiveModule =
     ? (require('../proactive/index.js') as typeof import('../proactive/index.js'))
     : null
 const cronSchedulerModule = feature('AGENT_TRIGGERS')
-  ? (require('../utils/cronScheduler.js') as typeof import('../utils/cronScheduler.js'))
+  ? (require('../utils/cron/cronScheduler.js') as typeof import('../utils/cron/cronScheduler.js'))
   : null
 const cronJitterConfigModule = feature('AGENT_TRIGGERS')
-  ? (require('../utils/cronJitterConfig.js') as typeof import('../utils/cronJitterConfig.js'))
+  ? (require('../utils/cron/cronJitterConfig.js') as typeof import('../utils/cron/cronJitterConfig.js'))
   : null
 const cronGate = feature('AGENT_TRIGGERS')
   ? (require('../tools/ScheduleCronTool/prompt.js') as typeof import('../tools/ScheduleCronTool/prompt.js'))
@@ -2697,7 +2697,7 @@ function runHeadlessStreaming(
   // that drains on enqueue while idle. The run() mutex makes this safe
   // during an active turn: the call no-ops and the post-run recheck at
   // the end of run() picks up the queued command.
-  let cronScheduler: import('../utils/cronScheduler.js').CronScheduler | null =
+  let cronScheduler: import('../utils/cron/cronScheduler.js').CronScheduler | null =
     null
   if (
     feature('AGENT_TRIGGERS') &&

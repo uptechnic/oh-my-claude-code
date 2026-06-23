@@ -6,10 +6,10 @@ import {
   CCR_SESSION_INGRESS_TOKEN_PATH,
   maybePersistTokenForSubprocesses,
   readTokenFromWellKnownFile,
-} from './authFileDescriptor.js'
+} from './auth/authFileDescriptor.js'
 import { logForDebugging } from './debug.js'
 import { errorMessage } from './errors.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 
 /**
  * Read token via file descriptor, falling back to well-known file.

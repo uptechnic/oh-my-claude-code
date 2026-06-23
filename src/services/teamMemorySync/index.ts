@@ -38,7 +38,7 @@ import { count } from '../../utils/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
-} from '../../utils/auth.js'
+} from '../../utils/auth/auth.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { classifyAxiosError } from '../../utils/errors.js'
 import { getGithubRepo } from '../../utils/git/git.js'
@@ -46,7 +46,7 @@ import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
 } from '../../utils/model/providers.js'
-import { sleep } from '../../utils/sleep.js'
+import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
 import { logEvent } from '../analytics/index.js'

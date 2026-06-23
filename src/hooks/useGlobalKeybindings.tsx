@@ -13,7 +13,7 @@ import { getFeatureValue_CACHED_MAY_BE_STALE } from '../services/analytics/growt
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from '../services/analytics/index.js';
 import { useAppState, useSetAppState } from '../state/AppState.js';
 import { count } from '../utils/array.js';
-import { getTerminalPanel } from '../utils/terminalPanel.js';
+import { getTerminalPanel } from '../utils/rendering/terminalPanel.js';
 type Props = {
   screen: Screen;
   setScreen: React.Dispatch<React.SetStateAction<Screen>>;

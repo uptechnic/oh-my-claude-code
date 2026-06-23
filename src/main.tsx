@@ -47,22 +47,22 @@ import { getTools } from './tools.js';
 import { canUserConfigureAdvisor, getInitialAdvisorSetting, isAdvisorEnabled, isValidAdvisorModel, modelSupportsAdvisor } from './utils/advisor.js';
 import { isAgentSwarmsEnabled } from './utils/agentSwarmsEnabled.js';
 import { count, uniq } from './utils/array.js';
-import { installAsciicastRecorder } from './utils/asciicast.js';
-import { getSubscriptionType, isClaudeAISubscriber, validateForceLoginOrg } from './utils/auth.js';
+import { installAsciicastRecorder } from './utils/media/asciicast.js';
+import { getSubscriptionType, isClaudeAISubscriber, validateForceLoginOrg } from './utils/auth/auth.js';
 import { checkHasTrustDialogAccepted, getGlobalConfig, getRemoteControlAtStartup, isAutoUpdaterDisabled, saveGlobalConfig } from './utils/config.js';
-import { seedEarlyInput, stopCapturingEarlyInput } from './utils/earlyInput.js';
+import { seedEarlyInput, stopCapturingEarlyInput } from './utils/lifecycle/earlyInput.js';
 import { getInitialEffortSetting, parseEffortValue } from './utils/effort.js';
 import { getInitialFastModeSetting, isFastModeEnabled, prefetchFastModeStatus, resolveFastModeStatusFromCache } from './utils/fastMode.js';
 import { applyConfigEnvironmentVariables } from './utils/managedEnv.js';
 import { createSystemMessage, createUserMessage } from './utils/messages/messages.js';
 import { getPlatform } from './utils/platform.js';
-import { getBaseRenderOptions } from './utils/renderOptions.js';
+import { getBaseRenderOptions } from './utils/rendering/renderOptions.js';
 import { getSessionIngressAuthToken } from './utils/sessionIngressAuth.js';
 import { settingsChangeDetector } from './utils/settings/changeDetector.js';
 import { skillChangeDetector } from './utils/skills/skillChangeDetector.js';
 import { jsonParse, writeFileSync_DEPRECATED } from './utils/slowOperations.js';
 import { computeInitialTeamContext } from './utils/swarm/reconnection.js';
-import { initializeWarningHandler } from './utils/warningHandler.js';
+import { initializeWarningHandler } from './utils/lifecycle/warningHandler.js';
 import { isWorktreeModeEnabled } from './utils/worktreeModeEnabled.js';
 
 // Lazy require to avoid circular dependency: teammate.ts -> AppState.tsx -> ... -> main.tsx
@@ -100,7 +100,7 @@ import type { AgentColorName } from './tools/AgentTool/agentColorManager.js';
 import { getActiveAgentsFromList, getAgentDefinitionsWithOverrides, isBuiltInAgent, isCustomAgent, parseAgentsFromJson } from './tools/AgentTool/loadAgentsDir.js';
 import type { LogOption } from './types/logs.js';
 import type { Message as MessageType } from './types/message.js';
-import { assertMinVersion } from './utils/autoUpdater.js';
+import { assertMinVersion } from './utils/lifecycle/autoUpdater.js';
 import { getContextWindowForModel } from './utils/context.js';
 import { loadConversationForResume } from './utils/conversationRecovery.js';
 import { buildDeepLinkBanner } from './utils/deepLink/banner.js';
@@ -132,7 +132,7 @@ import type { ValidationError } from './utils/settings/validation.js';
 import { DEFAULT_TASKS_MODE_TASK_LIST_ID, TASK_STATUSES } from './utils/task/tasks.js';
 import { logPluginLoadErrors, logPluginsEnabledForSession } from './utils/telemetry/pluginTelemetry.js';
 import { logSkillsLoaded } from './utils/telemetry/skillLoadedEvent.js';
-import { generateTempFilePath } from './utils/tempfile.js';
+import { generateTempFilePath } from './utils/files/tempfile.js';
 import { validateUuid } from './utils/uuid.js';
 // Plugin startup checks are now handled non-blockingly in REPL.tsx
 
@@ -146,15 +146,15 @@ import { excludeCommandsByServer, excludeResourcesByServer } from 'src/services/
 import { isXaaEnabled } from 'src/services/mcp/xaaIdpLogin.js';
 import { getRelevantTips } from 'src/services/tips/tipRegistry.js';
 import { logContextMetrics } from 'src/utils/api.js';
-import { registerCleanup } from 'src/utils/cleanupRegistry.js';
+import { registerCleanup } from 'src/utils/lifecycle/cleanupRegistry.js';
 import { eagerParseCliFlag } from 'src/utils/cliArgs.js';
 import { createEmptyAttributionState } from 'src/utils/commitAttribution.js';
 import { countConcurrentSessions, registerSession, updateSessionName } from 'src/utils/concurrentSessions.js';
 import { getCwd } from 'src/utils/cwd.js';
 import { logForDebugging, setHasFormattedOutput } from 'src/utils/debug.js';
 import { errorMessage, getErrnoCode, isENOENT, TeleportOperationError, toError } from 'src/utils/errors.js';
-import { getFsImplementation, safeResolvePath } from 'src/utils/fsOperations.js';
-import { gracefulShutdown, gracefulShutdownSync } from 'src/utils/gracefulShutdown.js';
+import { getFsImplementation, safeResolvePath } from 'src/utils/files/fsOperations.js';
+import { gracefulShutdown, gracefulShutdownSync } from 'src/utils/lifecycle/gracefulShutdown.js';
 import { setAllHookEventsEnabled } from 'src/utils/hooks/hookEvents.js';
 import { refreshModelCapabilities } from 'src/utils/model/modelCapabilities.js';
 import { peekForStdinData, writeToStderr } from 'src/utils/process.js';
@@ -2697,7 +2697,7 @@ async function run(): Promise<CommanderCommand> {
       // that scripted calls don't need — the next interactive session reconciles.
       if (!isBareMode()) {
         startDeferredPrefetches();
-        void import('./utils/backgroundHousekeeping.js').then(m => m.startBackgroundHousekeeping());
+        void import('./utils/lifecycle/backgroundHousekeeping.js').then(m => m.startBackgroundHousekeeping());
         if ("external" === 'ant') {
           void import('./utils/sdkHeapDumpMonitor.js').then(m => m.startSdkMemoryMonitor());
         }
@@ -3193,7 +3193,7 @@ async function run(): Promise<CommanderCommand> {
       const {
         checkAndRefreshOAuthTokenIfNeeded,
         getClaudeAIOAuthTokens
-      } = await import('./utils/auth.js');
+      } = await import('./utils/auth/auth.js');
       await checkAndRefreshOAuthTokenIfNeeded();
       let apiCreds;
       try {
@@ -3344,7 +3344,7 @@ async function run(): Promise<CommanderCommand> {
         // Create remote session config for the REPL
         const {
           getClaudeAIOAuthTokens: getTokensForRemote
-        } = await import('./utils/auth.js');
+        } = await import('./utils/auth/auth.js');
         const getAccessTokenForRemote = (): string => getTokensForRemote()?.accessToken ?? apiCreds.accessToken;
         const remoteSessionConfig = createRemoteSessionConfig(createdSession.id, getAccessTokenForRemote, apiCreds.orgUUID, hasInitialPrompt);
 

@@ -5,13 +5,13 @@ import { setupTerminal, shouldOfferTerminalSetup } from '../commands/terminalSet
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { Box, Link, Newline, Text, useTheme } from '../ink.js';
 import { useKeybindings } from '../keybindings/useKeybinding.js';
-import { isAnthropicAuthEnabled, getAnthropicApiKeyWithSource } from '../utils/auth.js';
-import { normalizeApiKeyForConfig } from '../utils/authPortable.js';
+import { isAnthropicAuthEnabled, getAnthropicApiKeyWithSource } from '../utils/auth/auth.js';
+import { normalizeApiKeyForConfig } from '../utils/auth/authPortable.js';
 import { getCustomApiKeyStatus } from '../utils/config.js';
 import { env } from '../utils/env.js';
 import { isRunningOnHomespace } from '../utils/envUtils.js';
-import { PreflightStep } from '../utils/preflightChecks.js';
-import type { ThemeSetting } from '../utils/theme.js';
+import { PreflightStep } from '../utils/rendering/preflightChecks.js';
+import type { ThemeSetting } from '../utils/rendering/theme.js';
 import { ApproveApiKey } from './ApproveApiKey.js';
 import { Select } from './CustomSelect/select.js';
 import { WelcomeV2 } from './LogoV2/WelcomeV2.js';

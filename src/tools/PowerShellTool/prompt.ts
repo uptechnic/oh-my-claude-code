@@ -7,7 +7,7 @@ import {
 import {
   getDefaultBashTimeoutMs,
   getMaxBashTimeoutMs,
-} from '../../utils/timeouts.js'
+} from '../../utils/lifecycle/timeouts.js'
 import { FILE_EDIT_TOOL_NAME } from '../FileEditTool/constants.js'
 import { FILE_READ_TOOL_NAME } from '../FileReadTool/prompt.js'
 import { FILE_WRITE_TOOL_NAME } from '../FileWriteTool/prompt.js'

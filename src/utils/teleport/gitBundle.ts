@@ -20,7 +20,7 @@ import { getCwd } from '../cwd.js'
 import { logForDebugging } from '../debug.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
 import { findGitRoot, gitExe } from '../git/git.js'
-import { generateTempFilePath } from '../tempfile.js'
+import { generateTempFilePath } from '../files/tempfile.js'
 
 // Tunable via tengu_ccr_bundle_max_bytes.
 const DEFAULT_BUNDLE_MAX_BYTES = 100 * 1024 * 1024

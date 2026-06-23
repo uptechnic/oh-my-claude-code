@@ -19,7 +19,7 @@ import { checkHasTrustDialogAccepted } from '../utils/config.js';
 import { calculateContextPercentages, getContextWindowForModel } from '../utils/context.js';
 import { getCwd } from '../utils/cwd.js';
 import { logForDebugging } from '../utils/debug.js';
-import { isFullscreenEnvEnabled } from '../utils/fullscreen.js';
+import { isFullscreenEnvEnabled } from '../utils/rendering/fullscreen.js';
 import { createBaseHookInput, executeStatusLineCommand } from '../utils/hooks/hooks.js';
 import { getLastAssistantMessage } from '../utils/messages/messages.js';
 import { getRuntimeMainLoopModel, type ModelName, renderModelName } from '../utils/model/model.js';

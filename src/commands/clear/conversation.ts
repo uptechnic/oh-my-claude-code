@@ -24,7 +24,7 @@ import { isLocalShellTask } from '../../tasks/LocalShellTask/guards.js'
 import { asAgentId } from '../../types/ids.js'
 import type { Message } from '../../types/message.js'
 import { createEmptyAttributionState } from '../../utils/commitAttribution.js'
-import type { FileStateCache } from '../../utils/fileStateCache.js'
+import type { FileStateCache } from '../../utils/files/fileStateCache.js'
 import {
   executeSessionEndHooks,
   getSessionEndHookTimeoutMs,

@@ -23,8 +23,8 @@ import {
   logEvent,
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from 'src/services/analytics/index.js'
-import { ImageSizeError } from './utils/imageValidation.js'
-import { ImageResizeError } from './utils/imageResizer.js'
+import { ImageSizeError } from './utils/media/imageValidation.js'
+import { ImageResizeError } from './utils/media/imageResizer.js'
 import { findToolByName, type ToolUseContext } from './Tool.js'
 import { asSystemPrompt, type SystemPrompt } from './utils/systemPromptType.js'
 import type {
@@ -61,7 +61,7 @@ import {
   filterDuplicateMemoryAttachments,
   getAttachmentMessages,
   startRelevantMemoryPrefetch,
-} from './utils/attachments.js'
+} from './utils/media/attachments.js'
 /* eslint-disable @typescript-eslint/no-require-imports */
 const skillPrefetch = feature('EXPERIMENTAL_SKILL_SEARCH')
   ? (require('./services/skillSearch/prefetch.js') as typeof import('./services/skillSearch/prefetch.js'))
@@ -75,7 +75,7 @@ import {
   getCommandsByMaxPriority,
   isSlashCommand,
 } from './utils/messageQueueManager.js'
-import { notifyCommandLifecycle } from './utils/commandLifecycle.js'
+import { notifyCommandLifecycle } from './utils/lifecycle/commandLifecycle.js'
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import {
   getRuntimeMainLoopModel,

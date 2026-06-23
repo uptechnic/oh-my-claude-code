@@ -18,7 +18,7 @@ import { TEAM_CREATE_TOOL_NAME } from '../../../tools/TeamCreateTool/constants.j
 import { isAgentSwarmsEnabled } from '../../../utils/agentSwarmsEnabled.js';
 import { calculateContextPercentages, getContextWindowForModel } from '../../../utils/context.js';
 import { getExternalEditor } from '../../../utils/editor.js';
-import { getDisplayPath } from '../../../utils/file.js';
+import { getDisplayPath } from '../../../utils/files/file.js';
 import { toIDEDisplayName } from '../../../utils/ide.js';
 import { logError } from '../../../utils/log.js';
 import { enqueuePendingNotification } from '../../../utils/messageQueueManager.js';
@@ -44,9 +44,9 @@ const autoModeStateModule = feature('TRANSCRIPT_CLASSIFIER') ? require('../../..
 import type { Base64ImageSource, ImageBlockParam } from '@anthropic-ai/sdk/resources/messages.mjs';
 /* eslint-enable @typescript-eslint/no-require-imports */
 import type { PastedContent } from '../../../utils/config.js';
-import type { ImageDimensions } from '../../../utils/imageResizer.js';
-import { maybeResizeAndDownsampleImageBlock } from '../../../utils/imageResizer.js';
-import { cacheImagePath, storeImage } from '../../../utils/imageStore.js';
+import type { ImageDimensions } from '../../../utils/media/imageResizer.js';
+import { maybeResizeAndDownsampleImageBlock } from '../../../utils/media/imageResizer.js';
+import { cacheImagePath, storeImage } from '../../../utils/media/imageStore.js';
 type ResponseValue = 'yes-bypass-permissions' | 'yes-accept-edits' | 'yes-accept-edits-keep-context' | 'yes-default-keep-context' | 'yes-resume-auto-mode' | 'yes-auto-clear-context' | 'ultraplan' | 'no';
 
 /**

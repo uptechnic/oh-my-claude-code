@@ -6,13 +6,13 @@ import * as React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from 'src/services/analytics/index.js';
 import { useAppState } from 'src/state/AppState.js';
-import { type DiffStats, fileHistoryCanRestore, fileHistoryEnabled, fileHistoryGetDiffStats } from 'src/utils/fileHistory.js';
+import { type DiffStats, fileHistoryCanRestore, fileHistoryEnabled, fileHistoryGetDiffStats } from 'src/utils/files/fileHistory.js';
 import { logError } from 'src/utils/log.js';
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { Box, Text } from '../ink.js';
 import { useKeybinding, useKeybindings } from '../keybindings/useKeybinding.js';
 import type { Message, PartialCompactDirection, UserMessage } from '../types/message.js';
-import { stripDisplayTags } from '../utils/displayTags.js';
+import { stripDisplayTags } from '../utils/rendering/displayTags.js';
 import { createUserMessage, extractTag, isEmptyMessageText, isSyntheticMessage, isToolUseResultMessage } from '../utils/messages/messages.js';
 import { type OptionWithDescription, Select } from './CustomSelect/select.js';
 import { Spinner } from './Spinner.js';
@@ -26,7 +26,7 @@ import type { Output as FileWriteToolOutput } from 'src/tools/FileWriteTool/File
 import { BASH_STDERR_TAG, BASH_STDOUT_TAG, COMMAND_MESSAGE_TAG, LOCAL_COMMAND_STDERR_TAG, LOCAL_COMMAND_STDOUT_TAG, TASK_NOTIFICATION_TAG, TEAMMATE_MESSAGE_TAG, TICK_TAG } from '../constants/xml.js';
 import { count } from '../utils/array.js';
 import { formatRelativeTimeAgo, truncate } from '../utils/format.js';
-import type { Theme } from '../utils/theme.js';
+import type { Theme } from '../utils/rendering/theme.js';
 import { Divider } from './design-system/Divider.js';
 type RestoreOption = 'both' | 'conversation' | 'code' | 'summarize' | 'summarize_up_to' | 'nevermind';
 function isSummarizeOption(option: RestoreOption | null): option is 'summarize' | 'summarize_up_to' {

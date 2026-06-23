@@ -18,11 +18,11 @@ import type {
   NormalizedUserMessage,
 } from '../types/message.js'
 import { PERMISSION_MODES } from '../types/permissions.js'
-import { suppressNextSkillListing } from './attachments.js'
+import { suppressNextSkillListing } from './media/attachments.js'
 import {
   copyFileHistoryForResume,
   type FileHistorySnapshot,
-} from './fileHistory.js'
+} from './files/fileHistory.js'
 import { logError } from './log.js'
 import {
   createAssistantMessage,

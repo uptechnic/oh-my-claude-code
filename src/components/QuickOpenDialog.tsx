@@ -10,8 +10,8 @@ import { logEvent } from '../services/analytics/index.js';
 import { getCwd } from '../utils/cwd.js';
 import { openFileInExternalEditor } from '../utils/editor.js';
 import { truncatePathMiddle, truncateToWidth } from '../utils/format.js';
-import { highlightMatch } from '../utils/highlightMatch.js';
-import { readFileInRange } from '../utils/readFileInRange.js';
+import { highlightMatch } from '../utils/rendering/highlightMatch.js';
+import { readFileInRange } from '../utils/files/readFileInRange.js';
 import { FuzzyPicker } from './design-system/FuzzyPicker.js';
 import { LoadingState } from './design-system/LoadingState.js';
 type Props = {

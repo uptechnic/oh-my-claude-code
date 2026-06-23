@@ -2,7 +2,7 @@ import { execa } from 'execa'
 import { readFile, realpath } from 'fs/promises'
 import { homedir } from 'os'
 import { delimiter, join, posix, win32 } from 'path'
-import { checkGlobalInstallPermissions } from './autoUpdater.js'
+import { checkGlobalInstallPermissions } from './lifecycle/autoUpdater.js'
 import { isInBundledMode } from './bundledMode.js'
 import {
   formatAutoUpdaterDisabledReason,
@@ -13,7 +13,7 @@ import {
 import { getCwd } from './cwd.js'
 import { isEnvTruthy } from './envUtils.js'
 import { execFileNoThrow } from './execFileNoThrow.js'
-import { getFsImplementation } from './fsOperations.js'
+import { getFsImplementation } from './files/fsOperations.js'
 import {
   getShellType,
   isRunningFromLocalInstallation,

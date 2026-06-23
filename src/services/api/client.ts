@@ -6,13 +6,13 @@ import {
   getApiKeyFromApiKeyHelper,
   getClaudeAIOAuthTokens,
   isClaudeAISubscriber,
-} from 'src/utils/auth.js'
+} from 'src/utils/auth/auth.js'
 import { getUserAgent } from 'src/utils/http.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
 } from 'src/utils/model/providers.js'
-import { getProxyFetchOptions } from 'src/utils/proxy.js'
+import { getProxyFetchOptions } from 'src/utils/auth/proxy.js'
 import {
   getIsNonInteractiveSession,
   getSessionId,

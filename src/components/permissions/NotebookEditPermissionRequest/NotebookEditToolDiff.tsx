@@ -7,7 +7,7 @@ import type { NotebookCellType, NotebookContent } from '../../../types/notebook.
 import { intersperse } from '../../../utils/array.js';
 import { getCwd } from '../../../utils/cwd.js';
 import { getPatchForDisplay } from '../../../utils/diff.js';
-import { getFsImplementation } from '../../../utils/fsOperations.js';
+import { getFsImplementation } from '../../../utils/files/fsOperations.js';
 import { safeParseJSON } from '../../../utils/json.js';
 import { parseCellId } from '../../../utils/notebook.js';
 import { HighlightedCode } from '../../HighlightedCode.js';

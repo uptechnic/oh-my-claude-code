@@ -3,7 +3,7 @@
  */
 
 import axios from 'axios'
-import { getAnthropicApiKey } from './auth.js'
+import { getAnthropicApiKey } from './auth/auth.js'
 import { getClaudeCodeUserAgent } from './userAgent.js'
 import { getWorkload } from './workloadContext.js'
 

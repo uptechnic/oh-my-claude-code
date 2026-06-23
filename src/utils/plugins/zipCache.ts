@@ -45,7 +45,7 @@ import { basename, dirname, join } from 'path'
 import { logForDebugging } from '../debug.js'
 import { parseZipModes, unzipFile } from '../dxt/zip.js'
 import { isEnvTruthy } from '../envUtils.js'
-import { getFsImplementation } from '../fsOperations.js'
+import { getFsImplementation } from '../files/fsOperations.js'
 import { expandTilde } from '../permissions/pathValidation.js'
 import type { MarketplaceSource } from './schemas.js'
 

@@ -5,8 +5,8 @@ import { extractDangerousSettings, hasDangerousSettings, hasDangerousSettingsCha
 import { render } from '../../ink.js';
 import { KeybindingSetup } from '../../keybindings/KeybindingProviderSetup.js';
 import { AppStateProvider } from '../../state/AppState.js';
-import { gracefulShutdownSync } from '../../utils/gracefulShutdown.js';
-import { getBaseRenderOptions } from '../../utils/renderOptions.js';
+import { gracefulShutdownSync } from '../../utils/lifecycle/gracefulShutdown.js';
+import { getBaseRenderOptions } from '../../utils/rendering/renderOptions.js';
 import type { SettingsJson } from '../../utils/settings/types.js';
 import { logEvent } from '../analytics/index.js';
 export type SecurityCheckResult = 'approved' | 'rejected' | 'no_check_needed';
