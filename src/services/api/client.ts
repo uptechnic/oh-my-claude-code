@@ -7,7 +7,7 @@ import {
   getClaudeAIOAuthTokens,
   isClaudeAISubscriber,
 } from 'src/utils/auth/auth.js'
-import { getUserAgent } from 'src/utils/http.js'
+import { getUserAgent } from 'src/utils/api/http.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
@@ -17,9 +17,9 @@ import {
   getIsNonInteractiveSession,
   getSessionId,
 } from '../../bootstrap/state.js'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { isDebugToStdErr, logForDebugging } from '../../utils/debug.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 
 /**
  * Environment variables for different client types:

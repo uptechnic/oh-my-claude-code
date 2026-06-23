@@ -4,7 +4,7 @@ import type { Message } from '../../types/message.js'
 import { checkAndRefreshOAuthTokenIfNeeded } from '../../utils/auth/auth.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { errorMessage } from '../../utils/errors.js'
-import { getAuthHeaders, getUserAgent } from '../../utils/http.js'
+import { getAuthHeaders, getUserAgent } from '../../utils/api/http.js'
 import { normalizeMessagesForAPI } from '../../utils/messages/messages.js'
 import {
   extractAgentIdsFromMessages,

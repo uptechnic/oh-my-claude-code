@@ -43,10 +43,10 @@ import type { Message } from './types/message.js'
 import type { OrphanedPermission } from './types/textInputTypes.js'
 import { createAbortController } from './utils/concurrency/abortController.js'
 import type { AttributionState } from './utils/commitAttribution.js'
-import { getGlobalConfig } from './utils/config.js'
-import { getCwd } from './utils/cwd.js'
-import { isBareMode, isEnvTruthy } from './utils/envUtils.js'
-import { getFastModeState } from './utils/fastMode.js'
+import { getGlobalConfig } from './utils/config/config.js'
+import { getCwd } from './utils/platform/cwd.js'
+import { isBareMode, isEnvTruthy } from './utils/platform/envUtils.js'
+import { getFastModeState } from './utils/config/fastMode.js'
 import {
   type FileHistoryState,
   fileHistoryEnabled,
@@ -75,7 +75,7 @@ import {
   flushSessionStorage,
   recordTranscript,
 } from './utils/sessionStorage.js'
-import { asSystemPrompt } from './utils/systemPromptType.js'
+import { asSystemPrompt } from './utils/agent/systemPromptType.js'
 import { resolveThemeSetting } from './utils/rendering/systemTheme.js'
 import {
   shouldEnableThinkingByDefault,

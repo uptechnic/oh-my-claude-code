@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 
 export type AdminRequestType = 'limit_increase' | 'seat_upgrade'

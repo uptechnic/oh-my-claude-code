@@ -3,7 +3,7 @@ import { getUserContext } from 'src/context.js'
 import { queryModelWithoutStreaming } from 'src/services/api/claude.js'
 import { getEmptyToolPermissionContext } from 'src/Tool.js'
 import { AGENT_TOOL_NAME } from 'src/tools/AgentTool/constants.js'
-import { prependUserContext } from 'src/utils/api.js'
+import { prependUserContext } from 'src/utils/api/api.js'
 import {
   createUserMessage,
   normalizeMessagesForAPI,
@@ -15,7 +15,7 @@ import {
   logEvent,
 } from '../../services/analytics/index.js'
 import { jsonParse } from '../../utils/slowOperations.js'
-import { asSystemPrompt } from '../../utils/systemPromptType.js'
+import { asSystemPrompt } from '../../utils/agent/systemPromptType.js'
 
 type GeneratedAgent = {
   identifier: string

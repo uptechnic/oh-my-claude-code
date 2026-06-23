@@ -2,7 +2,7 @@
 import { MODEL_ALIASES } from './aliases.js'
 import { isModelAllowed } from './modelAllowlist.js'
 import { getAPIProvider } from './providers.js'
-import { sideQuery } from '../sideQuery.js'
+import { sideQuery } from '../agent/sideQuery.js'
 import {
   NotFoundError,
   APIError,

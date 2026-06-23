@@ -2,7 +2,7 @@ import type { AgentColorName } from '../../../tools/AgentTool/agentColorManager.
 import { logForDebugging } from '../../../utils/debug.js'
 import { execFileNoThrow } from '../../../utils/execFileNoThrow.js'
 import { logError } from '../../../utils/log.js'
-import { count } from '../../array.js'
+import { count } from '../../text/array.js'
 import { sleep } from '../../concurrency/sleep.js'
 import {
   getSwarmSocketName,

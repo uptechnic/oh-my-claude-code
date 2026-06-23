@@ -18,9 +18,9 @@ import {
   type QueuedCommand,
 } from '../types/textInputTypes.js'
 import { createAbortController } from './concurrency/abortController.js'
-import type { PastedContent } from './config.js'
+import type { PastedContent } from './config/config.js'
 import { logForDebugging } from './debug.js'
-import type { EffortValue } from './effort.js'
+import type { EffortValue } from './config/effort.js'
 import type { FileHistoryState } from './files/fileHistory.js'
 import { fileHistoryEnabled, fileHistoryMakeSnapshot } from './files/fileHistory.js'
 import { gracefulShutdownSync } from './lifecycle/gracefulShutdown.js'

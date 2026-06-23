@@ -8,16 +8,16 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from 'src/services/analytics/index.js'
-import { type ReleaseChannel, saveGlobalConfig } from '../config.js'
+import { type ReleaseChannel, saveGlobalConfig } from '../config/config.js'
 import { logForDebugging } from '../debug.js'
-import { env } from '../env.js'
-import { getClaudeConfigHomeDir } from '../envUtils.js'
+import { env } from '../platform/env.js'
+import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { ClaudeError, getErrnoCode, isENOENT } from '../errors.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { gracefulShutdownSync } from './gracefulShutdown.js'
 import { logError } from '../log.js'
-import { gte, lt } from '../semver.js'
+import { gte, lt } from '../text/semver.js'
 import { getInitialSettings } from '../settings/settings.js'
 import {
   filterClaudeAliases,

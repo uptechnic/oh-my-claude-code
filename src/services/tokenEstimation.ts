@@ -2,7 +2,7 @@ import type { Anthropic } from '@anthropic-ai/sdk'
 import type { BetaMessageParam as MessageParam } from '@anthropic-ai/sdk/resources/beta/messages/messages.mjs'
 // to defer ~279KB of AWS SDK code until a Bedrock call is actually made
 import type { Attachment } from '../utils/media/attachments.js'
-import { getModelBetas } from '../utils/betas.js'
+import { getModelBetas } from '../utils/config/betas.js'
 import { logError } from '../utils/log.js'
 import { normalizeAttachmentForAPI } from '../utils/messages/messages.js'
 import {
@@ -12,7 +12,7 @@ import {
   normalizeModelStringForAPI,
 } from '../utils/model/model.js'
 import { jsonStringify } from '../utils/slowOperations.js'
-import { isToolReferenceBlock } from '../utils/toolSearch.js'
+import { isToolReferenceBlock } from '../utils/agent/toolSearch.js'
 import { getAPIMetadata, getExtraBodyParams } from './api/claude.js'
 import { getAnthropicClient } from './api/client.js'
 import { withTokenCountVCR } from './vcr.js'

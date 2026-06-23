@@ -25,7 +25,7 @@ import memoize from 'lodash-es/memoize.js'
 import { basename, dirname, isAbsolute, join, resolve, sep } from 'path'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js'
 import { logForDebugging } from '../debug.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import {
   ConfigParseError,
   errorMessage,

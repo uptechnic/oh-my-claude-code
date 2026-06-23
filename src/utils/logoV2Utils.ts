@@ -2,15 +2,15 @@ import { getDirectConnectServerUrl, getSessionId } from '../bootstrap/state.js'
 import { stringWidth } from '../ink/stringWidth.js'
 import type { LogOption } from '../types/logs.js'
 import { getSubscriptionName, isClaudeAISubscriber } from './auth/auth.js'
-import { getCwd } from './cwd.js'
+import { getCwd } from './platform/cwd.js'
 import { getDisplayPath } from './files/file.js'
 import {
   truncate,
   truncateToWidth,
   truncateToWidthNoEllipsis,
-} from './format.js'
+} from './text/format.js'
 import { getStoredChangelogFromMemory, parseChangelog } from './releaseNotes.js'
-import { gt } from './semver.js'
+import { gt } from './text/semver.js'
 import { loadMessageLogs } from './sessionStorage.js'
 import { getInitialSettings } from './settings/settings.js'
 

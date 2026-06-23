@@ -13,7 +13,7 @@ import {
   shouldAddStdinRedirect,
 } from '../bash/shellQuoting.js'
 import { logForDebugging } from '../debug.js'
-import { getPlatform } from '../platform.js'
+import { getPlatform } from '../platform/platform.js'
 import { getSessionEnvironmentScript } from '../sessionEnvironment.js'
 import { getSessionEnvVars } from '../sessionEnvVars.js'
 import {
@@ -21,7 +21,7 @@ import {
   getClaudeTmuxEnv,
   hasTmuxToolBeenUsed,
 } from '../tmuxSocket.js'
-import { windowsPathToPosixPath } from '../windowsPaths.js'
+import { windowsPathToPosixPath } from '../platform/windowsPaths.js'
 import type { ShellProvider } from './shellProvider.js'
 
 /**

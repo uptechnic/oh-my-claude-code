@@ -16,10 +16,10 @@ import { ASK_USER_QUESTION_TOOL_NAME } from '../../tools/AskUserQuestionTool/pro
 import { EXIT_PLAN_MODE_V2_TOOL_NAME } from '../../tools/ExitPlanModeTool/constants.js';
 import { openBrowser } from '../../utils/browser.js';
 import { errorMessage } from '../../utils/errors.js';
-import { formatDuration, truncateToWidth } from '../../utils/format.js';
+import { formatDuration, truncateToWidth } from '../../utils/text/format.js';
 import { toInternalMessages } from '../../utils/messages/mappers.js';
 import { EMPTY_LOOKUPS, normalizeMessages } from '../../utils/messages/messages.js';
-import { plural } from '../../utils/stringUtils.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { teleportResumeCodeSession } from '../../utils/teleport.js';
 import { Select } from '../CustomSelect/select.js';
 import { Byline } from '../design-system/Byline.js';

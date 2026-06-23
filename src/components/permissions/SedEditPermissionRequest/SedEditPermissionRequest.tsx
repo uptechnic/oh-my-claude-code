@@ -2,7 +2,7 @@ import { c as _c } from "react/compiler-runtime";
 import { basename, relative } from 'path';
 import React, { Suspense, use, useMemo } from 'react';
 import { FileEditToolDiff } from 'src/components/FileEditToolDiff.js';
-import { getCwd } from 'src/utils/cwd.js';
+import { getCwd } from 'src/utils/platform/cwd.js';
 import { isENOENT } from 'src/utils/errors.js';
 import { detectEncodingForResolvedPath } from 'src/utils/files/fileRead.js';
 import { getFsImplementation } from 'src/utils/files/fsOperations.js';

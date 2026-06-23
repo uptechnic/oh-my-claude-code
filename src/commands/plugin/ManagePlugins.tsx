@@ -25,7 +25,7 @@ import { disablePluginOp, enablePluginOp, getPluginInstallationFromV2, isInstall
 import { useAppState } from '../../state/AppState.js';
 import type { Tool } from '../../Tool.js';
 import type { LoadedPlugin, PluginError } from '../../types/plugin.js';
-import { count } from '../../utils/array.js';
+import { count } from '../../utils/text/array.js';
 import { openBrowser } from '../../utils/browser.js';
 import { logForDebugging } from '../../utils/debug.js';
 import { errorMessage, toError } from '../../utils/errors.js';
@@ -43,7 +43,7 @@ import { isPluginBlockedByPolicy } from '../../utils/plugins/pluginPolicy.js';
 import { getPluginEditableScopes } from '../../utils/plugins/pluginStartupCheck.js';
 import { getSettings_DEPRECATED, getSettingsForSource, updateSettingsForSource } from '../../utils/settings/settings.js';
 import { jsonParse } from '../../utils/slowOperations.js';
-import { plural } from '../../utils/stringUtils.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { formatErrorMessage, getErrorGuidance } from './PluginErrors.js';
 import { PluginOptionsDialog } from './PluginOptionsDialog.js';
 import { PluginOptionsFlow } from './PluginOptionsFlow.js';

@@ -19,7 +19,7 @@ import { logForDebugging } from '../utils/debug.js'
 import {
   findInProcessTeammateTaskId,
   handlePlanApprovalResponse,
-} from '../utils/inProcessTeammateHelpers.js'
+} from '../utils/agent/inProcessTeammateHelpers.js'
 import { createAssistantMessage } from '../utils/messages/messages.js'
 import {
   permissionModeFromString,

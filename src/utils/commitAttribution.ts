@@ -6,7 +6,7 @@ import type {
   AttributionSnapshotMessage,
   FileAttributionState,
 } from '../types/logs.js'
-import { getCwd } from './cwd.js'
+import { getCwd } from './platform/cwd.js'
 import { logForDebugging } from './debug.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
 import { getFsImplementation } from './files/fsOperations.js'

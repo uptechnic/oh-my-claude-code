@@ -28,13 +28,13 @@ import axios from 'axios'
 import { createHash } from 'crypto'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 import { join, relative, sep } from 'path'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   getTeamMemPath,
   PathTraversalError,
   validateTeamMemKey,
 } from '../../memdir/teamMemPaths.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
@@ -48,7 +48,7 @@ import {
 } from '../../utils/model/providers.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { logEvent } from '../analytics/index.js'
 import type { AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS } from '../analytics/metadata.js'
 import { getRetryDelay } from '../api/withRetry.js'
@@ -844,7 +844,7 @@ export async function pullTeamMemory(
 
   const filesWritten = await writeRemoteEntriesToLocal(entries)
   if (filesWritten > 0) {
-    const { clearMemoryFileCaches } = await import('../../utils/claudemd.js')
+    const { clearMemoryFileCaches } = await import('../../utils/config/claudemd.js')
     clearMemoryFileCaches()
   }
   logForDebugging(`team-memory-sync: pulled ${filesWritten} files`, {

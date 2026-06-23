@@ -12,8 +12,8 @@ import {
 } from 'fs/promises'
 import ignore from 'ignore'
 import { basename, dirname, join } from 'path'
-import { saveCurrentProjectConfig } from './config.js'
-import { getCwd } from './cwd.js'
+import { saveCurrentProjectConfig } from './config/config.js'
+import { getCwd } from './platform/cwd.js'
 import { logForDebugging } from './debug.js'
 import { errorMessage, getErrnoCode } from './errors.js'
 import { execFileNoThrow, execFileNoThrowWithCwd } from './execFileNoThrow.js'
@@ -36,8 +36,8 @@ import {
   executeWorktreeRemoveHook,
   hasWorktreeCreateHook,
 } from './hooks/hooks.js'
-import { containsPathTraversal } from './path.js'
-import { getPlatform } from './platform.js'
+import { containsPathTraversal } from './platform/path.js'
+import { getPlatform } from './platform/platform.js'
 import {
   getInitialSettings,
   getRelativeSettingsFilePathForSource,

@@ -18,9 +18,9 @@ import {
 import { GREP_TOOL_NAME } from '../tools/GrepTool/prompt.js'
 import { isReplModeEnabled } from '../tools/REPLTool/constants.js'
 import { logForDebugging } from '../utils/debug.js'
-import { hasEmbeddedSearchTools } from '../utils/embeddedTools.js'
-import { isEnvTruthy } from '../utils/envUtils.js'
-import { formatFileSize } from '../utils/format.js'
+import { hasEmbeddedSearchTools } from '../utils/agent/embeddedTools.js'
+import { isEnvTruthy } from '../utils/platform/envUtils.js'
+import { formatFileSize } from '../utils/text/format.js'
 import { getProjectDir } from '../utils/sessionStorage.js'
 import { getInitialSettings } from '../utils/settings/settings.js'
 import {

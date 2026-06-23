@@ -22,7 +22,7 @@ import { findToolByName } from '../Tool.js'
 import type { Message as MessageType } from '../types/message.js'
 import type { PermissionAskDecision } from '../types/permissions.js'
 import { logForDebugging } from '../utils/debug.js'
-import { truncateToWidth } from '../utils/format.js'
+import { truncateToWidth } from '../utils/text/format.js'
 import {
   createSystemMessage,
   extractTextContent,

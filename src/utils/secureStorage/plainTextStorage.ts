@@ -1,6 +1,6 @@
 import { chmodSync } from 'fs'
 import { join } from 'path'
-import { getClaudeConfigHomeDir } from '../envUtils.js'
+import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { getErrnoCode } from '../errors.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import {

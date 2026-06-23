@@ -9,7 +9,7 @@ import { Box, Text } from '../../ink.js';
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import { useShortcutDisplay } from '../../keybindings/useShortcutDisplay.js';
 import type { Message } from '../../types/message.js';
-import { plural } from '../../utils/stringUtils.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { Byline } from '../design-system/Byline.js';
 import { Dialog } from '../design-system/Dialog.js';
 import { DiffDetailView } from './DiffDetailView.js';

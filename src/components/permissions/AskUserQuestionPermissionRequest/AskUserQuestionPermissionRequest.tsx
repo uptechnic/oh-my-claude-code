@@ -10,13 +10,13 @@ import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEve
 import { useAppState } from '../../../state/AppState.js';
 import type { Question } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
 import { AskUserQuestionTool } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
-import { type CliHighlight, getCliHighlightPromise } from '../../../utils/cliHighlight.js';
-import type { PastedContent } from '../../../utils/config.js';
+import { type CliHighlight, getCliHighlightPromise } from '../../../utils/text/cliHighlight.js';
+import type { PastedContent } from '../../../utils/config/config.js';
 import type { ImageDimensions } from '../../../utils/media/imageResizer.js';
 import { maybeResizeAndDownsampleImageBlock } from '../../../utils/media/imageResizer.js';
 import { cacheImagePath, storeImage } from '../../../utils/media/imageStore.js';
 import { logError } from '../../../utils/log.js';
-import { applyMarkdown } from '../../../utils/markdown.js';
+import { applyMarkdown } from '../../../utils/text/markdown.js';
 import { isPlanModeInterviewPhaseEnabled } from '../../../utils/planModeV2.js';
 import { getPlanFilePath } from '../../../utils/plans.js';
 import type { PermissionRequestProps } from '../PermissionRequest.js';

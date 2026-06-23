@@ -13,7 +13,7 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_PII_TAGGED,
   logEvent,
 } from '../../services/analytics/index.js'
-import { getCwd } from '../cwd.js'
+import { getCwd } from '../platform/cwd.js'
 import { toError } from '../errors.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { logError } from '../log.js'

@@ -3,15 +3,15 @@ import { readFile, realpath } from 'fs/promises'
 import { homedir } from 'os'
 import { delimiter, join, posix, win32 } from 'path'
 import { checkGlobalInstallPermissions } from './lifecycle/autoUpdater.js'
-import { isInBundledMode } from './bundledMode.js'
+import { isInBundledMode } from './config/bundledMode.js'
 import {
   formatAutoUpdaterDisabledReason,
   getAutoUpdaterDisabledReason,
   getGlobalConfig,
   type InstallMethod,
-} from './config.js'
-import { getCwd } from './cwd.js'
-import { isEnvTruthy } from './envUtils.js'
+} from './config/config.js'
+import { getCwd } from './platform/cwd.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import { execFileNoThrow } from './execFileNoThrow.js'
 import { getFsImplementation } from './files/fsOperations.js'
 import {
@@ -30,7 +30,7 @@ import {
   detectWinget,
   getPackageManager,
 } from './nativeInstaller/packageManagers.js'
-import { getPlatform } from './platform.js'
+import { getPlatform } from './platform/platform.js'
 import { getRipgrepStatus } from './ripgrep.js'
 import { SandboxManager } from './sandbox/sandbox-adapter.js'
 import { getManagedFilePath } from './settings/managedPath.js'

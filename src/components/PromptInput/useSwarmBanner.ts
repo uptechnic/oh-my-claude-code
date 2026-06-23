@@ -10,7 +10,7 @@ import {
   type AgentColorName,
   getAgentColor,
 } from '../../tools/AgentTool/agentColorManager.js'
-import { getStandaloneAgentName } from '../../utils/standaloneAgent.js'
+import { getStandaloneAgentName } from '../../utils/agent/standaloneAgent.js'
 import { isInsideTmux } from '../../utils/swarm/backends/detection.js'
 import {
   getCachedDetectionResult,

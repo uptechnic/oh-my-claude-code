@@ -6,7 +6,7 @@ import { errorMessage } from '../../utils/errors.js'
 import { getSessionIngressAuthHeaders } from '../../utils/sessionIngressAuth.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import type { Transport } from './Transport.js'
 
 // ---------------------------------------------------------------------------

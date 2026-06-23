@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 
 /**

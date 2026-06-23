@@ -5,8 +5,8 @@ import type { Command } from '../../commands.js'
 import type { AgentMcpServerInfo } from '../../components/mcp/types.js'
 import type { Tool } from '../../Tool.js'
 import type { AgentDefinition } from '../../tools/AgentTool/loadAgentsDir.js'
-import { getCwd } from '../../utils/cwd.js'
-import { getGlobalClaudeFile } from '../../utils/env.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { getGlobalClaudeFile } from '../../utils/platform/env.js'
 import { isSettingSourceEnabled } from '../../utils/settings/constants.js'
 import {
   getSettings_DEPRECATED,

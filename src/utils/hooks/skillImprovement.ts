@@ -10,8 +10,8 @@ import { queryModelWithoutStreaming } from '../../services/api/claude.js'
 import { getEmptyToolPermissionContext } from '../../Tool.js'
 import type { Message } from '../../types/message.js'
 import { createAbortController } from '../concurrency/abortController.js'
-import { count } from '../array.js'
-import { getCwd } from '../cwd.js'
+import { count } from '../text/array.js'
+import { getCwd } from '../platform/cwd.js'
 import { toError } from '../errors.js'
 import { logError } from '../log.js'
 import {
@@ -21,7 +21,7 @@ import {
 } from '../messages/messages.js'
 import { getSmallFastModel } from '../model/model.js'
 import { jsonParse } from '../slowOperations.js'
-import { asSystemPrompt } from '../systemPromptType.js'
+import { asSystemPrompt } from '../agent/systemPromptType.js'
 import {
   type ApiQueryHookConfig,
   createApiQueryHook,

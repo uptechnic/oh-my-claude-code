@@ -19,9 +19,9 @@ import type { AgentDefinition } from '../tools/AgentTool/loadAgentsDir.js'
 import type { Message } from '../types/message.js'
 import { createAbortController } from './concurrency/abortController.js'
 import type { FileStateCache } from './files/fileStateCache.js'
-import type { CacheSafeParams } from './forkedAgent.js'
+import type { CacheSafeParams } from './agent/forkedAgent.js'
 import { getMainLoopModel } from './model/model.js'
-import { asSystemPrompt } from './systemPromptType.js'
+import { asSystemPrompt } from './agent/systemPromptType.js'
 import {
   shouldEnableThinkingByDefault,
   type ThinkingConfig,

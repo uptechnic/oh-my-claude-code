@@ -8,9 +8,9 @@ import {
   isBuiltInAgent,
   isPluginAgent,
 } from '../../tools/AgentTool/loadAgentsDir.js'
-import { getCwd } from '../../utils/cwd.js'
-import type { EffortValue } from '../../utils/effort.js'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import type { EffortValue } from '../../utils/config/effort.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 import { getErrnoCode } from '../../utils/errors.js'
 import { AGENT_PATHS } from './types.js'
 

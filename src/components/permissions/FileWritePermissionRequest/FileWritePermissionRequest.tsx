@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import type { z } from 'zod/v4';
 import { Text } from '../../../ink.js';
 import { FileWriteTool } from '../../../tools/FileWriteTool/FileWriteTool.js';
-import { getCwd } from '../../../utils/cwd.js';
+import { getCwd } from '../../../utils/platform/cwd.js';
 import { isENOENT } from '../../../utils/errors.js';
 import { readFileSync } from '../../../utils/files/fileRead.js';
 import { FilePermissionDialog } from '../FilePermissionDialog/FilePermissionDialog.js';

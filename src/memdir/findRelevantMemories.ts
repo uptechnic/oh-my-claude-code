@@ -2,7 +2,7 @@ import { feature } from 'bun:bundle'
 import { logForDebugging } from '../utils/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { getDefaultSonnetModel } from '../utils/model/model.js'
-import { sideQuery } from '../utils/sideQuery.js'
+import { sideQuery } from '../utils/agent/sideQuery.js'
 import { jsonParse } from '../utils/slowOperations.js'
 import {
   formatMemoryManifest,

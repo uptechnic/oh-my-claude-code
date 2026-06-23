@@ -13,10 +13,10 @@ import {
 } from '../../skills/loadSkillsDir.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { getCwd } from '../../utils/cwd.js'
+import { getCwd } from '../../utils/platform/cwd.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { countLinesChanged } from '../../utils/diff.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { isENOENT } from '../../utils/errors.js'
 import {
   FILE_NOT_FOUND_CWD_NOTE,
@@ -34,14 +34,14 @@ import {
   type LineEndingType,
   readFileSyncWithMetadata,
 } from '../../utils/files/fileRead.js'
-import { formatFileSize } from '../../utils/format.js'
+import { formatFileSize } from '../../utils/text/format.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   fetchSingleFileGitDiff,
   type ToolUseDiff,
 } from '../../utils/git/gitDiff.js'
 import { logError } from '../../utils/log.js'
-import { expandPath } from '../../utils/path.js'
+import { expandPath } from '../../utils/platform/path.js'
 import {
   checkWritePermissionForTool,
   matchingRuleForInput,

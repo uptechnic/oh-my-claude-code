@@ -15,7 +15,7 @@
 import axios from 'axios'
 import { createHash } from 'crypto'
 import { open, unlink } from 'fs/promises'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getAnthropicApiKeyWithSource,
@@ -31,7 +31,7 @@ import {
 } from '../../utils/settings/types.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { getRetryDelay } from '../api/withRetry.js'
 import {
   checkManagedSettingsSecurity,

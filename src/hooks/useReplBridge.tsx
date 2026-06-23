@@ -16,7 +16,7 @@ import { Text } from '../ink.js';
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../services/analytics/growthbook.js';
 import { useAppState, useAppStateStore, useSetAppState } from '../state/AppState.js';
 import type { Message } from '../types/message.js';
-import { getCwd } from '../utils/cwd.js';
+import { getCwd } from '../utils/platform/cwd.js';
 import { logForDebugging } from '../utils/debug.js';
 import { errorMessage } from '../utils/errors.js';
 import { enqueue } from '../utils/messageQueueManager.js';

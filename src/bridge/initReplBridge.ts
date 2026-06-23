@@ -30,7 +30,7 @@ import {
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
 } from '../utils/auth/auth.js'
-import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js'
+import { getGlobalConfig, saveGlobalConfig } from '../utils/config/config.js'
 import { logForDebugging } from '../utils/debug.js'
 import { stripDisplayTagsAllowEmpty } from '../utils/rendering/displayTags.js'
 import { errorMessage } from '../utils/errors.js'
@@ -47,7 +47,7 @@ import {
   extractConversationText,
   generateSessionTitle,
 } from '../utils/sessionTitle.js'
-import { generateShortWordSlug } from '../utils/words.js'
+import { generateShortWordSlug } from '../utils/text/words.js'
 import {
   getBridgeAccessToken,
   getBridgeBaseUrl,

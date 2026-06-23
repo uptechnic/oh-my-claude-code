@@ -51,7 +51,7 @@ import {
 import {
   type CacheSafeParams,
   createSubagentContext,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import { registerFrontmatterHooks } from '../../utils/hooks/registerFrontmatterHooks.js'
 import { clearSessionHooks } from '../../utils/hooks/sessionHooks.js'
 import { executeSubagentStartHooks } from '../../utils/hooks/hooks.js'
@@ -71,14 +71,14 @@ import {
 import {
   asSystemPrompt,
   type SystemPrompt,
-} from '../../utils/systemPromptType.js'
+} from '../../utils/agent/systemPromptType.js'
 import {
   isPerfettoTracingEnabled,
   registerAgent as registerPerfettoAgent,
   unregisterAgent as unregisterPerfettoAgent,
 } from '../../utils/telemetry/perfettoTracing.js'
 import type { ContentReplacementState } from '../../utils/toolResultStorage.js'
-import { createAgentId } from '../../utils/uuid.js'
+import { createAgentId } from '../../utils/text/uuid.js'
 import { resolveAgentTools } from './agentToolUtils.js'
 import { type AgentDefinition, isBuiltInAgent } from './loadAgentsDir.js'
 

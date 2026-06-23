@@ -14,12 +14,12 @@ import { getShortcutDisplay } from '../../keybindings/shortcutFormat.js'
 import { isKairosCronEnabled } from '../../tools/ScheduleCronTool/prompt.js'
 import { is1PApiCustomer } from '../../utils/auth/auth.js'
 import { countConcurrentSessions } from '../../utils/concurrentSessions.js'
-import { getGlobalConfig } from '../../utils/config.js'
+import { getGlobalConfig } from '../../utils/config/config.js'
 import {
   getEffortEnvOverride,
   modelSupportsEffort,
-} from '../../utils/effort.js'
-import { env } from '../../utils/env.js'
+} from '../../utils/config/effort.js'
+import { env } from '../../utils/platform/env.js'
 import { cacheKeys } from '../../utils/files/fileStateCache.js'
 import { getWorktreeCount } from '../../utils/git/git.js'
 import {
@@ -30,12 +30,12 @@ import {
   isSupportedVSCodeTerminal,
   isVSCodeInstalled,
   isWindsurfInstalled,
-} from '../../utils/ide.js'
+} from '../../utils/ide/ide.js'
 import {
   getMainLoopModel,
   getUserSpecifiedModelSetting,
 } from '../../utils/model/model.js'
-import { getPlatform } from '../../utils/platform.js'
+import { getPlatform } from '../../utils/platform/platform.js'
 import { isPluginInstalled } from '../../utils/plugins/installedPluginsManager.js'
 import { loadKnownMarketplacesConfigSafe } from '../../utils/plugins/marketplaceManager.js'
 import { OFFICIAL_MARKETPLACE_NAME } from '../../utils/plugins/officialMarketplace.js'

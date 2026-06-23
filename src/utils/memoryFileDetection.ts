@@ -7,11 +7,11 @@ import {
   isAutoMemPath,
 } from '../memdir/paths.js'
 import { isAgentMemoryPath } from '../tools/AgentTool/agentMemory.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import {
   posixPathToWindowsPath,
   windowsPathToPosixPath,
-} from './windowsPaths.js'
+} from './platform/windowsPaths.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const teamMemPaths = feature('TEAMMEM')

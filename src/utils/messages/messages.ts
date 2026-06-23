@@ -72,8 +72,8 @@ import type {
   UserMessage,
 } from '../../types/message.js'
 import { isAdvisorBlock } from '../advisor.js'
-import { isAgentSwarmsEnabled } from '../agentSwarmsEnabled.js'
-import { count } from '../array.js'
+import { isAgentSwarmsEnabled } from '../agent/agentSwarmsEnabled.js'
+import { count } from '../text/array.js'
 import {
   type Attachment,
   type HookAttachment,
@@ -81,7 +81,7 @@ import {
   memoryHeader,
 } from '../media/attachments.js'
 import { quote } from '../bash/shellQuote.js'
-import { formatNumber, formatTokens } from '../format.js'
+import { formatNumber, formatTokens } from '../text/format.js'
 import { getPewterLedgerVariant } from '../planModeV2.js'
 import { jsonStringify } from '../slowOperations.js'
 
@@ -144,14 +144,14 @@ import { TASK_CREATE_TOOL_NAME } from '../../tools/TaskCreateTool/constants.js'
 import { TASK_OUTPUT_TOOL_NAME } from '../../tools/TaskOutputTool/constants.js'
 import { TASK_UPDATE_TOOL_NAME } from '../../tools/TaskUpdateTool/constants.js'
 import type { PermissionMode } from '../../types/permissions.js'
-import { normalizeToolInput, normalizeToolInputForAPI } from '../api.js'
-import { getCurrentProjectConfig } from '../config.js'
+import { normalizeToolInput, normalizeToolInputForAPI } from '../api/api.js'
+import { getCurrentProjectConfig } from '../config/config.js'
 import { logAntError, logForDebugging } from '../debug.js'
 import { stripIdeContextTags } from '../rendering/displayTags.js'
-import { hasEmbeddedSearchTools } from '../embeddedTools.js'
-import { formatFileSize } from '../format.js'
+import { hasEmbeddedSearchTools } from '../agent/embeddedTools.js'
+import { formatFileSize } from '../text/format.js'
 import { validateImagesForAPI } from '../media/imageValidation.js'
-import { safeParseJSON } from '../json.js'
+import { safeParseJSON } from '../text/json.js'
 import { logError, logMCPDebug } from '../log.js'
 import { normalizeLegacyToolName } from '../permissions/permissionRuleParser.js'
 import {
@@ -159,7 +159,7 @@ import {
   getPlanModeV2ExploreAgentCount,
   isPlanModeInterviewPhaseEnabled,
 } from '../planModeV2.js'
-import { escapeRegExp } from '../stringUtils.js'
+import { escapeRegExp } from '../text/stringUtils.js'
 import { isTodoV2Enabled } from '../task/tasks.js'
 
 // Lazy import to avoid circular dependency (teammateMailbox -> teammate -> ... -> messages)
@@ -171,7 +171,7 @@ function getTeammateMailbox(): typeof import('../swarm/teammateMailbox.js') {
 import {
   isToolReferenceBlock,
   isToolSearchEnabledOptimistic,
-} from '../toolSearch.js'
+} from '../agent/toolSearch.js'
 
 const MEMORY_CORRECTION_HINT =
   "\n\nNote: The user's next message may contain a correction or preference. Pay close attention — if they explain what went wrong or how they'd prefer you to work, consider saving that to memory for future sessions."

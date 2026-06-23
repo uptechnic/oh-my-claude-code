@@ -17,7 +17,7 @@ import { getOauthAccountInfo } from '../../utils/auth/auth.js';
 import { openBrowser } from '../../utils/browser.js';
 import { errorMessage } from '../../utils/errors.js';
 import { logMCPDebug } from '../../utils/log.js';
-import { capitalize } from '../../utils/stringUtils.js';
+import { capitalize } from '../../utils/text/stringUtils.js';
 import { ConfigurableShortcutHint } from '../ConfigurableShortcutHint.js';
 import { Select } from '../CustomSelect/index.js';
 import { Byline } from '../design-system/Byline.js';

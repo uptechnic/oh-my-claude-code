@@ -38,7 +38,7 @@ import {
   getDeferredToolsDeltaAttachment,
   getMcpInstructionsDeltaAttachment,
 } from '../../utils/media/attachments.js'
-import { getMemoryPath } from '../../utils/config.js'
+import { getMemoryPath } from '../../utils/config/config.js'
 import { COMPACT_MAX_OUTPUT_TOKENS } from '../../utils/context.js'
 import {
   analyzeContext,
@@ -50,7 +50,7 @@ import { cacheToObject } from '../../utils/files/fileStateCache.js'
 import {
   type CacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import {
   executePostCompactHooks,
   executePreCompactHooks,
@@ -66,7 +66,7 @@ import {
   isCompactBoundaryMessage,
   normalizeMessagesForAPI,
 } from '../../utils/messages/messages.js'
-import { expandPath } from '../../utils/path.js'
+import { expandPath } from '../../utils/platform/path.js'
 import { getPlan, getPlanFilePath } from '../../utils/plans.js'
 import {
   isSessionActivityTrackingActive,
@@ -80,7 +80,7 @@ import {
 import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
-import { asSystemPrompt } from '../../utils/systemPromptType.js'
+import { asSystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js'
 import {
   getTokenUsage,
@@ -90,7 +90,7 @@ import {
 import {
   extractDiscoveredToolNames,
   isToolSearchEnabled,
-} from '../../utils/toolSearch.js'
+} from '../../utils/agent/toolSearch.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,

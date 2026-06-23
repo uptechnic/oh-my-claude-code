@@ -36,18 +36,18 @@ import {
 } from 'src/services/analytics/index.js'
 import { getMaxVersion, shouldSkipVersion } from '../lifecycle/autoUpdater.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
-import { getGlobalConfig, saveGlobalConfig } from '../config.js'
+import { getGlobalConfig, saveGlobalConfig } from '../config/config.js'
 import { logForDebugging } from '../debug.js'
 import { getCurrentInstallationType } from '../doctorDiagnostic.js'
-import { env } from '../env.js'
-import { envDynamic } from '../envDynamic.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { env } from '../platform/env.js'
+import { envDynamic } from '../platform/envDynamic.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import { errorMessage, getErrnoCode, isENOENT, toError } from '../errors.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
 import { getShellType } from '../localInstaller.js'
 import * as lockfile from '../files/lockfile.js'
 import { logError } from '../log.js'
-import { gt, gte } from '../semver.js'
+import { gt, gte } from '../text/semver.js'
 import {
   filterClaudeAliases,
   getShellConfigPaths,
@@ -60,7 +60,7 @@ import {
   getXDGCacheHome,
   getXDGDataHome,
   getXDGStateHome,
-} from '../xdg.js'
+} from '../platform/xdg.js'
 import { downloadVersion, getLatestVersion } from './download.js'
 import {
   acquireProcessLifetimeLock,

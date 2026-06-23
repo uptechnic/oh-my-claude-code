@@ -33,7 +33,7 @@ import { createAbortController } from '../utils/concurrency/abortController.js'
 import {
   runWithAgentContext,
   type SubagentContext,
-} from '../utils/agentContext.js'
+} from '../utils/agent/agentContext.js'
 import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
 import { logForDebugging } from '../utils/debug.js'
 import { logError } from '../utils/log.js'

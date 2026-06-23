@@ -21,7 +21,7 @@ import type { ModelStrings } from 'src/utils/model/modelStrings.js'
 import type { SettingSource } from 'src/utils/settings/constants.js'
 import { resetSettingsCache } from 'src/utils/settings/settingsCache.js'
 import type { PluginHookMatcher } from 'src/utils/settings/types.js'
-import { createSignal } from 'src/utils/signal.js'
+import { createSignal } from 'src/utils/platform/signal.js'
 
 // Union type for registered hooks - can be SDK callbacks or native plugin hooks
 type RegisteredHookMatcher = HookCallbackMatcher | PluginHookMatcher

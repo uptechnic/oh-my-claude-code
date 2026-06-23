@@ -26,7 +26,7 @@ import mapValues from 'lodash-es/mapValues.js';
 import pickBy from 'lodash-es/pickBy.js';
 import uniqBy from 'lodash-es/uniqBy.js';
 import React from 'react';
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getRemoteSessionUrl } from './constants/product.js';
 import { getSystemContext, getUserContext } from './context.js';
 import { init, initializeTelemetryAfterTrust } from './entrypoints/init.js';
@@ -45,17 +45,17 @@ import type { ToolInputJSONSchema } from './Tool.js';
 import { createSyntheticOutputTool, isSyntheticOutputToolEnabled } from './tools/SyntheticOutputTool/SyntheticOutputTool.js';
 import { getTools } from './tools.js';
 import { canUserConfigureAdvisor, getInitialAdvisorSetting, isAdvisorEnabled, isValidAdvisorModel, modelSupportsAdvisor } from './utils/advisor.js';
-import { isAgentSwarmsEnabled } from './utils/agentSwarmsEnabled.js';
-import { count, uniq } from './utils/array.js';
+import { isAgentSwarmsEnabled } from './utils/agent/agentSwarmsEnabled.js';
+import { count, uniq } from './utils/text/array.js';
 import { installAsciicastRecorder } from './utils/media/asciicast.js';
 import { getSubscriptionType, isClaudeAISubscriber, validateForceLoginOrg } from './utils/auth/auth.js';
-import { checkHasTrustDialogAccepted, getGlobalConfig, getRemoteControlAtStartup, isAutoUpdaterDisabled, saveGlobalConfig } from './utils/config.js';
+import { checkHasTrustDialogAccepted, getGlobalConfig, getRemoteControlAtStartup, isAutoUpdaterDisabled, saveGlobalConfig } from './utils/config/config.js';
 import { seedEarlyInput, stopCapturingEarlyInput } from './utils/lifecycle/earlyInput.js';
-import { getInitialEffortSetting, parseEffortValue } from './utils/effort.js';
-import { getInitialFastModeSetting, isFastModeEnabled, prefetchFastModeStatus, resolveFastModeStatusFromCache } from './utils/fastMode.js';
-import { applyConfigEnvironmentVariables } from './utils/managedEnv.js';
+import { getInitialEffortSetting, parseEffortValue } from './utils/config/effort.js';
+import { getInitialFastModeSetting, isFastModeEnabled, prefetchFastModeStatus, resolveFastModeStatusFromCache } from './utils/config/fastMode.js';
+import { applyConfigEnvironmentVariables } from './utils/config/managedEnv.js';
 import { createSystemMessage, createUserMessage } from './utils/messages/messages.js';
-import { getPlatform } from './utils/platform.js';
+import { getPlatform } from './utils/platform/platform.js';
 import { getBaseRenderOptions } from './utils/rendering/renderOptions.js';
 import { getSessionIngressAuthToken } from './utils/sessionIngressAuth.js';
 import { settingsChangeDetector } from './utils/settings/changeDetector.js';
@@ -104,13 +104,13 @@ import { assertMinVersion } from './utils/lifecycle/autoUpdater.js';
 import { getContextWindowForModel } from './utils/context.js';
 import { loadConversationForResume } from './utils/conversationRecovery.js';
 import { buildDeepLinkBanner } from './utils/deepLink/banner.js';
-import { hasNodeOption, isBareMode, isEnvTruthy, isInProtectedNamespace } from './utils/envUtils.js';
+import { hasNodeOption, isBareMode, isEnvTruthy, isInProtectedNamespace } from './utils/platform/envUtils.js';
 import { refreshExampleCommands } from './utils/exampleCommands.js';
 import type { FpsMetrics } from './utils/fpsTracker.js';
 import { getWorktreePaths } from './utils/getWorktreePaths.js';
 import { findGitRoot, getBranch, getIsGit, getWorktreeCount } from './utils/git/git.js';
 import { getGhAuthStatus } from './utils/github/ghAuthStatus.js';
-import { safeParseJSON } from './utils/json.js';
+import { safeParseJSON } from './utils/text/json.js';
 import { logError } from './utils/log.js';
 import { getModelDeprecationWarning } from './utils/model/deprecation.js';
 import { getDefaultMainLoopModel, getUserSpecifiedModelSetting, normalizeModelStringForAPI, parseUserSpecifiedModel } from './utils/model/model.js';
@@ -133,7 +133,7 @@ import { DEFAULT_TASKS_MODE_TASK_LIST_ID, TASK_STATUSES } from './utils/task/tas
 import { logPluginLoadErrors, logPluginsEnabledForSession } from './utils/telemetry/pluginTelemetry.js';
 import { logSkillsLoaded } from './utils/telemetry/skillLoadedEvent.js';
 import { generateTempFilePath } from './utils/files/tempfile.js';
-import { validateUuid } from './utils/uuid.js';
+import { validateUuid } from './utils/text/uuid.js';
 // Plugin startup checks are now handled non-blockingly in REPL.tsx
 
 import { registerMcpAddCommand } from 'src/commands/mcp/addCommand.js';
@@ -145,23 +145,23 @@ import { areMcpConfigsAllowedWithEnterpriseMcpConfig, dedupClaudeAiMcpServers, d
 import { excludeCommandsByServer, excludeResourcesByServer } from 'src/services/mcp/utils.js';
 import { isXaaEnabled } from 'src/services/mcp/xaaIdpLogin.js';
 import { getRelevantTips } from 'src/services/tips/tipRegistry.js';
-import { logContextMetrics } from 'src/utils/api.js';
+import { logContextMetrics } from 'src/utils/api/api.js';
 import { registerCleanup } from 'src/utils/lifecycle/cleanupRegistry.js';
-import { eagerParseCliFlag } from 'src/utils/cliArgs.js';
+import { eagerParseCliFlag } from 'src/utils/config/cliArgs.js';
 import { createEmptyAttributionState } from 'src/utils/commitAttribution.js';
 import { countConcurrentSessions, registerSession, updateSessionName } from 'src/utils/concurrentSessions.js';
-import { getCwd } from 'src/utils/cwd.js';
+import { getCwd } from 'src/utils/platform/cwd.js';
 import { logForDebugging, setHasFormattedOutput } from 'src/utils/debug.js';
 import { errorMessage, getErrnoCode, isENOENT, TeleportOperationError, toError } from 'src/utils/errors.js';
 import { getFsImplementation, safeResolvePath } from 'src/utils/files/fsOperations.js';
 import { gracefulShutdown, gracefulShutdownSync } from 'src/utils/lifecycle/gracefulShutdown.js';
 import { setAllHookEventsEnabled } from 'src/utils/hooks/hookEvents.js';
 import { refreshModelCapabilities } from 'src/utils/model/modelCapabilities.js';
-import { peekForStdinData, writeToStderr } from 'src/utils/process.js';
+import { peekForStdinData, writeToStderr } from 'src/utils/platform/process.js';
 import { setCwd } from 'src/utils/Shell.js';
 import { type ProcessedResume, processResumedConversation } from 'src/utils/sessionRestore.js';
 import { parseSettingSourcesFlag } from 'src/utils/settings/constants.js';
-import { plural } from 'src/utils/stringUtils.js';
+import { plural } from 'src/utils/text/stringUtils.js';
 import { type ChannelEntry, getInitialMainLoopModel, getIsNonInteractiveSession, getSdkBetas, getSessionId, getUserMsgOptIn, setAllowedChannels, setAllowedSettingSources, setClientType, setCwdState, setDirectConnectServerUrl, setFlagSettingsPath, setInitialMainLoopModel, setInlinePlugins, setIsInteractive, setKairosActive, setOriginalCwd, setQuestionPreviewFormat, setSdkBetas, setSessionBypassPermissionsMode, setSessionPersistenceDisabled, setSessionSource, setUserMsgOptIn, switchSession } from './bootstrap/state.js';
 
 /* eslint-disable @typescript-eslint/no-require-imports */
@@ -189,8 +189,8 @@ import { type AppState, getDefaultAppState, IDLE_SPECULATION_STATE } from './sta
 import { onChangeAppState } from './state/onChangeAppState.js';
 import { createStore } from './state/store.js';
 import { asSessionId } from './types/ids.js';
-import { filterAllowedSdkBetas } from './utils/betas.js';
-import { isInBundledMode, isRunningWithBun } from './utils/bundledMode.js';
+import { filterAllowedSdkBetas } from './utils/config/betas.js';
+import { isInBundledMode, isRunningWithBun } from './utils/config/bundledMode.js';
 import { logForDiagnosticsNoPII } from './utils/diagLogs.js';
 import { filterExistingPaths, getKnownPathsForRepo } from './utils/github/githubRepoPathMapping.js';
 import { clearPluginCache, loadAllPluginsCacheOnly } from './utils/plugins/pluginLoader.js';
@@ -640,7 +640,7 @@ export async function main() {
     if (handleUriIdx !== -1 && process.argv[handleUriIdx + 1]) {
       const {
         enableConfigs
-      } = await import('./utils/config.js');
+      } = await import('./utils/config/config.js');
       enableConfigs();
       const uri = process.argv[handleUriIdx + 1]!;
       const {
@@ -657,7 +657,7 @@ export async function main() {
     if (process.platform === 'darwin' && process.env.__CFBundleIdentifier === 'com.anthropic.claude-code-url-handler') {
       const {
         enableConfigs
-      } = await import('./utils/config.js');
+      } = await import('./utils/config/config.js');
       enableConfigs();
       const {
         handleUrlSchemeLaunch
@@ -1754,7 +1754,7 @@ async function run(): Promise<CommanderCommand> {
     if (feature('COORDINATOR_MODE') && isEnvTruthy(process.env.CLAUDE_CODE_COORDINATOR_MODE)) {
       const {
         applyCoordinatorToolFilter
-      } = await import('./utils/toolPool.js');
+      } = await import('./utils/agent/toolPool.js');
       tools = applyCoordinatorToolFilter(tools);
     }
     profileCheckpoint('action_tools_loaded');

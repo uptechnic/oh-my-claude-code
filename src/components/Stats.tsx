@@ -13,8 +13,8 @@ import type { Color } from '../ink/styles.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- raw j/k/arrow stats navigation
 import { Ansi, Box, Text, useInput } from '../ink.js';
 import { useKeybinding } from '../keybindings/useKeybinding.js';
-import { getGlobalConfig } from '../utils/config.js';
-import { formatDuration, formatNumber } from '../utils/format.js';
+import { getGlobalConfig } from '../utils/config/config.js';
+import { formatDuration, formatNumber } from '../utils/text/format.js';
 import { generateHeatmap } from '../utils/heatmap.js';
 import { renderModelName } from '../utils/model/model.js';
 import { copyAnsiToClipboard } from '../utils/media/screenshotClipboard.js';

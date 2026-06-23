@@ -37,11 +37,11 @@ import {
 } from '../../tasks/LocalAgentTask/LocalAgentTask.js'
 import { asAgentId } from '../../types/ids.js'
 import type { Message as MessageType } from '../../types/message.js'
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
 import { logForDebugging } from '../../utils/debug.js'
-import { isInProtectedNamespace } from '../../utils/envUtils.js'
+import { isInProtectedNamespace } from '../../utils/platform/envUtils.js'
 import { AbortError, errorMessage } from '../../utils/errors.js'
-import type { CacheSafeParams } from '../../utils/forkedAgent.js'
+import type { CacheSafeParams } from '../../utils/agent/forkedAgent.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import {
   extractTextContent,

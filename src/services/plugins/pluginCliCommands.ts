@@ -13,7 +13,7 @@ import { logError } from '../../utils/log.js'
 import { getManagedPluginNames } from '../../utils/plugins/managedPlugins.js'
 import { parsePluginIdentifier } from '../../utils/plugins/pluginIdentifier.js'
 import type { PluginScope } from '../../utils/plugins/schemas.js'
-import { writeToStdout } from '../../utils/process.js'
+import { writeToStdout } from '../../utils/platform/process.js'
 import {
   buildPluginTelemetryFields,
   classifyPluginCommandError,

@@ -30,8 +30,8 @@ import {
   getOriginalCwd,
 } from '../../bootstrap/state.js'
 import { logForDebugging } from '../debug.js'
-import { expandPath } from '../path.js'
-import { getPlatform, type Platform } from '../platform.js'
+import { expandPath } from '../platform/path.js'
+import { getPlatform, type Platform } from '../platform/platform.js'
 import { settingsChangeDetector } from '../settings/changeDetector.js'
 import { SETTING_SOURCES, type SettingSource } from '../settings/constants.js'
 import { getManagedSettingsDropInDir } from '../settings/managedPath.js'

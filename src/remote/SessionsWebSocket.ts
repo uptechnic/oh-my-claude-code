@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
 import type {
   SDKControlCancelRequest,

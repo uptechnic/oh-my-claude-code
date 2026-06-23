@@ -10,9 +10,9 @@ import {
   parseDebugFilter,
   shouldShowDebugMessage,
 } from './debugFilter.js'
-import { getClaudeConfigHomeDir, isEnvTruthy } from './envUtils.js'
+import { getClaudeConfigHomeDir, isEnvTruthy } from './platform/envUtils.js'
 import { getFsImplementation } from './files/fsOperations.js'
-import { writeToStderr } from './process.js'
+import { writeToStderr } from './platform/process.js'
 import { jsonStringify } from './slowOperations.js'
 
 export type DebugLogLevel = 'verbose' | 'debug' | 'info' | 'warn' | 'error'

@@ -9,9 +9,9 @@ import {
   filterInjectedMemoryFiles,
   getClaudeMds,
   getMemoryFiles,
-} from './utils/claudemd.js'
+} from './utils/config/claudemd.js'
 import { logForDiagnosticsNoPII } from './utils/diagLogs.js'
-import { isBareMode, isEnvTruthy } from './utils/envUtils.js'
+import { isBareMode, isEnvTruthy } from './utils/platform/envUtils.js'
 import { execFileNoThrow } from './utils/execFileNoThrow.js'
 import { getBranch, getDefaultBranch, getIsGit, gitExe } from './utils/git/git.js'
 import { shouldIncludeGitInstructions } from './utils/git/gitSettings.js'

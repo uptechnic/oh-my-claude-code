@@ -17,7 +17,7 @@ import type { QueryChainTracking } from 'src/Tool.js'
 import { isConnectorTextBlock } from 'src/types/connectorText.js'
 import type { AssistantMessage } from 'src/types/message.js'
 import { logForDebugging } from 'src/utils/debug.js'
-import type { EffortLevel } from 'src/utils/effort.js'
+import type { EffortLevel } from 'src/utils/config/effort.js'
 import { logError } from 'src/utils/log.js'
 import { getAPIProviderForStatsig } from 'src/utils/model/providers.js'
 import type { PermissionMode } from 'src/utils/permissions/PermissionMode.js'
@@ -29,7 +29,7 @@ import {
   type Span,
 } from 'src/utils/telemetry/sessionTracing.js'
 import type { NonNullableUsage } from '../../entrypoints/sdk/sdkUtilityTypes.js'
-import { consumeInvokingRequestId } from '../../utils/agentContext.js'
+import { consumeInvokingRequestId } from '../../utils/agent/agentContext.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,

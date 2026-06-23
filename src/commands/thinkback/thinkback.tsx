@@ -16,7 +16,7 @@ import { isENOENT, toError } from '../../utils/errors.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
 import { pathExists } from '../../utils/files/file.js';
 import { logError } from '../../utils/log.js';
-import { getPlatform } from '../../utils/platform.js';
+import { getPlatform } from '../../utils/platform/platform.js';
 import { clearAllCaches } from '../../utils/plugins/cacheUtils.js';
 import { isPluginInstalled } from '../../utils/plugins/installedPluginsManager.js';
 import { addMarketplaceSource, clearMarketplacesCache, loadKnownMarketplacesConfig, refreshMarketplace } from '../../utils/plugins/marketplaceManager.js';

@@ -10,7 +10,7 @@ import {
   tryReadImageFromPath,
 } from '../utils/media/imagePaste.js'
 import type { ImageDimensions } from '../utils/media/imageResizer.js'
-import { getPlatform } from '../utils/platform.js'
+import { getPlatform } from '../utils/platform/platform.js'
 
 const CLIPBOARD_CHECK_DEBOUNCE_MS = 50
 const PASTE_COMPLETION_TIMEOUT_MS = 100

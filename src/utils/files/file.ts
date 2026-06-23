@@ -14,7 +14,7 @@ import {
 } from 'path'
 import { logEvent } from 'src/services/analytics/index.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js'
-import { getCwd } from '../cwd.js'
+import { getCwd } from '../platform/cwd.js'
 import { logForDebugging } from '../debug.js'
 import { isENOENT, isFsInaccessible } from '../errors.js'
 import {
@@ -25,8 +25,8 @@ import {
 import { fileReadCache } from './fileReadCache.js'
 import { getFsImplementation, safeResolvePath } from './fsOperations.js'
 import { logError } from '../log.js'
-import { expandPath } from '../path.js'
-import { getPlatform } from '../platform.js'
+import { expandPath } from '../platform/path.js'
+import { getPlatform } from '../platform/platform.js'
 
 export type File = {
   filename: string

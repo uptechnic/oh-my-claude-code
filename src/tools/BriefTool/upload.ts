@@ -23,7 +23,7 @@ import {
   getBridgeAccessToken,
   getBridgeBaseUrlOverride,
 } from '../../bridge/bridgeConfig.js'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { jsonStringify } from '../../utils/slowOperations.js'

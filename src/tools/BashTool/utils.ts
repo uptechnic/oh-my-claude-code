@@ -7,13 +7,13 @@ import { readFile, stat } from 'fs/promises'
 import { getOriginalCwd } from 'src/bootstrap/state.js'
 import { logEvent } from 'src/services/analytics/index.js'
 import type { ToolPermissionContext } from 'src/Tool.js'
-import { getCwd } from 'src/utils/cwd.js'
+import { getCwd } from 'src/utils/platform/cwd.js'
 import { pathInAllowedWorkingPath } from 'src/utils/permissions/filesystem.js'
 import { setCwd } from 'src/utils/Shell.js'
-import { shouldMaintainProjectWorkingDir } from '../../utils/envUtils.js'
+import { shouldMaintainProjectWorkingDir } from '../../utils/platform/envUtils.js'
 import { maybeResizeAndDownsampleImageBuffer } from '../../utils/media/imageResizer.js'
 import { getMaxOutputLength } from '../../utils/shell/outputLimits.js'
-import { countCharInString, plural } from '../../utils/stringUtils.js'
+import { countCharInString, plural } from '../../utils/text/stringUtils.js'
 /**
  * Strips leading and trailing lines that contain only whitespace/newlines.
  * Unlike trim(), this preserves whitespace within content lines and only removes

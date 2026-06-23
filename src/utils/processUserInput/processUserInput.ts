@@ -35,8 +35,8 @@ import {
   createAttachmentMessage,
   getAttachmentMessages,
 } from '../media/attachments.js'
-import type { PastedContent } from '../config.js'
-import type { EffortValue } from '../effort.js'
+import type { PastedContent } from '../config/config.js'
+import type { EffortValue } from '../config/effort.js'
 import { toArray } from '../generators.js'
 import {
   executeUserPromptSubmitHooks,

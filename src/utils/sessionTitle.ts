@@ -18,10 +18,10 @@ import { logEvent } from '../services/analytics/index.js'
 import { queryHaiku } from '../services/api/claude.js'
 import type { Message } from '../types/message.js'
 import { logForDebugging } from './debug.js'
-import { safeParseJSON } from './json.js'
+import { safeParseJSON } from './text/json.js'
 import { lazySchema } from './lazySchema.js'
 import { extractTextContent } from './messages/messages.js'
-import { asSystemPrompt } from './systemPromptType.js'
+import { asSystemPrompt } from './agent/systemPromptType.js'
 
 const MAX_CONVERSATION_TEXT = 1000
 

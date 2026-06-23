@@ -1,7 +1,7 @@
 import { feature } from 'bun:bundle'
 import { z } from 'zod/v4'
 import { SandboxSettingsSchema } from '../../entrypoints/sandboxTypes.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import { lazySchema } from '../lazySchema.js'
 import {
   EXTERNAL_PERMISSION_MODES,
@@ -27,7 +27,7 @@ export {
 
 // Also import for use within this file
 import { type HookCommand, HooksSchema } from '../../schemas/hooks.js'
-import { count } from '../array.js'
+import { count } from '../text/array.js'
 
 /**
  * Schema for environment variables

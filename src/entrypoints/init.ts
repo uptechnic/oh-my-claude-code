@@ -17,15 +17,15 @@ import {
   isEligibleForRemoteManagedSettings,
   waitForRemoteManagedSettingsToLoad,
 } from '../services/remoteManagedSettings/index.js'
-import { preconnectAnthropicApi } from '../utils/apiPreconnect.js'
+import { preconnectAnthropicApi } from '../utils/api/apiPreconnect.js'
 import { applyExtraCACertsFromConfig } from '../utils/auth/caCertsConfig.js'
 import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
-import { enableConfigs, recordFirstStartTime } from '../utils/config.js'
+import { enableConfigs, recordFirstStartTime } from '../utils/config/config.js'
 import { logForDebugging } from '../utils/debug.js'
 import { detectCurrentRepository } from '../utils/detectRepository.js'
 import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
-import { initJetBrainsDetection } from '../utils/envDynamic.js'
-import { isEnvTruthy } from '../utils/envUtils.js'
+import { initJetBrainsDetection } from '../utils/platform/envDynamic.js'
+import { isEnvTruthy } from '../utils/platform/envUtils.js'
 import { ConfigParseError, errorMessage } from '../utils/errors.js'
 // showInvalidConfigDialog is dynamically imported in the error path to avoid loading React at init
 import {
@@ -35,7 +35,7 @@ import {
 import {
   applyConfigEnvironmentVariables,
   applySafeConfigEnvironmentVariables,
-} from '../utils/managedEnv.js'
+} from '../utils/config/managedEnv.js'
 import { configureGlobalMTLS } from '../utils/auth/mtls.js'
 import {
   ensureScratchpadDir,
@@ -47,7 +47,7 @@ import {
 import { configureGlobalAgents } from '../utils/auth/proxy.js'
 import { isBetaTracingEnabled } from '../utils/telemetry/betaSessionTracing.js'
 import { getTelemetryAttributes } from '../utils/telemetry/telemetryAttributes.js'
-import { setShellIfWindows } from '../utils/windowsPaths.js'
+import { setShellIfWindows } from '../utils/platform/windowsPaths.js'
 
 // initialize1PEventLogging is dynamically imported to defer OpenTelemetry sdk-logs/resources
 

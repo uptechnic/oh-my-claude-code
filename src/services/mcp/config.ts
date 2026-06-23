@@ -3,7 +3,7 @@ import { chmod, open, rename, stat, unlink } from 'fs/promises'
 import mapValues from 'lodash-es/mapValues.js'
 import memoize from 'lodash-es/memoize.js'
 import { dirname, join, parse } from 'path'
-import { getPlatform } from 'src/utils/platform.js'
+import { getPlatform } from 'src/utils/platform/platform.js'
 import type { PluginError } from '../../types/plugin.js'
 import { getPluginErrorMessage } from '../../types/plugin.js'
 import {
@@ -11,12 +11,12 @@ import {
   getGlobalConfig,
   saveCurrentProjectConfig,
   saveGlobalConfig,
-} from '../../utils/config.js'
-import { getCwd } from '../../utils/cwd.js'
+} from '../../utils/config/config.js'
+import { getCwd } from '../../utils/platform/cwd.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { getErrnoCode } from '../../utils/errors.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
-import { safeParseJSON } from '../../utils/json.js'
+import { safeParseJSON } from '../../utils/text/json.js'
 import { logError } from '../../utils/log.js'
 import { getPluginMcpServers } from '../../utils/plugins/mcpPluginIntegration.js'
 import { loadAllPluginsCacheOnly } from '../../utils/plugins/pluginLoader.js'

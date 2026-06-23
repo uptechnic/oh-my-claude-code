@@ -18,7 +18,7 @@ import {
   isClaudeAISubscriber,
   isEnterpriseSubscriber,
 } from '../../utils/auth/auth.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import {
   type CooldownReason,
@@ -27,7 +27,7 @@ import {
   isFastModeCooldown,
   isFastModeEnabled,
   triggerFastModeCooldown,
-} from '../../utils/fastMode.js'
+} from '../../utils/config/fastMode.js'
 import { isNonCustomOpusModel } from '../../utils/model/model.js'
 import { disableKeepAlive } from '../../utils/auth/proxy.js'
 import { sleep } from '../../utils/concurrency/sleep.js'

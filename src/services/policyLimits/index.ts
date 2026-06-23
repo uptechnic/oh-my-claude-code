@@ -17,7 +17,7 @@ import { createHash } from 'crypto'
 import { readFileSync as fsReadFileSync } from 'fs'
 import { unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getAnthropicApiKeyWithSource,
@@ -25,17 +25,17 @@ import {
 } from '../../utils/auth/auth.js'
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
 import { logForDebugging } from '../../utils/debug.js'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 import { classifyAxiosError } from '../../utils/errors.js'
-import { safeParseJSON } from '../../utils/json.js'
+import { safeParseJSON } from '../../utils/text/json.js'
 import {
   getAPIProvider,
   isFirstPartyAnthropicBaseUrl,
 } from '../../utils/model/providers.js'
-import { isEssentialTrafficOnly } from '../../utils/privacyLevel.js'
+import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import { getRetryDelay } from '../api/withRetry.js'
 import {
   type PolicyLimitsFetchResult,

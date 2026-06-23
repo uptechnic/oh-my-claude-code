@@ -4,7 +4,7 @@ import { logEvent } from '../../services/analytics/index.js'
 import { CircularBuffer } from '../../utils/CircularBuffer.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { logForDiagnosticsNoPII } from '../../utils/diagLogs.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { getWebSocketTLSOptions } from '../../utils/auth/mtls.js'
 import {
   getWebSocketProxyAgent,

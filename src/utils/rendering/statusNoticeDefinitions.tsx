@@ -1,17 +1,17 @@
 // biome-ignore-all assist/source/organizeImports: ANT-ONLY import markers must not be reordered
 import { Box, Text } from '../../ink.js';
 import * as React from 'react';
-import { getLargeMemoryFiles, MAX_MEMORY_CHARACTER_COUNT, type MemoryFileInfo } from '../claudemd.js';
+import { getLargeMemoryFiles, MAX_MEMORY_CHARACTER_COUNT, type MemoryFileInfo } from '../config/claudemd.js';
 import figures from 'figures';
-import { getCwd } from '../cwd.js';
+import { getCwd } from '../platform/cwd.js';
 import { relative } from 'path';
-import { formatNumber } from '../format.js';
-import type { getGlobalConfig } from '../config.js';
+import { formatNumber } from '../text/format.js';
+import type { getGlobalConfig } from '../config/config.js';
 import { getAnthropicApiKeyWithSource, getApiKeyFromConfigOrMacOSKeychain, getAuthTokenSource, isClaudeAISubscriber } from '../auth/auth.js';
 import type { AgentDefinitionsResult } from '../../tools/AgentTool/loadAgentsDir.js';
 import { getAgentDescriptionsTotalTokens, AGENT_DESCRIPTIONS_THRESHOLD } from './statusNoticeHelpers.js';
-import { isSupportedJetBrainsTerminal, toIDEDisplayName, getTerminalIdeType } from '../ide.js';
-import { isJetBrainsPluginInstalledCachedSync } from '../jetbrains.js';
+import { isSupportedJetBrainsTerminal, toIDEDisplayName, getTerminalIdeType } from '../ide/ide.js';
+import { isJetBrainsPluginInstalledCachedSync } from '../ide/jetbrains.js';
 
 // Types
 export type StatusNoticeType = 'warning' | 'info';

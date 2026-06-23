@@ -19,7 +19,7 @@ import {
   updateSettingsForSource,
 } from '../settings/settings.js'
 import { jsonParse, jsonStringify } from '../slowOperations.js'
-import { getSystemDirectories } from '../systemDirectories.js'
+import { getSystemDirectories } from '../platform/systemDirectories.js'
 import { classifyFetchError, logPluginFetch } from './fetchTelemetry.js'
 /**
  * User configuration values for MCPB

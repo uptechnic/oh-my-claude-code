@@ -11,12 +11,12 @@ import {
   logEvent,
   logEventAsync,
 } from '../services/analytics/index.js'
-import { isInBundledMode } from '../utils/bundledMode.js'
+import { isInBundledMode } from '../utils/config/bundledMode.js'
 import { logForDebugging } from '../utils/debug.js'
 import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
-import { isEnvTruthy, isInProtectedNamespace } from '../utils/envUtils.js'
+import { isEnvTruthy, isInProtectedNamespace } from '../utils/platform/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
-import { truncateToWidth } from '../utils/format.js'
+import { truncateToWidth } from '../utils/text/format.js'
 import { logError } from '../utils/log.js'
 import { sleep } from '../utils/concurrency/sleep.js'
 import { createAgentWorktree, removeAgentWorktree } from '../utils/worktree.js'
@@ -2113,7 +2113,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
     saveGlobalConfig,
     getCurrentProjectConfig,
     saveCurrentProjectConfig,
-  } = await import('../utils/config.js')
+  } = await import('../utils/config/config.js')
   if (!getGlobalConfig().remoteDialogSeen) {
     const readline = await import('readline')
     const rl = readline.createInterface({

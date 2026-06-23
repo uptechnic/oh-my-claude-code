@@ -2,9 +2,9 @@ import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { getSessionId } from '../bootstrap/state.js'
 import { logForDebugging } from './debug.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { errorMessage, getErrnoCode } from './errors.js'
-import { getPlatform } from './platform.js'
+import { getPlatform } from './platform/platform.js'
 
 // Cache states:
 // undefined = not yet loaded (need to check disk)

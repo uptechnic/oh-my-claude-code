@@ -4,9 +4,9 @@ import { getOriginalCwd, getSessionId } from '../../bootstrap/state.js'
 import { createBufferedWriter } from '../bufferedWriter.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { logForDebugging } from '../debug.js'
-import { getClaudeConfigHomeDir, isEnvTruthy } from '../envUtils.js'
+import { getClaudeConfigHomeDir, isEnvTruthy } from '../platform/envUtils.js'
 import { getFsImplementation } from '../files/fsOperations.js'
-import { sanitizePath } from '../path.js'
+import { sanitizePath } from '../platform/path.js'
 import { jsonStringify } from '../slowOperations.js'
 
 // Mutable recording state — filePath is updated when session ID changes (e.g., --resume)

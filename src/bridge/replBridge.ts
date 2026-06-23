@@ -38,7 +38,7 @@ import {
   createV2ReplTransport,
 } from './replBridgeTransport.js'
 import { updateSessionIngressAuthToken } from '../utils/sessionIngressAuth.js'
-import { isEnvTruthy, isInProtectedNamespace } from '../utils/envUtils.js'
+import { isEnvTruthy, isInProtectedNamespace } from '../utils/platform/envUtils.js'
 import { validateBridgeId } from './bridgeApi.js'
 import {
   describeAxiosError,

@@ -27,8 +27,8 @@ import {
 } from '../../skills/loadSkillsDir.js'
 import type { ToolUseContext } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { getCwd } from '../../utils/cwd.js'
-import { getClaudeConfigHomeDir, isEnvTruthy } from '../../utils/envUtils.js'
+import { getCwd } from '../../utils/platform/cwd.js'
+import { getClaudeConfigHomeDir, isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { getErrnoCode, isENOENT } from '../../utils/errors.js'
 import {
   addLineNumbers,
@@ -38,7 +38,7 @@ import {
   suggestPathUnderCwd,
 } from '../../utils/files/file.js'
 import { logFileOperation } from '../../utils/fileOperationAnalytics.js'
-import { formatFileSize } from '../../utils/format.js'
+import { formatFileSize } from '../../utils/text/format.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   compressImageBufferWithTokenLimit,
@@ -57,7 +57,7 @@ import {
   mapNotebookCellsToToolResult,
   readNotebook,
 } from '../../utils/notebook.js'
-import { expandPath } from '../../utils/path.js'
+import { expandPath } from '../../utils/platform/path.js'
 import { extractPDFPages, getPDFPageCount, readPDF } from '../../utils/media/pdf.js'
 import {
   isPDFExtension,
@@ -71,7 +71,7 @@ import {
 import type { PermissionDecision } from '../../utils/permissions/PermissionResult.js'
 import { matchWildcardPattern } from '../../utils/permissions/shellRuleMatching.js'
 import { readFileInRange } from '../../utils/files/readFileInRange.js'
-import { semanticNumber } from '../../utils/semanticNumber.js'
+import { semanticNumber } from '../../utils/text/semanticNumber.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { BASH_TOOL_NAME } from '../BashTool/toolName.js'
 import { getDefaultFileReadingLimits } from './limits.js'

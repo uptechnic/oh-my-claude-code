@@ -16,13 +16,13 @@ import { Box, Text } from '../../ink.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import type { Message } from '../../types/message.js';
 import { createAbortController } from '../../utils/concurrency/abortController.js';
-import { saveGlobalConfig } from '../../utils/config.js';
+import { saveGlobalConfig } from '../../utils/config/config.js';
 import { errorMessage } from '../../utils/errors.js';
-import { type CacheSafeParams, getLastCacheSafeParams } from '../../utils/forkedAgent.js';
+import { type CacheSafeParams, getLastCacheSafeParams } from '../../utils/agent/forkedAgent.js';
 import { getMessagesAfterCompactBoundary } from '../../utils/messages/messages.js';
 import type { ProcessUserInputContext } from '../../utils/processUserInput/processUserInput.js';
-import { runSideQuestion } from '../../utils/sideQuestion.js';
-import { asSystemPrompt } from '../../utils/systemPromptType.js';
+import { runSideQuestion } from '../../utils/agent/sideQuestion.js';
+import { asSystemPrompt } from '../../utils/agent/systemPromptType.js';
 type BtwComponentProps = {
   question: string;
   context: ProcessUserInputContext;

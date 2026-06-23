@@ -4,7 +4,7 @@ import * as path from 'path'
 import {
   CLAUDE_CONFIG_DIRECTORIES,
   loadMarkdownFilesForSubdir,
-} from 'src/utils/markdownConfigLoader.js'
+} from 'src/utils/config/markdownConfigLoader.js'
 import type { SuggestionItem } from '../components/PromptInput/PromptInputFooterSuggestions.js'
 import {
   CHUNK_MS,
@@ -13,8 +13,8 @@ import {
 } from '../native-ts/file-index/index.js'
 import { logEvent } from '../services/analytics/index.js'
 import type { FileSuggestionCommandInput } from '../types/fileSuggestion.js'
-import { getGlobalConfig } from '../utils/config.js'
-import { getCwd } from '../utils/cwd.js'
+import { getGlobalConfig } from '../utils/config/config.js'
+import { getCwd } from '../utils/platform/cwd.js'
 import { logForDebugging } from '../utils/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { execFileNoThrowWithCwd } from '../utils/execFileNoThrow.js'
@@ -25,10 +25,10 @@ import {
   executeFileSuggestionCommand,
 } from '../utils/hooks/hooks.js'
 import { logError } from '../utils/log.js'
-import { expandPath } from '../utils/path.js'
+import { expandPath } from '../utils/platform/path.js'
 import { ripGrep } from '../utils/ripgrep.js'
 import { getInitialSettings } from '../utils/settings/settings.js'
-import { createSignal } from '../utils/signal.js'
+import { createSignal } from '../utils/platform/signal.js'
 
 // Lazily constructed singleton
 let fileIndex: FileIndex | null = null

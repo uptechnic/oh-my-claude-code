@@ -21,7 +21,7 @@ import type {
   SessionState,
 } from '../../utils/sessionState.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 import {
   RetryableError,
   SerialBatchEventUploader,

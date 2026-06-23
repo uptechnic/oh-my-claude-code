@@ -11,7 +11,7 @@ import { getAnthropicApiKey, isAnthropicAuthEnabled } from '../../utils/auth/aut
 import { openBrowser } from '../../utils/browser.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
 import { getGithubRepo } from '../../utils/git/git.js';
-import { plural } from '../../utils/stringUtils.js';
+import { plural } from '../../utils/text/stringUtils.js';
 import { ApiKeyStep } from './ApiKeyStep.js';
 import { CheckExistingSecretStep } from './CheckExistingSecretStep.js';
 import { CheckGitHubStep } from './CheckGitHubStep.js';

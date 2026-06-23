@@ -3,7 +3,7 @@ import {
   findTeammateTaskByAgentId,
   requestTeammateShutdown,
 } from '../../../tasks/InProcessTeammateTask/InProcessTeammateTask.js'
-import { parseAgentId } from '../../../utils/agentId.js'
+import { parseAgentId } from '../../agent/agentId.js'
 import { logForDebugging } from '../../../utils/debug.js'
 import { jsonStringify } from '../../../utils/slowOperations.js'
 import {

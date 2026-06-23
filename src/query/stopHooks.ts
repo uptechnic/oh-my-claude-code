@@ -34,7 +34,7 @@ import {
   createUserInterruptionMessage,
   createUserMessage,
 } from '../utils/messages/messages.js'
-import type { SystemPrompt } from '../utils/systemPromptType.js'
+import type { SystemPrompt } from '../utils/agent/systemPromptType.js'
 import { getTaskListId, listTasks } from '../utils/task/tasks.js'
 import { getAgentName, getTeamName, isTeammate } from '../utils/swarm/teammate.js'
 
@@ -51,11 +51,11 @@ const jobClassifierModule = feature('TEMPLATES')
 import type { QuerySource } from '../constants/querySource.js'
 import { executeAutoDream } from '../services/autoDream/autoDream.js'
 import { executePromptSuggestion } from '../services/PromptSuggestion/promptSuggestion.js'
-import { isBareMode, isEnvDefinedFalsy } from '../utils/envUtils.js'
+import { isBareMode, isEnvDefinedFalsy } from '../utils/platform/envUtils.js'
 import {
   createCacheSafeParams,
   saveCacheSafeParams,
-} from '../utils/forkedAgent.js'
+} from '../utils/agent/forkedAgent.js'
 
 type StopHookResult = {
   blockingErrors: Message[]

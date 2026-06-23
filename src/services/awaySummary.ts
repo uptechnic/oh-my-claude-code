@@ -7,7 +7,7 @@ import {
   getAssistantMessageText,
 } from '../utils/messages/messages.js'
 import { getSmallFastModel } from '../utils/model/model.js'
-import { asSystemPrompt } from '../utils/systemPromptType.js'
+import { asSystemPrompt } from '../utils/agent/systemPromptType.js'
 import { queryModelWithoutStreaming } from './api/claude.js'
 import { getSessionMemoryContent } from './SessionMemory/sessionMemoryUtils.js'
 

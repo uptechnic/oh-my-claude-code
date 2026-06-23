@@ -9,7 +9,7 @@ import { Box, Text } from '../../ink.js';
 import type { ToolProgressData } from '../../Tool.js';
 import type { ProgressMessage } from '../../types/message.js';
 import { FILE_NOT_FOUND_CWD_NOTE, getDisplayPath } from '../../utils/files/file.js';
-import { truncate } from '../../utils/format.js';
+import { truncate } from '../../utils/text/format.js';
 import { extractTag } from '../../utils/messages/messages.js';
 
 // Reusable component for search result summaries

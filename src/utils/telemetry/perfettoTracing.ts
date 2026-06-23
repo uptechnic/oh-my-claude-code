@@ -33,9 +33,9 @@ import {
   getClaudeConfigHomeDir,
   isEnvDefinedFalsy,
   isEnvTruthy,
-} from '../envUtils.js'
+} from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
-import { djb2Hash } from '../hash.js'
+import { djb2Hash } from '../text/hash.js'
 import { jsonStringify } from '../slowOperations.js'
 import { getAgentId, getAgentName, getParentSessionId } from '../swarm/teammate.js'
 

@@ -29,14 +29,14 @@ import type {
 } from '../types/logs.js'
 import type { Message } from '../types/message.js'
 import { renameRecordingForSession } from './media/asciicast.js'
-import { clearMemoryFileCaches } from './claudemd.js'
+import { clearMemoryFileCaches } from './config/claudemd.js'
 import {
   type AttributionState,
   attributionRestoreStateFromLog,
   restoreAttributionStateFromSnapshots,
 } from './commitAttribution.js'
 import { updateSessionName } from './concurrentSessions.js'
-import { getCwd } from './cwd.js'
+import { getCwd } from './platform/cwd.js'
 import { logForDebugging } from './debug.js'
 import type { FileHistorySnapshot } from './files/fileHistory.js'
 import { fileHistoryRestoreStateFromLog } from './files/fileHistory.js'

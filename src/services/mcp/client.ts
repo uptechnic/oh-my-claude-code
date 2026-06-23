@@ -54,22 +54,22 @@ import { type MCPProgress, MCPTool } from '../../tools/MCPTool/MCPTool.js'
 import { createMcpAuthTool } from '../../tools/McpAuthTool/McpAuthTool.js'
 import { ReadMcpResourceTool } from '../../tools/ReadMcpResourceTool/ReadMcpResourceTool.js'
 import { createAbortController } from '../../utils/concurrency/abortController.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   handleOAuth401Error,
 } from '../../utils/auth/auth.js'
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
-import { detectCodeIndexingFromMcpServerName } from '../../utils/codeIndexing.js'
+import { detectCodeIndexingFromMcpServerName } from '../../utils/ide/codeIndexing.js'
 import { logForDebugging } from '../../utils/debug.js'
-import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/envUtils.js'
+import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/platform/envUtils.js'
 import {
   errorMessage,
   TelemetrySafeError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from '../../utils/errors.js'
-import { getMCPUserAgent } from '../../utils/http.js'
-import { maybeNotifyIDEConnected } from '../../utils/ide.js'
+import { getMCPUserAgent } from '../../utils/api/http.js'
+import { maybeNotifyIDEConnected } from '../../utils/ide/ide.js'
 import { maybeResizeAndDownsampleImageBuffer } from '../../utils/media/imageResizer.js'
 import { logMCPDebug, logMCPError } from '../../utils/log.js'
 import {
@@ -229,7 +229,7 @@ function getMcpToolTimeoutMs(): number {
 
 import { mkdir, readFile, unlink, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
-import { getClaudeConfigHomeDir } from '../../utils/envUtils.js'
+import { getClaudeConfigHomeDir } from '../../utils/platform/envUtils.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js'
 

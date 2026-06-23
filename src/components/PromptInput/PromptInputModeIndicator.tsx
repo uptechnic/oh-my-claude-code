@@ -6,7 +6,7 @@ import { AGENT_COLOR_TO_THEME_COLOR, AGENT_COLORS, type AgentColorName } from 's
 import type { PromptInputMode } from 'src/types/textInputTypes.js';
 import { getTeammateColor } from 'src/utils/swarm/teammate.js';
 import type { Theme } from 'src/utils/rendering/theme.js';
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js';
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js';
 type Props = {
   mode: PromptInputMode;
   isLoading: boolean;

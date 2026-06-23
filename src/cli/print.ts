@@ -20,8 +20,8 @@ import type { ToolPermissionContext } from 'src/Tool.js'
 import type { ThinkingConfig } from 'src/utils/thinking.js'
 import { assembleToolPool, filterToolsByDenyRules } from 'src/tools.js'
 import uniqBy from 'lodash-es/uniqBy.js'
-import { uniq } from 'src/utils/array.js'
-import { mergeAndFilterTools } from 'src/utils/toolPool.js'
+import { uniq } from 'src/utils/text/array.js'
+import { mergeAndFilterTools } from 'src/utils/agent/toolPool.js'
 import {
   logEvent,
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
@@ -63,7 +63,7 @@ import { getInMemoryErrors, logError, logMCPDebug } from 'src/utils/log.js'
 import {
   writeToStdout,
   registerProcessOutputErrorHandlers,
-} from 'src/utils/process.js'
+} from 'src/utils/platform/process.js'
 import type { Stream } from 'src/utils/concurrency/stream.js'
 import { EMPTY_USAGE } from 'src/services/api/logging.js'
 import {
@@ -86,7 +86,7 @@ import {
   isChannelsEnabled,
 } from 'src/services/mcp/channelAllowlist.js'
 import { parsePluginIdentifier } from 'src/utils/plugins/pluginIdentifier.js'
-import { validateUuid } from 'src/utils/uuid.js'
+import { validateUuid } from 'src/utils/text/uuid.js'
 import { fromArray } from 'src/utils/generators.js'
 import { ask } from 'src/QueryEngine.js'
 import type { PermissionPromptTool } from 'src/utils/queryHelpers.js'
@@ -95,7 +95,7 @@ import {
   mergeFileStateCaches,
   READ_FILE_STATE_CACHE_SIZE,
 } from 'src/utils/files/fileStateCache.js'
-import { expandPath } from 'src/utils/path.js'
+import { expandPath } from 'src/utils/platform/path.js'
 import { extractReadFilesFromMessages } from 'src/utils/queryHelpers.js'
 import { registerHookEventHandler } from 'src/utils/hooks/hookEvents.js'
 import { executeFilePersistence } from 'src/utils/filePersistence/filePersistence.js'
@@ -130,7 +130,7 @@ import type {
 import type { PermissionMode } from '@anthropic-ai/claude-agent-sdk'
 import type { PermissionMode as InternalPermissionMode } from 'src/types/permissions.js'
 import { cwd } from 'process'
-import { getCwd } from 'src/utils/cwd.js'
+import { getCwd } from 'src/utils/platform/cwd.js'
 import omit from 'lodash-es/omit.js'
 import reject from 'lodash-es/reject.js'
 import { isPolicyAllowed } from 'src/services/policyLimits/index.js'
@@ -141,7 +141,7 @@ import { extractInboundMessageFields } from 'src/bridge/inboundMessages.js'
 import { resolveAndPrepend } from 'src/bridge/inboundAttachments.js'
 import type { CanUseToolFn } from 'src/hooks/useCanUseTool.js'
 import { hasPermissionsToUseTool } from 'src/utils/permissions/permissions.js'
-import { safeParseJSON } from 'src/utils/json.js'
+import { safeParseJSON } from 'src/utils/text/json.js'
 import {
   outputSchema as permissionToolOutputSchema,
   permissionPromptToolResultToPermissionDecision,
@@ -150,7 +150,7 @@ import { createAbortController } from 'src/utils/concurrency/abortController.js'
 import { createCombinedAbortSignal } from 'src/utils/concurrency/combinedAbortSignal.js'
 import { generateSessionTitle } from 'src/utils/sessionTitle.js'
 import { buildSideQuestionFallbackParams } from 'src/utils/queryContext.js'
-import { runSideQuestion } from 'src/utils/sideQuestion.js'
+import { runSideQuestion } from 'src/utils/agent/sideQuestion.js'
 import {
   processSessionStartHooks,
   processSetupHooks,
@@ -172,7 +172,7 @@ import {
   isFastModeEnabled,
   isFastModeSupportedByModel,
   getFastModeState,
-} from 'src/utils/fastMode.js'
+} from 'src/utils/config/fastMode.js'
 import {
   isAutoModeGateEnabled,
   getAutoModeUnavailableNotification,
@@ -186,7 +186,7 @@ import {
   logSuggestionSuppressed,
   type PromptVariant,
 } from 'src/services/PromptSuggestion/promptSuggestion.js'
-import { getLastCacheSafeParams } from 'src/utils/forkedAgent.js'
+import { getLastCacheSafeParams } from 'src/utils/agent/forkedAgent.js'
 import { getAccountInformation } from 'src/utils/auth/auth.js'
 import { getAPIProvider } from 'src/utils/model/providers.js'
 import type { HookCallbackMatcher } from 'src/types/hooks.js'
@@ -274,9 +274,9 @@ import {
   modelSupportsMaxEffort,
   EFFORT_LEVELS,
   resolveAppliedEffort,
-} from 'src/utils/effort.js'
+} from 'src/utils/config/effort.js'
 import { modelSupportsAdaptiveThinking } from 'src/utils/thinking.js'
-import { modelSupportsAutoMode } from 'src/utils/betas.js'
+import { modelSupportsAutoMode } from 'src/utils/config/betas.js'
 import { ensureModelStringsInitialized } from 'src/utils/model/modelStrings.js'
 import {
   getSessionId,
@@ -325,7 +325,7 @@ import {
   isBareMode,
   isEnvTruthy,
   isEnvDefinedFalsy,
-} from '../utils/envUtils.js'
+} from '../utils/platform/envUtils.js'
 import { installPluginsForHeadless } from '../utils/plugins/headlessPluginInstall.js'
 import { refreshActivePlugins } from '../utils/plugins/refresh.js'
 import { loadAllPluginsCacheOnly } from '../utils/plugins/pluginLoader.js'

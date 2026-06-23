@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getOrganizationUUID } from 'src/utils/auth/auth.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../../services/analytics/growthbook.js'
 import {
@@ -7,7 +7,7 @@ import {
   getClaudeAIOAuthTokens,
   isClaudeAISubscriber,
 } from '../../auth/auth.js'
-import { getCwd } from '../../cwd.js'
+import { getCwd } from '../../platform/cwd.js'
 import { logForDebugging } from '../../debug.js'
 import { detectCurrentRepository } from '../../detectRepository.js'
 import { errorMessage } from '../../errors.js'

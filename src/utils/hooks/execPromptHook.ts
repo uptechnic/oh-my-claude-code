@@ -8,11 +8,11 @@ import { createCombinedAbortSignal } from '../concurrency/combinedAbortSignal.js
 import { logForDebugging } from '../debug.js'
 import { errorMessage } from '../errors.js'
 import type { HookResult } from './hooks.js'
-import { safeParseJSON } from '../json.js'
+import { safeParseJSON } from '../text/json.js'
 import { createUserMessage, extractTextContent } from '../messages/messages.js'
 import { getSmallFastModel } from '../model/model.js'
 import type { PromptHook } from '../settings/types.js'
-import { asSystemPrompt } from '../systemPromptType.js'
+import { asSystemPrompt } from '../agent/systemPromptType.js'
 import { addArgumentsToPrompt, hookResponseSchema } from './hookHelpers.js'
 
 /**

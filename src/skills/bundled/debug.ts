@@ -3,7 +3,7 @@ import { CLAUDE_CODE_GUIDE_AGENT_TYPE } from 'src/tools/AgentTool/built-in/claud
 import { getSettingsFilePathForSource } from 'src/utils/settings/settings.js'
 import { enableDebugLogging, getDebugLogPath } from '../../utils/debug.js'
 import { errorMessage, isENOENT } from '../../utils/errors.js'
-import { formatFileSize } from '../../utils/format.js'
+import { formatFileSize } from '../../utils/text/format.js'
 import { registerBundledSkill } from '../bundledSkills.js'
 
 const DEFAULT_DEBUG_LINES_READ = 20

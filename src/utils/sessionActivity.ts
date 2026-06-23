@@ -13,7 +13,7 @@
 
 import { registerCleanup } from './lifecycle/cleanupRegistry.js'
 import { logForDiagnosticsNoPII } from './diagLogs.js'
-import { isEnvTruthy } from './envUtils.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 
 const SESSION_ACTIVITY_INTERVAL_MS = 30_000
 

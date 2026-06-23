@@ -7,8 +7,8 @@ import type { ToolUseContext } from '../../Tool.js'
 import { registerAsyncAgent } from '../../tasks/LocalAgentTask/LocalAgentTask.js'
 import { assembleToolPool } from '../../tools.js'
 import { asAgentId } from '../../types/ids.js'
-import { runWithAgentContext } from '../../utils/agentContext.js'
-import { runWithCwdOverride } from '../../utils/cwd.js'
+import { runWithAgentContext } from '../../utils/agent/agentContext.js'
+import { runWithCwdOverride } from '../../utils/platform/cwd.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {
   createUserMessage,
@@ -22,8 +22,8 @@ import {
   getAgentTranscript,
   readAgentMetadata,
 } from '../../utils/sessionStorage.js'
-import { buildEffectiveSystemPrompt } from '../../utils/systemPrompt.js'
-import type { SystemPrompt } from '../../utils/systemPromptType.js'
+import { buildEffectiveSystemPrompt } from '../../utils/agent/systemPrompt.js'
+import type { SystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js'
 import { getParentSessionId } from '../../utils/swarm/teammate.js'
 import { reconstructForSubagentResume } from '../../utils/toolResultStorage.js'

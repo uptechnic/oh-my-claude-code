@@ -20,7 +20,7 @@ import type { AgentDefinition } from '../tools/AgentTool/loadAgentsDir.js';
 import { asSessionId } from '../types/ids.js';
 import type { LogOption } from '../types/logs.js';
 import type { Message } from '../types/message.js';
-import { agenticSessionSearch } from '../utils/agenticSessionSearch.js';
+import { agenticSessionSearch } from '../utils/agent/agenticSessionSearch.js';
 import { renameRecordingForSession } from '../utils/media/asciicast.js';
 import { updateSessionName } from '../utils/concurrentSessions.js';
 import { loadConversationForResume } from '../utils/conversationRecovery.js';

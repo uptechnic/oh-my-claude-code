@@ -7,11 +7,11 @@ import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
 import { setCommandLifecycleListener } from '../utils/lifecycle/commandLifecycle.js'
 import { isDebugMode, logForDebugging } from '../utils/debug.js'
 import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
-import { isEnvTruthy } from '../utils/envUtils.js'
+import { isEnvTruthy } from '../utils/platform/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
 import { gracefulShutdown } from '../utils/lifecycle/gracefulShutdown.js'
 import { logError } from '../utils/log.js'
-import { writeToStdout } from '../utils/process.js'
+import { writeToStdout } from '../utils/platform/process.js'
 import { getSessionIngressAuthToken } from '../utils/sessionIngressAuth.js'
 import {
   setSessionMetadataChangedListener,

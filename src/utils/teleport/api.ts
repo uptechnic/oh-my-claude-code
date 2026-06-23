@@ -1,6 +1,6 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { randomUUID } from 'crypto'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getOrganizationUUID } from '../auth/auth.js'
 import z from 'zod/v4'
 import { getClaudeAIOAuthTokens } from '../auth/auth.js'

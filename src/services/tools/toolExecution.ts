@@ -57,7 +57,7 @@ import type {
   ProgressMessage,
   StopHookInfo,
 } from '../../types/message.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import { createAttachmentMessage } from '../../utils/media/attachments.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {
@@ -110,7 +110,7 @@ import {
   extractDiscoveredToolNames,
   isToolSearchEnabledOptimistic,
   isToolSearchToolAvailable,
-} from '../../utils/toolSearch.js'
+} from '../../utils/agent/toolSearch.js'
 import {
   McpAuthError,
   McpToolCallError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,

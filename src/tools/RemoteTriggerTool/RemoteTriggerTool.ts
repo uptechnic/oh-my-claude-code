@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { z } from 'zod/v4'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js'
 import { getOrganizationUUID } from '../../utils/auth/auth.js'
 import { isPolicyAllowed } from '../../services/policyLimits/index.js'

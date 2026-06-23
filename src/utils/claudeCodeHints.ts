@@ -16,7 +16,7 @@
  */
 
 import { logForDebugging } from './debug.js'
-import { createSignal } from './signal.js'
+import { createSignal } from './platform/signal.js'
 
 export type ClaudeCodeHintType = 'plugin'
 

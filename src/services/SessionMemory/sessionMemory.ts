@@ -17,12 +17,12 @@ import {
   type Output as FileReadToolOutput,
 } from '../../tools/FileReadTool/FileReadTool.js'
 import type { Message } from '../../types/message.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import {
   createCacheSafeParams,
   createSubagentContext,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import {
   type REPLHookContext,
@@ -37,7 +37,7 @@ import {
   getSessionMemoryPath,
 } from '../../utils/permissions/filesystem.js'
 import { sequential } from '../../utils/concurrency/sequential.js'
-import { asSystemPrompt } from '../../utils/systemPromptType.js'
+import { asSystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getTokenUsage, tokenCountWithEstimation } from '../../utils/tokens.js'
 import { logEvent } from '../analytics/index.js'
 import { isAutoCompactEnabled } from '../compact/autoCompact.js'

@@ -1,7 +1,7 @@
 import { type StructuredPatchHunk, structuredPatch } from 'diff'
 import { logError } from 'src/utils/log.js'
-import { expandPath } from 'src/utils/path.js'
-import { countCharInString } from 'src/utils/stringUtils.js'
+import { expandPath } from 'src/utils/platform/path.js'
+import { countCharInString } from 'src/utils/text/stringUtils.js'
 import {
   DIFF_TIMEOUT_MS,
   getPatchForDisplay,

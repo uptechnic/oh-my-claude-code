@@ -3,7 +3,7 @@ import { logForDebugging } from '../utils/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { extractErrorDetail } from './debugUtils.js'
 import { toCompatSessionId } from './sessionIdCompat.js'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 
 type GitSource = {
   type: 'git_repository'
@@ -55,7 +55,7 @@ export async function createBridgeSession({
 }): Promise<string | null> {
   const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
   const { getOrganizationUUID } = await import('../utils/auth/auth.js')
-  const { getBaseApiUrl } = await import('../utils/apiBaseUrl.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { parseGitHubRepository } = await import('../utils/detectRepository.js')
   const { getDefaultBranch } = await import('../utils/git/git.js')
@@ -194,7 +194,7 @@ export async function getBridgeSession(
 ): Promise<{ environment_id?: string; title?: string } | null> {
   const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
   const { getOrganizationUUID } = await import('../utils/auth/auth.js')
-  const { getBaseApiUrl } = await import('../utils/apiBaseUrl.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 
@@ -271,7 +271,7 @@ export async function archiveBridgeSession(
 ): Promise<void> {
   const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
   const { getOrganizationUUID } = await import('../utils/auth/auth.js')
-  const { getBaseApiUrl } = await import('../utils/apiBaseUrl.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 
@@ -332,7 +332,7 @@ export async function updateBridgeSessionTitle(
 ): Promise<void> {
   const { getClaudeAIOAuthTokens } = await import('../utils/auth/auth.js')
   const { getOrganizationUUID } = await import('../utils/auth/auth.js')
-  const { getBaseApiUrl } = await import('../utils/apiBaseUrl.js')
+  const { getBaseApiUrl } = await import('../utils/api/apiBaseUrl.js')
   const { getOAuthHeaders } = await import('../utils/teleport/api.js')
   const { default: axios } = await import('axios')
 

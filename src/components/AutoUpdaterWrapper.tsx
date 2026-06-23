@@ -2,7 +2,7 @@ import { c as _c } from "react/compiler-runtime";
 import { feature } from 'bun:bundle';
 import * as React from 'react';
 import type { AutoUpdaterResult } from '../utils/lifecycle/autoUpdater.js';
-import { isAutoUpdaterDisabled } from '../utils/config.js';
+import { isAutoUpdaterDisabled } from '../utils/config/config.js';
 import { logForDebugging } from '../utils/debug.js';
 import { getCurrentInstallationType } from '../utils/doctorDiagnostic.js';
 import { AutoUpdater } from './AutoUpdater.js';

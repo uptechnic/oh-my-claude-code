@@ -28,12 +28,12 @@ import {
   EFFORT_LEVELS,
   type EffortValue,
   parseEffortValue,
-} from '../utils/effort.js'
+} from '../utils/config/effort.js'
 import {
   getClaudeConfigHomeDir,
   isBareMode,
   isEnvTruthy,
-} from '../utils/envUtils.js'
+} from '../utils/platform/envUtils.js'
 import { isENOENT, isFsInaccessible } from '../utils/errors.js'
 import {
   coerceDescriptionToString,
@@ -43,7 +43,7 @@ import {
   parseFrontmatter,
   parseShellFrontmatter,
   splitPathInFrontmatter,
-} from '../utils/frontmatterParser.js'
+} from '../utils/text/frontmatterParser.js'
 import { getFsImplementation } from '../utils/files/fsOperations.js'
 import { isPathGitignored } from '../utils/git/gitignore.js'
 import { logError } from '../utils/log.js'
@@ -53,7 +53,7 @@ import {
   loadMarkdownFilesForSubdir,
   type MarkdownFile,
   parseSlashCommandToolsFromFrontmatter,
-} from '../utils/markdownConfigLoader.js'
+} from '../utils/config/markdownConfigLoader.js'
 import { parseUserSpecifiedModel } from '../utils/model/model.js'
 import { executeShellCommandsInPrompt } from '../utils/promptShellExecution.js'
 import type { SettingSource } from '../utils/settings/constants.js'
@@ -61,7 +61,7 @@ import { isSettingSourceEnabled } from '../utils/settings/constants.js'
 import { getManagedFilePath } from '../utils/settings/managedPath.js'
 import { isRestrictedToPluginOnly } from '../utils/settings/pluginOnlyPolicy.js'
 import { HooksSchema, type HooksSettings } from '../utils/settings/types.js'
-import { createSignal } from '../utils/signal.js'
+import { createSignal } from '../utils/platform/signal.js'
 import { registerMCPSkillBuilders } from './mcpSkillBuilders.js'
 
 export type LoadedFrom =

@@ -1,7 +1,7 @@
 import { spawnSync } from 'child_process'
 import { getIsInteractive } from '../../bootstrap/state.js'
 import { logForDebugging } from '../debug.js'
-import { isEnvDefinedFalsy, isEnvTruthy } from '../envUtils.js'
+import { isEnvDefinedFalsy, isEnvTruthy } from '../platform/envUtils.js'
 import { execFileNoThrow } from '../execFileNoThrow.js'
 
 let loggedTmuxCcDisable = false

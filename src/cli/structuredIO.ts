@@ -35,7 +35,7 @@ import type {
   PermissionDecisionReason,
 } from 'src/utils/permissions/PermissionResult.js'
 import { hasPermissionsToUseTool } from 'src/utils/permissions/permissions.js'
-import { writeToStdout } from 'src/utils/process.js'
+import { writeToStdout } from 'src/utils/platform/process.js'
 import { jsonStringify } from 'src/utils/slowOperations.js'
 import { z } from 'zod/v4'
 import { notifyCommandLifecycle } from '../utils/lifecycle/commandLifecycle.js'

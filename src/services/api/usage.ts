@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   getClaudeAIOAuthTokens,
   hasProfileScope,
   isClaudeAISubscriber,
 } from '../../utils/auth/auth.js'
-import { getAuthHeaders } from '../../utils/http.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getAuthHeaders } from '../../utils/api/http.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 export type RateLimit = {
   utilization: number | null // a percentage from 0 to 100

@@ -22,7 +22,7 @@ import {
   sanitizeModelName,
 } from './commitAttribution.js'
 import { logForDebugging } from './debug.js'
-import { parseJSONL } from './json.js'
+import { parseJSONL } from './text/json.js'
 import { logError } from './log.js'
 import {
   getCanonicalName,

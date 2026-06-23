@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 import type { ValidationResult } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
-import { getCwd } from '../../utils/cwd.js'
+import { getCwd } from '../../utils/platform/cwd.js'
 import { isENOENT } from '../../utils/errors.js'
 import {
   FILE_NOT_FOUND_CWD_NOTE,
@@ -9,7 +9,7 @@ import {
 } from '../../utils/files/file.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { expandPath, toRelativePath } from '../../utils/path.js'
+import { expandPath, toRelativePath } from '../../utils/platform/path.js'
 import {
   checkReadPermissionForTool,
   getFileReadIgnorePatterns,
@@ -19,9 +19,9 @@ import type { PermissionDecision } from '../../utils/permissions/PermissionResul
 import { matchWildcardPattern } from '../../utils/permissions/shellRuleMatching.js'
 import { getGlobExclusionsForPluginCache } from '../../utils/plugins/orphanedPluginFilter.js'
 import { ripGrep } from '../../utils/ripgrep.js'
-import { semanticBoolean } from '../../utils/semanticBoolean.js'
-import { semanticNumber } from '../../utils/semanticNumber.js'
-import { plural } from '../../utils/stringUtils.js'
+import { semanticBoolean } from '../../utils/text/semanticBoolean.js'
+import { semanticNumber } from '../../utils/text/semanticNumber.js'
+import { plural } from '../../utils/text/stringUtils.js'
 import { GREP_TOOL_NAME, getDescription } from './prompt.js'
 import {
   getToolUseSummary,

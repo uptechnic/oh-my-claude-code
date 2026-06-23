@@ -26,7 +26,7 @@ import {
   type AttributionState,
   createEmptyAttributionState,
 } from '../utils/commitAttribution.js'
-import type { EffortValue } from '../utils/effort.js'
+import type { EffortValue } from '../utils/config/effort.js'
 import type { FileHistoryState } from '../utils/files/fileHistory.js'
 import type { REPLHookContext } from '../utils/hooks/postSamplingHooks.js'
 import type { SessionHooksState } from '../utils/hooks/sessionHooks.js'

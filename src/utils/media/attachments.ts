@@ -16,9 +16,9 @@ import {
   readImageWithTokenBudget,
 } from '../../tools/FileReadTool/FileReadTool.js'
 import { FileTooLargeError, readFileInRange } from '../files/readFileInRange.js'
-import { expandPath } from '../path.js'
-import { countCharInString } from '../stringUtils.js'
-import { count, uniq } from '../array.js'
+import { expandPath } from '../platform/path.js'
+import { countCharInString } from '../text/stringUtils.js'
+import { count, uniq } from '../text/array.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { readdir, stat } from 'fs/promises'
 import type { IDESelection } from '../../hooks/useIdeSelection.js'
@@ -35,7 +35,7 @@ import {
   isTodoV2Enabled,
 } from '../task/tasks.js'
 import { getPlanFilePath, getPlan } from '../plans.js'
-import { getConnectedIdeName } from '../ide.js'
+import { getConnectedIdeName } from '../ide/ide.js'
 import {
   filterInjectedMemoryFiles,
   getManagedAndUserConditionalRules,
@@ -43,9 +43,9 @@ import {
   getMemoryFilesForNestedDirectory,
   getConditionalRulesForCwdLevelDirectory,
   type MemoryFileInfo,
-} from '../claudemd.js'
+} from '../config/claudemd.js'
 import { dirname, parse, relative, resolve } from 'path'
-import { getCwd } from 'src/utils/cwd.js'
+import { getCwd } from 'src/utils/platform/cwd.js'
 import { getViewedTeammateTask } from '../../state/selectors.js'
 import { logError } from '../log.js'
 import { logAntError } from '../debug.js'
@@ -71,8 +71,8 @@ import type {
   Base64ImageSource,
 } from '@anthropic-ai/sdk/resources/messages.mjs'
 import { maybeResizeAndDownsampleImageBlock } from './imageResizer.js'
-import type { PastedContent } from '../config.js'
-import { getGlobalConfig } from '../config.js'
+import type { PastedContent } from '../config/config.js'
+import { getGlobalConfig } from '../config/config.js'
 import {
   getDefaultSonnetModel,
   getDefaultHaikuModel,
@@ -166,7 +166,7 @@ import {
   isToolSearchToolAvailable,
   modelSupportsToolReference,
   type DeferredToolsDeltaScanContext,
-} from '../toolSearch.js'
+} from '../agent/toolSearch.js'
 import {
   getMcpInstructionsDelta,
   isMcpInstructionsDeltaEnabled,
@@ -192,7 +192,7 @@ import {
   isThinkingMessage,
 } from '../messages/messages.js'
 import { isHumanTurn } from '../messagePredicates.js'
-import { isEnvTruthy, getClaudeConfigHomeDir } from '../envUtils.js'
+import { isEnvTruthy, getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { feature } from 'bun:bundle'
 /* eslint-disable @typescript-eslint/no-require-imports */
 const BRIEF_TOOL_NAME: string | null =
@@ -226,7 +226,7 @@ import { isPDFExtension } from './pdfUtils.js'
 import { getLocalISODate } from '../../constants/common.js'
 import { getPDFPageCount } from './pdf.js'
 import { PDF_AT_MENTION_INLINE_THRESHOLD } from '../../constants/apiLimits.js'
-import { isAgentSwarmsEnabled } from '../agentSwarmsEnabled.js'
+import { isAgentSwarmsEnabled } from '../agent/agentSwarmsEnabled.js'
 import { findRelevantMemories } from '../../memdir/findRelevantMemories.js'
 import { memoryAge, memoryFreshnessText } from '../../memdir/memoryAge.js'
 import { getAutoMemPath, isAutoMemoryEnabled } from '../../memdir/paths.js'

@@ -7,7 +7,7 @@ import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
 import { Box, Text } from '../../ink.js';
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { LocalShellTaskState } from '../../tasks/LocalShellTask/guards.js';
-import { formatDuration, formatFileSize, truncateToWidth } from '../../utils/format.js';
+import { formatDuration, formatFileSize, truncateToWidth } from '../../utils/text/format.js';
 import { tailFile } from '../../utils/files/fsOperations.js';
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js';
 import { Byline } from '../design-system/Byline.js';

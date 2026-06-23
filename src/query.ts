@@ -26,7 +26,7 @@ import {
 import { ImageSizeError } from './utils/media/imageValidation.js'
 import { ImageResizeError } from './utils/media/imageResizer.js'
 import { findToolByName, type ToolUseContext } from './Tool.js'
-import { asSystemPrompt, type SystemPrompt } from './utils/systemPromptType.js'
+import { asSystemPrompt, type SystemPrompt } from './utils/agent/systemPromptType.js'
 import type {
   AssistantMessage,
   AttachmentMessage,
@@ -55,7 +55,7 @@ import {
   stripSignatureBlocks,
 } from './utils/messages/messages.js'
 import { generateToolUseSummary } from './services/toolUseSummary/toolUseSummaryGenerator.js'
-import { prependUserContext, appendSystemContext } from './utils/api.js'
+import { prependUserContext, appendSystemContext } from './utils/api/api.js'
 import {
   createAttachmentMessage,
   filterDuplicateMemoryAttachments,
@@ -109,7 +109,7 @@ import {
   incrementBudgetContinuationCount,
 } from './bootstrap/state.js'
 import { createBudgetTracker, checkTokenBudget } from './query/tokenBudget.js'
-import { count } from './utils/array.js'
+import { count } from './utils/text/array.js'
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const snipModule = feature('HISTORY_SNIP')

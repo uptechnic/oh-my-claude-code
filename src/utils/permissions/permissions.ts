@@ -21,7 +21,7 @@ import {
   getSettingSourceDisplayNameLowercase,
   SETTING_SOURCES,
 } from '../settings/constants.js'
-import { plural } from '../stringUtils.js'
+import { plural } from '../text/stringUtils.js'
 import { permissionModeTitle } from './PermissionMode.js'
 import type {
   PermissionAskDecision,
@@ -80,7 +80,7 @@ import {
   clearClassifierChecking,
   setClassifierChecking,
 } from './classifierApprovals.js'
-import { isInProtectedNamespace } from '../envUtils.js'
+import { isInProtectedNamespace } from '../platform/envUtils.js'
 import { executePermissionRequestHooks } from '../hooks/hooks.js'
 import {
   AUTO_REJECT_MESSAGE,
@@ -88,7 +88,7 @@ import {
   buildYoloRejectionMessage,
   DONT_ASK_REJECT_MESSAGE,
 } from '../messages/messages.js'
-import { calculateCostFromTokens } from '../modelCost.js'
+import { calculateCostFromTokens } from '../api/modelCost.js'
 /* eslint-enable @typescript-eslint/no-require-imports */
 import { jsonStringify } from '../slowOperations.js'
 import {

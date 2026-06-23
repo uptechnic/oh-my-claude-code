@@ -16,13 +16,13 @@ import {
   type ToolDef,
   toolMatchesName,
 } from '../../Tool.js'
-import { formatAgentId, generateRequestId } from '../../utils/agentId.js'
-import { isAgentSwarmsEnabled } from '../../utils/agentSwarmsEnabled.js'
+import { formatAgentId, generateRequestId } from '../../utils/agent/agentId.js'
+import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {
   findInProcessTeammateTaskId,
   setAwaitingPlanApproval,
-} from '../../utils/inProcessTeammateHelpers.js'
+} from '../../utils/agent/inProcessTeammateHelpers.js'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { logError } from '../../utils/log.js'
 import {

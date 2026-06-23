@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { useInterval } from 'usehooks-ts';
 import { Text } from '../ink.js';
 import { type AutoUpdaterResult, getLatestVersionFromGcs, getMaxVersion, shouldSkipVersion } from '../utils/lifecycle/autoUpdater.js';
-import { isAutoUpdaterDisabled } from '../utils/config.js';
+import { isAutoUpdaterDisabled } from '../utils/config/config.js';
 import { logForDebugging } from '../utils/debug.js';
 import { getPackageManager, type PackageManager } from '../utils/nativeInstaller/packageManagers.js';
-import { gt, gte } from '../utils/semver.js';
+import { gt, gte } from '../utils/text/semver.js';
 import { getInitialSettings } from '../utils/settings/settings.js';
 type Props = {
   isUpdating: boolean;

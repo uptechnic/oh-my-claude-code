@@ -4,8 +4,8 @@ import {
   logEvent,
 } from 'src/services/analytics/index.js'
 import { logForDebugging } from '../debug.js'
-import { isEnvTruthy } from '../envUtils.js'
-import { getPlatform } from '../platform.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
+import { getPlatform } from '../platform/platform.js'
 
 // Track warnings to avoid spam — bounded to prevent unbounded memory growth
 export const MAX_WARNING_KEYS = 1000

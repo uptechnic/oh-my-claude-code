@@ -8,7 +8,7 @@ import { spawn, type ChildProcessWithoutNullStreams } from 'child_process'
 import { pathExists } from '../files/file.js'
 import { wrapSpawn } from '../ShellCommand.js'
 import { TaskOutput } from '../task/TaskOutput.js'
-import { getCwd } from '../cwd.js'
+import { getCwd } from '../platform/cwd.js'
 import { randomUUID } from 'crypto'
 import { formatShellPrefixCommand } from '../bash/shellPrefix.js'
 import {
@@ -16,8 +16,8 @@ import {
   invalidateSessionEnvCache,
 } from '../sessionEnvironment.js'
 import { subprocessEnv } from '../subprocessEnv.js'
-import { getPlatform } from '../platform.js'
-import { findGitBashPath, windowsPathToPosixPath } from '../windowsPaths.js'
+import { getPlatform } from '../platform/platform.js'
+import { findGitBashPath, windowsPathToPosixPath } from '../platform/windowsPaths.js'
 import { getCachedPowerShellPath } from '../shell/powershellDetection.js'
 import { DEFAULT_HOOK_SHELL } from '../shell/shellProvider.js'
 import { buildPowerShellArgs } from '../shell/powershellProvider.js'
@@ -36,7 +36,7 @@ import {
   getOriginalCwd,
   getMainThreadAgentType,
 } from '../../bootstrap/state.js'
-import { checkHasTrustDialogAccepted } from '../config.js'
+import { checkHasTrustDialogAccepted } from '../config/config.js'
 import {
   getHooksConfigFromSnapshot,
   shouldAllowManagedHooksOnly,
@@ -121,7 +121,7 @@ import type {
 import { getHookDisplayText } from './hooksSettings.js'
 import { logForDebugging } from '../debug.js'
 import { logForDiagnosticsNoPII } from '../diagLogs.js'
-import { firstLineOf } from '../stringUtils.js'
+import { firstLineOf } from '../text/stringUtils.js'
 import {
   normalizeLegacyToolName,
   getLegacyToolNames,
@@ -160,7 +160,7 @@ import {
 } from './sessionHooks.js'
 import type { AppState } from '../../state/AppState.js'
 import { jsonStringify, jsonParse } from '../slowOperations.js'
-import { isEnvTruthy } from '../envUtils.js'
+import { isEnvTruthy } from '../platform/envUtils.js'
 import { errorMessage, getErrnoCode } from '../errors.js'
 
 const TOOL_HOOK_EXECUTION_TIMEOUT_MS = 10 * 60 * 1000

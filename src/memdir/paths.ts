@@ -10,9 +10,9 @@ import {
   getClaudeConfigHomeDir,
   isEnvDefinedFalsy,
   isEnvTruthy,
-} from '../utils/envUtils.js'
+} from '../utils/platform/envUtils.js'
 import { findCanonicalGitRoot } from '../utils/git/git.js'
-import { sanitizePath } from '../utils/path.js'
+import { sanitizePath } from '../utils/platform/path.js'
 import {
   getInitialSettings,
   getSettingsForSource,

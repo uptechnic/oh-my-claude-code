@@ -8,10 +8,10 @@ import {
 } from '../bootstrap/state.js'
 import { registerCleanup } from './lifecycle/cleanupRegistry.js'
 import { logForDebugging } from './debug.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { errorMessage, isFsInaccessible } from './errors.js'
-import { isProcessRunning } from './genericProcessUtils.js'
-import { getPlatform } from './platform.js'
+import { isProcessRunning } from './platform/genericProcessUtils.js'
+import { getPlatform } from './platform/platform.js'
 import { jsonParse, jsonStringify } from './slowOperations.js'
 import { getAgentId } from './swarm/teammate.js'
 

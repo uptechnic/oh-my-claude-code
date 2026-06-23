@@ -8,8 +8,8 @@ import {
   getSubscriptionType,
   isOverageProvisioningAllowed,
 } from '../utils/auth/auth.js'
-import { hasClaudeAiBillingAccess } from '../utils/billing.js'
-import { formatResetTime } from '../utils/format.js'
+import { hasClaudeAiBillingAccess } from '../utils/api/billing.js'
+import { formatResetTime } from '../utils/text/format.js'
 import type { ClaudeAILimits } from './claudeAiLimits.js'
 
 const FEEDBACK_CHANNEL_ANT = '#briarpatch-cc'

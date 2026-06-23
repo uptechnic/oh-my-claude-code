@@ -54,21 +54,21 @@ import {
   logAPIPrefix,
   splitSysPromptPrefix,
   toolToAPISchema,
-} from '../../utils/api.js'
+} from '../../utils/api/api.js'
 import { getOauthAccountInfo } from '../../utils/auth/auth.js'
 import {
   getBedrockExtraBodyParamsBetas,
   getMergedBetas,
   getModelBetas,
-} from '../../utils/betas.js'
-import { getOrCreateUserID } from '../../utils/config.js'
+} from '../../utils/config/betas.js'
+import { getOrCreateUserID } from '../../utils/config/config.js'
 import {
   CAPPED_DEFAULT_MAX_TOKENS,
   getModelMaxOutputTokens,
   getSonnet1mExpTreatmentEnabled,
 } from '../../utils/context.js'
-import { resolveAppliedEffort } from '../../utils/effort.js'
-import { isEnvTruthy } from '../../utils/envUtils.js'
+import { resolveAppliedEffort } from '../../utils/config/effort.js'
+import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import { computeFingerprintFromMessages } from '../../utils/fingerprint.js'
 import { captureAPIRequest, logError } from '../../utils/log.js'
@@ -91,7 +91,7 @@ import {
 import {
   asSystemPrompt,
   type SystemPrompt,
-} from '../../utils/systemPromptType.js'
+} from '../../utils/agent/systemPromptType.js'
 import { tokenCountFromLastAPIResponse } from '../../utils/tokens.js'
 import { getDynamicConfig_BLOCKS_ON_INIT } from '../analytics/growthbook.js'
 import {
@@ -153,28 +153,28 @@ import {
   isValidAdvisorModel,
   modelSupportsAdvisor,
 } from 'src/utils/advisor.js'
-import { getAgentContext } from 'src/utils/agentContext.js'
+import { getAgentContext } from 'src/utils/agent/agentContext.js'
 import { isClaudeAISubscriber } from 'src/utils/auth/auth.js'
 import {
   getToolSearchBetaHeader,
   modelSupportsStructuredOutputs,
   shouldIncludeFirstPartyOnlyBetas,
   shouldUseGlobalCacheScope,
-} from 'src/utils/betas.js'
+} from 'src/utils/config/betas.js'
 import { getMaxThinkingTokensForModel } from 'src/utils/context.js'
 import { logForDebugging } from 'src/utils/debug.js'
 import { logForDiagnosticsNoPII } from 'src/utils/diagLogs.js'
-import { type EffortValue, modelSupportsEffort } from 'src/utils/effort.js'
+import { type EffortValue, modelSupportsEffort } from 'src/utils/config/effort.js'
 import {
   isFastModeAvailable,
   isFastModeCooldown,
   isFastModeEnabled,
   isFastModeSupportedByModel,
-} from 'src/utils/fastMode.js'
+} from 'src/utils/config/fastMode.js'
 import { returnValue } from 'src/utils/generators.js'
 import { headlessProfilerCheckpoint } from 'src/utils/headlessProfiler.js'
 import { isMcpInstructionsDeltaEnabled } from 'src/utils/mcp/mcpInstructionsDelta.js'
-import { calculateUSDCost } from 'src/utils/modelCost.js'
+import { calculateUSDCost } from 'src/utils/api/modelCost.js'
 import { endQueryProfile, queryCheckpoint } from 'src/utils/queryProfiler.js'
 import {
   modelSupportsAdaptiveThinking,
@@ -185,7 +185,7 @@ import {
   extractDiscoveredToolNames,
   isDeferredToolsDeltaEnabled,
   isToolSearchEnabled,
-} from 'src/utils/toolSearch.js'
+} from 'src/utils/agent/toolSearch.js'
 import { API_MAX_MEDIA_PER_REQUEST } from '../../constants/apiLimits.js'
 import { ADVISOR_BETA_HEADER } from '../../constants/betas.js'
 import {
@@ -193,10 +193,10 @@ import {
   isDeferredTool,
   TOOL_SEARCH_TOOL_NAME,
 } from '../../tools/ToolSearchTool/prompt.js'
-import { count } from '../../utils/array.js'
+import { count } from '../../utils/text/array.js'
 import { insertBlockAfterToolResults } from '../../utils/contentArray.js'
-import { validateBoundedIntEnvVar } from '../../utils/envValidation.js'
-import { safeParseJSON } from '../../utils/json.js'
+import { validateBoundedIntEnvVar } from '../../utils/platform/envValidation.js'
+import { safeParseJSON } from '../../utils/text/json.js'
 import {
   normalizeModelStringForAPI,
   parseUserSpecifiedModel,

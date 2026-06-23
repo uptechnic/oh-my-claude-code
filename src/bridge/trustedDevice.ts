@@ -1,14 +1,14 @@
 import axios from 'axios'
 import memoize from 'lodash-es/memoize.js'
 import { hostname } from 'os'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import {
   checkGate_CACHED_OR_BLOCKING,
   getFeatureValue_CACHED_MAY_BE_STALE,
 } from '../services/analytics/growthbook.js'
 import { logForDebugging } from '../utils/debug.js'
 import { errorMessage } from '../utils/errors.js'
-import { isEssentialTrafficOnly } from '../utils/privacyLevel.js'
+import { isEssentialTrafficOnly } from '../utils/config/privacyLevel.js'
 import { getSecureStorage } from '../utils/secureStorage/index.js'
 import { jsonStringify } from '../utils/slowOperations.js'
 

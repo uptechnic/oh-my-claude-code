@@ -42,12 +42,12 @@ import type {
   SystemMessage,
 } from '../../types/message.js'
 import { createAbortController } from '../../utils/concurrency/abortController.js'
-import { count, uniq } from '../../utils/array.js'
+import { count, uniq } from '../../utils/text/array.js'
 import { logForDebugging } from '../../utils/debug.js'
 import {
   createCacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import type { REPLHookContext } from '../../utils/hooks/postSamplingHooks.js'
 import {
   createMemorySavedMessage,

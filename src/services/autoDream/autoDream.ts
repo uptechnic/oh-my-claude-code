@@ -14,7 +14,7 @@ import type { REPLHookContext } from '../../utils/hooks/postSamplingHooks.js'
 import {
   createCacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
+} from '../../utils/agent/forkedAgent.js'
 import {
   createUserMessage,
   createMemorySavedMessage,

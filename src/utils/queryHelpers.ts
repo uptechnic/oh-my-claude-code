@@ -19,7 +19,7 @@ import { FILE_WRITE_TOOL_NAME } from '../tools/FileWriteTool/prompt.js'
 import type { Message } from '../types/message.js'
 import type { OrphanedPermission } from '../types/textInputTypes.js'
 import { logForDebugging } from './debug.js'
-import { isEnvTruthy } from './envUtils.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import { isFsInaccessible } from './errors.js'
 import { getFileModificationTime, stripLineNumberPrefix } from './files/file.js'
 import { readFileSyncWithMetadata } from './files/fileRead.js'
@@ -28,7 +28,7 @@ import {
   type FileStateCache,
 } from './files/fileStateCache.js'
 import { isNotEmptyMessage, normalizeMessages } from './messages/messages.js'
-import { expandPath } from './path.js'
+import { expandPath } from './platform/path.js'
 import type {
   inputSchema as permissionToolInputSchema,
   outputSchema as permissionToolOutputSchema,

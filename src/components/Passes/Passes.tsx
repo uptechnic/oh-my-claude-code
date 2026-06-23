@@ -10,7 +10,7 @@ import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { logEvent } from '../../services/analytics/index.js';
 import { fetchReferralRedemptions, formatCreditAmount, getCachedOrFetchPassesEligibility } from '../../services/api/referral.js';
 import type { ReferralRedemptionsResponse, ReferrerRewardInfo } from '../../utils/auth/auth.js';
-import { count } from '../../utils/array.js';
+import { count } from '../../utils/text/array.js';
 import { logError } from '../../utils/log.js';
 import { Pane } from '../design-system/Pane.js';
 type PassStatus = {

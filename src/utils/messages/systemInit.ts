@@ -12,8 +12,8 @@ import {
   LEGACY_AGENT_TOOL_NAME,
 } from 'src/tools/AgentTool/constants.js'
 import { getAnthropicApiKeyWithSource } from '../auth/auth.js'
-import { getCwd } from '../cwd.js'
-import { getFastModeState } from '../fastMode.js'
+import { getCwd } from '../platform/cwd.js'
+import { getFastModeState } from '../config/fastMode.js'
 import { getSettings_DEPRECATED } from '../settings/settings.js'
 
 // TODO(next-minor): remove this translation once SDK consumers have migrated

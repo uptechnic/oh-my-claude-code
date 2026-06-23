@@ -15,7 +15,7 @@ import { getEmptyToolPermissionContext } from '../../Tool.js';
 import { AGENT_COLOR_TO_THEME_COLOR } from '../../tools/AgentTool/agentColorManager.js';
 import { logForDebugging } from '../../utils/debug.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
-import { truncateToWidth } from '../../utils/format.js';
+import { truncateToWidth } from '../../utils/text/format.js';
 import { getNextPermissionMode } from '../../utils/permissions/getNextPermissionMode.js';
 import { getModeColor, type PermissionMode, permissionModeFromString, permissionModeSymbol } from '../../utils/permissions/PermissionMode.js';
 import { jsonStringify } from '../../utils/slowOperations.js';

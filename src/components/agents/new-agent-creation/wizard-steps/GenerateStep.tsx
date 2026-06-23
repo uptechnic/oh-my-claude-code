@@ -4,7 +4,7 @@ import { useMainLoopModel } from '../../../../hooks/useMainLoopModel.js';
 import { Box, Text } from '../../../../ink.js';
 import { useKeybinding } from '../../../../keybindings/useKeybinding.js';
 import { createAbortController } from '../../../../utils/concurrency/abortController.js';
-import { editPromptInEditor } from '../../../../utils/promptEditor.js';
+import { editPromptInEditor } from '../../../../utils/ide/promptEditor.js';
 import { ConfigurableShortcutHint } from '../../../ConfigurableShortcutHint.js';
 import { Byline } from '../../../design-system/Byline.js';
 import { Spinner } from '../../../Spinner.js';

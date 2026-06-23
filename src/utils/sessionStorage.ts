@@ -63,24 +63,24 @@ import type {
   UserMessage,
 } from '../types/message.js'
 import type { QueueOperationMessage } from '../types/messageQueueTypes.js'
-import { uniq } from './array.js'
+import { uniq } from './text/array.js'
 import { registerCleanup } from './lifecycle/cleanupRegistry.js'
 import { updateSessionName } from './concurrentSessions.js'
-import { getCwd } from './cwd.js'
+import { getCwd } from './platform/cwd.js'
 import { logForDebugging } from './debug.js'
 import { logForDiagnosticsNoPII } from './diagLogs.js'
-import { getClaudeConfigHomeDir, isEnvTruthy } from './envUtils.js'
+import { getClaudeConfigHomeDir, isEnvTruthy } from './platform/envUtils.js'
 import { isFsInaccessible } from './errors.js'
 import type { FileHistorySnapshot } from './files/fileHistory.js'
-import { formatFileSize } from './format.js'
+import { formatFileSize } from './text/format.js'
 import { getFsImplementation } from './files/fsOperations.js'
 import { getWorktreePaths } from './getWorktreePaths.js'
 import { getBranch } from './git/git.js'
 import { gracefulShutdownSync, isShuttingDown } from './lifecycle/gracefulShutdown.js'
-import { parseJSONL } from './json.js'
+import { parseJSONL } from './text/json.js'
 import { logError } from './log.js'
 import { extractTag, isCompactBoundaryMessage } from './messages/messages.js'
-import { sanitizePath } from './path.js'
+import { sanitizePath } from './platform/path.js'
 import {
   extractJsonStringField,
   extractLastJsonStringField,
@@ -92,7 +92,7 @@ import {
 import { getSettings_DEPRECATED } from './settings/settings.js'
 import { jsonParse, jsonStringify } from './slowOperations.js'
 import type { ContentReplacementRecord } from './toolResultStorage.js'
-import { validateUuid } from './uuid.js'
+import { validateUuid } from './text/uuid.js'
 
 // Cache MACRO.VERSION at module level to work around bun --define bug in async contexts
 // See: https://github.com/oven-sh/bun/issues/26168

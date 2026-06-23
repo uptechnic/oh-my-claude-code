@@ -41,7 +41,7 @@ type InstalledPluginsMapV2 = Record<string, PluginInstallationEntry[]>
 export type PersistableScope = Exclude<PluginScope, never> // All scopes are persistable in the schema
 
 import { getOriginalCwd } from '../../bootstrap/state.js'
-import { getCwd } from '../cwd.js'
+import { getCwd } from '../platform/cwd.js'
 import { getHeadForDir } from '../git/gitFilesystem.js'
 import type { EditableSettingSource } from '../settings/constants.js'
 import {

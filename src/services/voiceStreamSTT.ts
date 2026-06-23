@@ -13,14 +13,14 @@
 
 import type { ClientRequest, IncomingMessage } from 'http'
 import WebSocket from 'ws'
-import { getBaseApiUrl } from '../utils/apiBaseUrl.js'
+import { getBaseApiUrl } from '../utils/api/apiBaseUrl.js'
 import {
   checkAndRefreshOAuthTokenIfNeeded,
   getClaudeAIOAuthTokens,
   isAnthropicAuthEnabled,
 } from '../utils/auth/auth.js'
 import { logForDebugging } from '../utils/debug.js'
-import { getUserAgent } from '../utils/http.js'
+import { getUserAgent } from '../utils/api/http.js'
 import { logError } from '../utils/log.js'
 import { getWebSocketTLSOptions } from '../utils/auth/mtls.js'
 import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/auth/proxy.js'

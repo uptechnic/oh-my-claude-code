@@ -7,17 +7,17 @@ import {
 import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth/auth.js'
 import { logForDebugging } from 'src/utils/debug.js'
 import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
-import { isEssentialTrafficOnly } from 'src/utils/privacyLevel.js'
-import { writeToStderr } from 'src/utils/process.js'
-import { getBaseApiUrl } from 'src/utils/apiBaseUrl.js'
-import { getGlobalConfig, saveGlobalConfig } from '../../utils/config.js'
+import { isEssentialTrafficOnly } from 'src/utils/config/privacyLevel.js'
+import { writeToStderr } from 'src/utils/platform/process.js'
+import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
+import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
 import {
   getAuthHeaders,
   getUserAgent,
   withOAuth401Retry,
-} from '../../utils/http.js'
+} from '../../utils/api/http.js'
 import { logError } from '../../utils/log.js'
-import { getClaudeCodeUserAgent } from '../../utils/userAgent.js'
+import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 // Cache expiration: 24 hours
 const GROVE_CACHE_EXPIRATION_MS = 24 * 60 * 60 * 1000

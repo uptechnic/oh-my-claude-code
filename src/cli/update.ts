@@ -10,7 +10,7 @@ import {
   getGlobalConfig,
   type InstallMethod,
   saveGlobalConfig,
-} from 'src/utils/config.js'
+} from 'src/utils/config/config.js'
 import { logForDebugging } from 'src/utils/debug.js'
 import { getDoctorDiagnostic } from 'src/utils/doctorDiagnostic.js'
 import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
@@ -23,8 +23,8 @@ import {
   removeInstalledSymlink,
 } from 'src/utils/nativeInstaller/index.js'
 import { getPackageManager } from 'src/utils/nativeInstaller/packageManagers.js'
-import { writeToStdout } from 'src/utils/process.js'
-import { gte } from 'src/utils/semver.js'
+import { writeToStdout } from 'src/utils/platform/process.js'
+import { gte } from 'src/utils/text/semver.js'
 import { getInitialSettings } from 'src/utils/settings/settings.js'
 
 export async function update() {

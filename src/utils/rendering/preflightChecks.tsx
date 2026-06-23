@@ -3,11 +3,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { logEvent } from 'src/services/analytics/index.js';
 import { Spinner } from '../../components/Spinner.js';
-import { getBaseApiUrl } from '../apiBaseUrl.js';
+import { getBaseApiUrl } from '../api/apiBaseUrl.js';
 import { useTimeout } from '../../hooks/useTimeout.js';
 import { Box, Text } from '../../ink.js';
 import { getSSLErrorHint } from '../../services/api/errorUtils.js';
-import { getUserAgent } from '../http.js';
+import { getUserAgent } from '../api/http.js';
 import { logError } from '../log.js';
 export interface PreflightCheckResult {
   success: boolean;

@@ -24,7 +24,7 @@ import type {
   TeammateIdentity,
 } from '../../tasks/InProcessTeammateTask/types.js'
 import { createAbortController } from '../concurrency/abortController.js'
-import { formatAgentId } from '../agentId.js'
+import { formatAgentId } from '../agent/agentId.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { logForDebugging } from '../debug.js'
 import { emitTaskTerminatedSdk } from '../sdkEventQueue.js'

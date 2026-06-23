@@ -3,12 +3,12 @@ import { mkdir, readFile, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { coerce } from 'semver'
 import { getIsNonInteractiveSession } from '../bootstrap/state.js'
-import { getGlobalConfig, saveGlobalConfig } from './config.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { getGlobalConfig, saveGlobalConfig } from './config/config.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { toError } from './errors.js'
 import { logError } from './log.js'
-import { isEssentialTrafficOnly } from './privacyLevel.js'
-import { gt } from './semver.js'
+import { isEssentialTrafficOnly } from './config/privacyLevel.js'
+import { gt } from './text/semver.js'
 
 const MAX_RELEASE_NOTES_SHOWN = 5
 

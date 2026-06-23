@@ -4,8 +4,8 @@
 
 import { access, chmod, writeFile } from 'fs/promises'
 import { join } from 'path'
-import { type ReleaseChannel, saveGlobalConfig } from './config.js'
-import { getClaudeConfigHomeDir } from './envUtils.js'
+import { type ReleaseChannel, saveGlobalConfig } from './config/config.js'
+import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { getErrnoCode } from './errors.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
 import { getFsImplementation } from './files/fsOperations.js'

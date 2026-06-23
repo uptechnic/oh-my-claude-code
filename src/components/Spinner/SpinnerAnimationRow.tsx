@@ -5,7 +5,7 @@ import { useMemo, useRef } from 'react';
 import { stringWidth } from '../../ink/stringWidth.js';
 import { Box, Text, useAnimationFrame } from '../../ink.js';
 import type { InProcessTeammateTaskState } from '../../tasks/InProcessTeammateTask/types.js';
-import { formatDuration, formatNumber } from '../../utils/format.js';
+import { formatDuration, formatNumber } from '../../utils/text/format.js';
 import { toInkColor } from '../../utils/rendering/ink.js';
 import type { Theme } from '../../utils/rendering/theme.js';
 import { Byline } from '../design-system/Byline.js';

@@ -46,19 +46,19 @@ import type {
   NormalizedUserMessage,
   UserMessage,
 } from '../types/message.js'
-import { toolToAPISchema } from './api.js'
-import { filterInjectedMemoryFiles, getMemoryFiles } from './claudemd.js'
+import { toolToAPISchema } from './api/api.js'
+import { filterInjectedMemoryFiles, getMemoryFiles } from './config/claudemd.js'
 import { getContextWindowForModel } from './context.js'
-import { getCwd } from './cwd.js'
+import { getCwd } from './platform/cwd.js'
 import { logForDebugging } from './debug.js'
-import { isEnvTruthy } from './envUtils.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import { errorMessage, toError } from './errors.js'
 import { logError } from './log.js'
 import { normalizeMessagesForAPI } from './messages/messages.js'
 import { getRuntimeMainLoopModel } from './model/model.js'
 import type { SettingSource } from './settings/constants.js'
 import { jsonStringify } from './slowOperations.js'
-import { buildEffectiveSystemPrompt } from './systemPrompt.js'
+import { buildEffectiveSystemPrompt } from './agent/systemPrompt.js'
 import type { Theme } from './rendering/theme.js'
 import { getCurrentUsage } from './tokens.js'
 
@@ -383,7 +383,7 @@ async function countBuiltInToolTokens(
   }
 
   // Check if tool search is enabled
-  const { isToolSearchEnabled } = await import('./toolSearch.js')
+  const { isToolSearchEnabled } = await import('./agent/toolSearch.js')
   const { isDeferredTool } = await import('../tools/ToolSearchTool/prompt.js')
   const isDeferred = await isToolSearchEnabled(
     model ?? '',
@@ -666,7 +666,7 @@ export async function countMcpToolTokens(
 
   // Check if tool search is enabled - if so, MCP tools are deferred
   // isToolSearchEnabled handles threshold calculation internally for TstAuto mode
-  const { isToolSearchEnabled } = await import('./toolSearch.js')
+  const { isToolSearchEnabled } = await import('./agent/toolSearch.js')
   const { isDeferredTool } = await import('../tools/ToolSearchTool/prompt.js')
 
   const isDeferred = await isToolSearchEnabled(

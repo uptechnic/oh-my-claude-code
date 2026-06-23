@@ -6,13 +6,13 @@ import {
   getAnthropicApiKeyWithSource,
   saveApiKey,
 } from '../../utils/auth/auth.js'
-import { saveGlobalConfig } from '../../utils/config.js'
-import { isRunningOnHomespace } from '../../utils/envUtils.js'
+import { saveGlobalConfig } from '../../utils/config/config.js'
+import { isRunningOnHomespace } from '../../utils/platform/envUtils.js'
 import {
   LOGIN_ENV_VAR_DEFS,
   readEnvFile,
   setSessionEnvVars,
-} from '../../utils/envFile.js'
+} from '../../utils/config/envFile.js'
 import { getAPIProvider } from '../../utils/model/providers.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {

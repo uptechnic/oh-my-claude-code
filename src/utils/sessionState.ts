@@ -23,7 +23,7 @@ export type RequiresActionDetails = {
   input?: Record<string, unknown>
 }
 
-import { isEnvTruthy } from './envUtils.js'
+import { isEnvTruthy } from './platform/envUtils.js'
 import type { PermissionMode } from './permissions/PermissionMode.js'
 import { enqueueSdkEvent } from './sdkEventQueue.js'
 

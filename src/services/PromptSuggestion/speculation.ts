@@ -15,8 +15,8 @@ import { checkReadOnlyConstraints } from '../../tools/BashTool/readOnlyValidatio
 import type { SpeculationAcceptMessage } from '../../types/logs.js'
 import type { Message } from '../../types/message.js'
 import { createChildAbortController } from '../../utils/concurrency/abortController.js'
-import { count } from '../../utils/array.js'
-import { getGlobalConfig } from '../../utils/config.js'
+import { count } from '../../utils/text/array.js'
+import { getGlobalConfig } from '../../utils/config/config.js'
 import { logForDebugging } from '../../utils/debug.js'
 import { errorMessage } from '../../utils/errors.js'
 import {
@@ -28,8 +28,8 @@ import {
   type CacheSafeParams,
   createCacheSafeParams,
   runForkedAgent,
-} from '../../utils/forkedAgent.js'
-import { formatDuration, formatNumber } from '../../utils/format.js'
+} from '../../utils/agent/forkedAgent.js'
+import { formatDuration, formatNumber } from '../../utils/text/format.js'
 import type { REPLHookContext } from '../../utils/hooks/postSamplingHooks.js'
 import { logError } from '../../utils/log.js'
 import type { SetAppState } from '../../utils/messageQueueManager.js'
