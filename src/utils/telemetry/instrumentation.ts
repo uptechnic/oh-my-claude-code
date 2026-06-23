@@ -49,7 +49,7 @@ import { getPlatform, getWslVersion } from 'src/utils/platform/platform.js'
 
 import { getCACertificates } from '../auth/caCerts.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
-import { getHasFormattedOutput, logForDebugging } from '../debug.js'
+import { getHasFormattedOutput, logForDebugging } from '../debug/debug.js'
 import { isEnvTruthy } from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
 import { getMTLSConfig } from '../auth/mtls.js'

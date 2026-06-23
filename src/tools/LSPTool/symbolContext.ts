@@ -1,4 +1,4 @@
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { truncate } from '../../utils/text/format.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
 import { expandPath } from '../../utils/platform/path.js'

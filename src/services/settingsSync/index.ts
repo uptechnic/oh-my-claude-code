@@ -22,7 +22,7 @@ import {
 } from '../../utils/auth/auth.js'
 import { clearMemoryFileCaches } from '../../utils/config/claudemd.js'
 import { getMemoryPath } from '../../utils/config/config.js'
-import { logForDiagnosticsNoPII } from '../../utils/diagLogs.js'
+import { logForDiagnosticsNoPII } from '../../utils/debug/diagLogs.js'
 import { classifyAxiosError } from '../../utils/errors.js'
 import { getRepoRemoteHash } from '../../utils/git/git.js'
 import {

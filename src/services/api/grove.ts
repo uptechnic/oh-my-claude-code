@@ -5,7 +5,7 @@ import {
   logEvent,
 } from 'src/services/analytics/index.js'
 import { getOauthAccountInfo, isConsumerSubscriber } from 'src/utils/auth/auth.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
 import { isEssentialTrafficOnly } from 'src/utils/config/privacyLevel.js'
 import { writeToStderr } from 'src/utils/platform/process.js'
@@ -16,7 +16,7 @@ import {
   getUserAgent,
   withOAuth401Retry,
 } from '../../utils/api/http.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 // Cache expiration: 24 hours

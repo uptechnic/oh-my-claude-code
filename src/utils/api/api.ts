@@ -41,7 +41,7 @@ import {
   shouldUseGlobalCacheScope,
 } from '../config/betas.js'
 import { getCwd } from '../platform/cwd.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isEnvTruthy } from '../platform/envUtils.js'
 import { createUserMessage } from '../messages/messages.js'
 import {

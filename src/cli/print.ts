@@ -27,11 +27,11 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from 'src/services/analytics/index.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from 'src/services/analytics/growthbook.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import {
   logForDiagnosticsNoPII,
   withDiagnosticsTiming,
-} from 'src/utils/diagLogs.js'
+} from 'src/utils/debug/diagLogs.js'
 import { toolMatchesName, type Tool, type Tools } from 'src/Tool.js'
 import {
   type AgentDefinition,
@@ -57,9 +57,9 @@ import {
   setPermissionModeChangedListener,
   type RequiresActionDetails,
   type SessionExternalMetadata,
-} from 'src/utils/sessionState.js'
+} from 'src/utils/session/sessionState.js'
 import { externalMetadataToAppState } from 'src/state/onChangeAppState.js'
-import { getInMemoryErrors, logError, logMCPDebug } from 'src/utils/log.js'
+import { getInMemoryErrors, logError, logMCPDebug } from 'src/utils/debug/log.js'
 import {
   writeToStdout,
   registerProcessOutputErrorHandlers,
@@ -69,7 +69,7 @@ import { EMPTY_USAGE } from 'src/services/api/logging.js'
 import {
   loadConversationForResume,
   type TurnInterruptionState,
-} from 'src/utils/conversationRecovery.js'
+} from 'src/utils/session/conversationRecovery.js'
 import type {
   MCPServerConnection,
   McpSdkServerConfig,
@@ -148,14 +148,14 @@ import {
 } from 'src/utils/permissions/PermissionPromptToolResultSchema.js'
 import { createAbortController } from 'src/utils/concurrency/abortController.js'
 import { createCombinedAbortSignal } from 'src/utils/concurrency/combinedAbortSignal.js'
-import { generateSessionTitle } from 'src/utils/sessionTitle.js'
+import { generateSessionTitle } from 'src/utils/session/sessionTitle.js'
 import { buildSideQuestionFallbackParams } from 'src/utils/queryContext.js'
 import { runSideQuestion } from 'src/utils/agent/sideQuestion.js'
 import {
   processSessionStartHooks,
   processSetupHooks,
   takeInitialUserMessage,
-} from 'src/utils/sessionStart.js'
+} from 'src/utils/session/sessionStart.js'
 import {
   DEFAULT_OUTPUT_STYLE_NAME,
   getAllOutputStyles,
@@ -199,7 +199,7 @@ import {
   setSdkAgentProgressSummariesEnabled,
 } from 'src/bootstrap/state.js'
 import { createSyntheticOutputTool } from 'src/tools/SyntheticOutputTool/SyntheticOutputTool.js'
-import { parseSessionIdentifier } from 'src/utils/sessionUrl.js'
+import { parseSessionIdentifier } from 'src/utils/session/sessionUrl.js'
 import {
   hydrateRemoteSession,
   hydrateFromCCRv2InternalEvents,
@@ -211,7 +211,7 @@ import {
   saveMode,
   saveAiGeneratedTitle,
   restoreSessionMetadata,
-} from 'src/utils/sessionStorage.js'
+} from 'src/utils/session/sessionStorage.js'
 import { incrementPromptCount } from 'src/utils/commitAttribution.js'
 import {
   setupSdkMcpClients,
@@ -306,7 +306,7 @@ import {
 import {
   restoreAgentFromSession,
   restoreSessionStateFromLog,
-} from 'src/utils/sessionRestore.js'
+} from 'src/utils/session/sessionRestore.js'
 import { SandboxManager } from 'src/utils/sandbox/sandbox-adapter.js'
 import {
   headlessProfilerStartTurn,

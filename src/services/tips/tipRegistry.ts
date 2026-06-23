@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { fileHistoryEnabled } from 'src/utils/files/fileHistory.js'
 import {
   getInitialSettings,
@@ -13,7 +13,7 @@ import { shouldShowOverageCreditUpsell } from '../../components/LogoV2/OverageCr
 import { getShortcutDisplay } from '../../keybindings/shortcutFormat.js'
 import { isKairosCronEnabled } from '../../tools/ScheduleCronTool/prompt.js'
 import { is1PApiCustomer } from '../../utils/auth/auth.js'
-import { countConcurrentSessions } from '../../utils/concurrentSessions.js'
+import { countConcurrentSessions } from '../../utils/session/concurrentSessions.js'
 import { getGlobalConfig } from '../../utils/config/config.js'
 import {
   getEffortEnvOverride,
@@ -42,7 +42,7 @@ import { OFFICIAL_MARKETPLACE_NAME } from '../../utils/plugins/officialMarketpla
 import {
   getCurrentSessionAgentColor,
   isCustomTitleEnabled,
-} from '../../utils/sessionStorage.js'
+} from '../../utils/session/sessionStorage.js'
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../analytics/growthbook.js'
 import {
   formatGrantAmount,

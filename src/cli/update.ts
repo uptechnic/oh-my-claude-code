@@ -11,7 +11,7 @@ import {
   type InstallMethod,
   saveGlobalConfig,
 } from 'src/utils/config/config.js'
-import { logForDebugging } from 'src/utils/debug.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
 import { getDoctorDiagnostic } from 'src/utils/doctorDiagnostic.js'
 import { gracefulShutdown } from 'src/utils/lifecycle/gracefulShutdown.js'
 import {

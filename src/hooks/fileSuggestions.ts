@@ -15,7 +15,7 @@ import { logEvent } from '../services/analytics/index.js'
 import type { FileSuggestionCommandInput } from '../types/fileSuggestion.js'
 import { getGlobalConfig } from '../utils/config/config.js'
 import { getCwd } from '../utils/platform/cwd.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { execFileNoThrowWithCwd } from '../utils/execFileNoThrow.js'
 import { getFsImplementation } from '../utils/files/fsOperations.js'
@@ -24,7 +24,7 @@ import {
   createBaseHookInput,
   executeFileSuggestionCommand,
 } from '../utils/hooks/hooks.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { expandPath } from '../utils/platform/path.js'
 import { ripGrep } from '../utils/ripgrep.js'
 import { getInitialSettings } from '../utils/settings/settings.js'

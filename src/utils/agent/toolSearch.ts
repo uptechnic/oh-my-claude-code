@@ -32,7 +32,7 @@ import {
 import { count } from '../text/array.js'
 import { getMergedBetas } from '../config/betas.js'
 import { getContextWindowForModel } from '../context.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isEnvDefinedFalsy, isEnvTruthy } from '../platform/envUtils.js'
 import {
   getAPIProvider,

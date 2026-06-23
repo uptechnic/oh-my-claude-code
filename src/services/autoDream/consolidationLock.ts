@@ -8,10 +8,10 @@ import { mkdir, readFile, stat, unlink, utimes, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { getOriginalCwd } from '../../bootstrap/state.js'
 import { getAutoMemPath } from '../../memdir/paths.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { isProcessRunning } from '../../utils/platform/genericProcessUtils.js'
-import { listCandidates } from '../../utils/listSessionsImpl.js'
-import { getProjectDir } from '../../utils/sessionStorage.js'
+import { listCandidates } from '../../utils/session/listSessionsImpl.js'
+import { getProjectDir } from '../../utils/session/sessionStorage.js'
 
 const LOCK_FILE = '.consolidate-lock'
 

@@ -1,7 +1,7 @@
 import type { AgentColorName } from '../../../tools/AgentTool/agentColorManager.js'
-import { logForDebugging } from '../../../utils/debug.js'
+import { logForDebugging } from '../../debug/debug.js'
 import { execFileNoThrow } from '../../../utils/execFileNoThrow.js'
-import { logError } from '../../../utils/log.js'
+import { logError } from '../../debug/log.js'
 import { count } from '../../text/array.js'
 import { sleep } from '../../concurrency/sleep.js'
 import {

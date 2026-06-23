@@ -6,7 +6,7 @@ import { getIsNonInteractiveSession } from '../bootstrap/state.js'
 import { getGlobalConfig, saveGlobalConfig } from './config/config.js'
 import { getClaudeConfigHomeDir } from './platform/envUtils.js'
 import { toError } from './errors.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 import { isEssentialTrafficOnly } from './config/privacyLevel.js'
 import { gt } from './text/semver.js'
 

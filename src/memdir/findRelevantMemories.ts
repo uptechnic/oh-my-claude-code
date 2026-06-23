@@ -1,5 +1,5 @@
 import { feature } from 'bun:bundle'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { errorMessage } from '../utils/errors.js'
 import { getDefaultSonnetModel } from '../utils/model/model.js'
 import { sideQuery } from '../utils/agent/sideQuery.js'

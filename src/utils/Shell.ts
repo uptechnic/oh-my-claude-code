@@ -12,10 +12,10 @@ import {
 } from '../bootstrap/state.js'
 import { generateTaskId } from '../Task.js'
 import { pwd } from './platform/cwd.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { errorMessage, isENOENT } from './errors.js'
 import { getFsImplementation } from './files/fsOperations.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 import {
   createAbortedCommand,
   createFailedCommand,
@@ -33,7 +33,7 @@ import { onCwdChangedForHooks } from './hooks/fileChangedWatcher.js'
 import { getClaudeTempDirName } from './permissions/filesystem.js'
 import { getPlatform } from './platform/platform.js'
 import { SandboxManager } from './sandbox/sandbox-adapter.js'
-import { invalidateSessionEnvCache } from './sessionEnvironment.js'
+import { invalidateSessionEnvCache } from './session/sessionEnvironment.js'
 import { createBashShellProvider } from './shell/bashProvider.js'
 import { getCachedPowerShellPath } from './shell/powershellDetection.js'
 import { createPowerShellProvider } from './shell/powershellProvider.js'

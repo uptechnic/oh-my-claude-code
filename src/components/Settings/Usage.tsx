@@ -9,7 +9,7 @@ import { Box, Text } from '../../ink.js';
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { type ExtraUsage, fetchUtilization, type RateLimit, type Utilization } from '../../services/api/usage.js';
 import { formatResetText } from '../../utils/text/format.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { jsonStringify } from '../../utils/slowOperations.js';
 import { ConfigurableShortcutHint } from '../ConfigurableShortcutHint.js';
 import { Byline } from '../design-system/Byline.js';

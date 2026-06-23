@@ -10,7 +10,7 @@ import type {
 } from '@anthropic-ai/sdk/resources'
 import type { SDKMessage } from '../../entrypoints/agentSdkTypes.js'
 import { EXIT_PLAN_MODE_V2_TOOL_NAME } from '../../tools/ExitPlanModeTool/constants.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { sleep } from '../concurrency/sleep.js'
 import { isTransientNetworkError } from '../teleport/api.js'
 import {

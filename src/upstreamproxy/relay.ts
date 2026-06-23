@@ -17,7 +17,7 @@
  */
 
 import { createServer, type Socket as NodeSocket } from 'node:net'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { getWebSocketTLSOptions } from '../utils/auth/mtls.js'
 import { getWebSocketProxyAgent, getWebSocketProxyUrl } from '../utils/auth/proxy.js'
 

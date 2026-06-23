@@ -5,7 +5,7 @@ import { getUserContext } from '../../context.js'
 import { clearSpeculativeChecks } from '../../tools/BashTool/bashPermissions.js'
 import { clearClassifierApprovals } from '../../utils/permissions/classifierApprovals.js'
 import { resetGetMemoryFilesCache } from '../../utils/config/claudemd.js'
-import { clearSessionMessagesCache } from '../../utils/sessionStorage.js'
+import { clearSessionMessagesCache } from '../../utils/session/sessionStorage.js'
 import { clearBetaTracingState } from '../../utils/telemetry/betaSessionTracing.js'
 import { resetMicrocompactState } from './microCompact.js'
 

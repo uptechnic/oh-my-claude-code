@@ -30,7 +30,7 @@ import {
 } from '../platform/path.js'
 import { getPlanSlug, getPlansDirectory } from '../plans.js'
 import { getPlatform } from '../platform/platform.js'
-import { getProjectDir } from '../sessionStorage.js'
+import { getProjectDir } from '../session/sessionStorage.js'
 import { SETTING_SOURCES } from '../settings/constants.js'
 import {
   getSettingsFilePathForSource,

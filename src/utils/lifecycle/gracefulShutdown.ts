@@ -37,10 +37,10 @@ import {
 } from '../../services/analytics/index.js'
 import type { AppState } from '../../state/AppState.js'
 import { runCleanupFunctions } from './cleanupRegistry.js'
-import { logForDebugging } from '../debug.js'
-import { logForDiagnosticsNoPII } from '../diagLogs.js'
+import { logForDebugging } from '../debug/debug.js'
+import { logForDiagnosticsNoPII } from '../debug/diagLogs.js'
 import { isEnvTruthy } from '../platform/envUtils.js'
-import { getCurrentSessionTitle, sessionIdExists } from '../sessionStorage.js'
+import { getCurrentSessionTitle, sessionIdExists } from '../session/sessionStorage.js'
 import { sleep } from '../concurrency/sleep.js'
 import { profileReport } from '../startupProfiler.js'
 

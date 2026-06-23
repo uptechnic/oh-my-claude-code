@@ -11,7 +11,7 @@ import { useAppStateMaybeOutsideOfProvider } from '../../state/AppState.js';
 import { findToolByName, type Tool, type ToolProgressData, type Tools } from '../../Tool.js';
 import type { ProgressMessage } from '../../types/message.js';
 import { useIsClassifierChecking } from '../../utils/permissions/classifierApprovalsHook.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import type { buildMessageLookups } from '../../utils/messages/messages.js';
 import { MessageResponse } from '../MessageResponse.js';
 import { useSelectedMessageBg } from '../messageActions.js';

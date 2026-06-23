@@ -15,7 +15,7 @@ import { createAbortController, createChildAbortController } from '../../utils/c
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js';
 import { getToolSearchOrReadInfo } from '../../utils/collapseReadSearch.js';
 import { enqueuePendingNotification } from '../../utils/messageQueueManager.js';
-import { getAgentTranscriptPath } from '../../utils/sessionStorage.js';
+import { getAgentTranscriptPath } from '../../utils/session/sessionStorage.js';
 import { evictTaskOutput, getTaskOutputPath, initTaskOutputAsSymlink } from '../../utils/task/diskOutput.js';
 import { PANEL_GRACE_MS, registerTask, updateTaskState } from '../../utils/task/framework.js';
 import { emitTaskProgress } from '../../utils/task/sdkProgress.js';

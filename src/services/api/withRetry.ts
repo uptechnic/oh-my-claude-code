@@ -7,8 +7,8 @@ import {
 } from '@anthropic-ai/sdk'
 import type { QuerySource } from 'src/constants/querySource.js'
 import type { SystemAPIErrorMessage } from 'src/types/message.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { logError } from 'src/utils/log.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { logError } from 'src/utils/debug/log.js'
 import { createSystemAPIErrorMessage } from 'src/utils/messages/messages.js'
 import { getAPIProviderForStatsig } from 'src/utils/model/providers.js'
 import {

@@ -20,7 +20,7 @@ import { getSessionId } from '../../bootstrap/state.js'
 import instances from '../../ink/instances.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { pwd } from '../platform/cwd.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 
 const TMUX_SESSION = 'panel'
 

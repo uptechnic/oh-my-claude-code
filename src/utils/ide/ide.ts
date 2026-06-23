@@ -24,7 +24,7 @@ import {
 import { getFsImplementation } from '../files/fsOperations.js'
 import { getAncestorPidsAsync } from '../platform/genericProcessUtils.js'
 import { isJetBrainsPluginInstalledCached } from './jetbrains.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { getPlatform } from '../platform/platform.js'
 import { lt } from '../text/semver.js'
 
@@ -35,7 +35,7 @@ const ideOnboardingDialog =
     require('src/components/IdeOnboardingDialog.js')
 
 import { createAbortController } from '../concurrency/abortController.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { envDynamic } from '../platform/envDynamic.js'
 import { errorMessage, isFsInaccessible } from '../errors.js'
 /* eslint-enable @typescript-eslint/no-require-imports */

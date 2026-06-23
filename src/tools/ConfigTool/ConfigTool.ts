@@ -13,7 +13,7 @@ import {
 } from '../../utils/config/config.js'
 import { errorMessage } from '../../utils/errors.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   getInitialSettings,
   updateSettingsForSource,

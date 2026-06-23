@@ -47,8 +47,8 @@ import {
 import { dirname, parse, relative, resolve } from 'path'
 import { getCwd } from 'src/utils/platform/cwd.js'
 import { getViewedTeammateTask } from '../../state/selectors.js'
-import { logError } from '../log.js'
-import { logAntError } from '../debug.js'
+import { logError } from '../debug/log.js'
+import { logAntError } from '../debug/debug.js'
 import { isENOENT, toError } from '../errors.js'
 import type { DiagnosticFile } from '../../services/diagnosticTracking.js'
 import { diagnosticTracker } from '../../services/diagnosticTracking.js'
@@ -185,7 +185,7 @@ import {
   checkForLSPDiagnostics,
   clearAllLSPDiagnostics,
 } from '../../services/lsp/LSPDiagnosticRegistry.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import {
   extractTextContent,
   getUserMessageText,

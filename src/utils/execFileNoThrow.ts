@@ -4,7 +4,7 @@
 
 import { type ExecaError, execa } from 'execa'
 import { getCwd } from './platform/cwd.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 
 export { execSyncWithDefaults_DEPRECATED } from './execFileNoThrowPortable.js'
 

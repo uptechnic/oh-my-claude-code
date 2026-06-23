@@ -59,7 +59,7 @@ import type {
 } from '../../types/message.js'
 import { count } from '../../utils/text/array.js'
 import { createAttachmentMessage } from '../../utils/media/attachments.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   AbortError,
   errorMessage,
@@ -68,7 +68,7 @@ import {
   TelemetrySafeError_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
 } from '../../utils/errors.js'
 import { executePermissionDeniedHooks } from '../../utils/hooks/hooks.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   CANCEL_MESSAGE,
   createProgressMessage,
@@ -84,7 +84,7 @@ import type {
 import {
   startSessionActivity,
   stopSessionActivity,
-} from '../../utils/sessionActivity.js'
+} from '../../utils/session/sessionActivity.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import { Stream } from '../../utils/concurrency/stream.js'
 import { logOTelEvent } from '../../utils/telemetry/events.js'

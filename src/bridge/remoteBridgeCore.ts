@@ -52,8 +52,8 @@ import {
   BoundedUUIDSet,
 } from './bridgeMessaging.js'
 import { logBridgeSkip } from './debugUtils.js'
-import { logForDebugging } from '../utils/debug.js'
-import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from '../utils/debug/diagLogs.js'
 import { isInProtectedNamespace } from '../utils/platform/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
 import { sleep } from '../utils/concurrency/sleep.js'

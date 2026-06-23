@@ -37,12 +37,12 @@ import type {
   UserMessage,
   TombstoneMessage,
 } from './types/message.js'
-import { logError } from './utils/log.js'
+import { logError } from './utils/debug/log.js'
 import {
   PROMPT_TOO_LONG_ERROR_MESSAGE,
   isPromptTooLongMessage,
 } from './services/api/errors.js'
-import { logAntError, logForDebugging } from './utils/debug.js'
+import { logAntError, logForDebugging } from './utils/debug/debug.js'
 import {
   createUserMessage,
   createUserInterruptionMessage,
@@ -97,7 +97,7 @@ import { StreamingToolExecutor } from './services/tools/StreamingToolExecutor.js
 import { queryCheckpoint } from './utils/queryProfiler.js'
 import { runTools } from './services/tools/toolOrchestration.js'
 import { applyToolResultBudget } from './utils/toolResultStorage.js'
-import { recordContentReplacement } from './utils/sessionStorage.js'
+import { recordContentReplacement } from './utils/session/sessionStorage.js'
 import { handleStopHooks } from './query/stopHooks.js'
 import { buildQueryConfig } from './query/config.js'
 import { productionDeps, type QueryDeps } from './query/deps.js'

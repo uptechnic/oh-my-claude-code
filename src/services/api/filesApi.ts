@@ -13,9 +13,9 @@ import * as fs from 'fs/promises'
 import * as path from 'path'
 import { count } from '../../utils/text/array.js'
 import { getCwd } from '../../utils/platform/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { sleep } from '../../utils/concurrency/sleep.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,

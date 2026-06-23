@@ -8,7 +8,7 @@ import { createTaskStateBase } from '../../Task.js';
 import type { AgentId } from '../../types/ids.js';
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js';
 import { tailFile } from '../../utils/files/fsOperations.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { enqueuePendingNotification } from '../../utils/messageQueueManager.js';
 import type { ShellCommand } from '../../utils/ShellCommand.js';
 import { evictTaskOutput, getTaskOutputPath } from '../../utils/task/diskOutput.js';

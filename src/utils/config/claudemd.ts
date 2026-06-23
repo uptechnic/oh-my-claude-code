@@ -54,8 +54,8 @@ import {
   getMemoryPath,
   getUserClaudeRulesDir,
 } from './config.js'
-import { logForDebugging } from '../debug.js'
-import { logForDiagnosticsNoPII } from '../diagLogs.js'
+import { logForDebugging } from '../debug/debug.js'
+import { logForDiagnosticsNoPII } from '../debug/diagLogs.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from '../platform/envUtils.js'
 import { getErrnoCode } from '../errors.js'
 import { normalizePathForComparison } from '../files/file.js'

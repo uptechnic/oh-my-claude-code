@@ -31,7 +31,7 @@ import {
   handleOAuth401Error,
 } from '../utils/auth/auth.js'
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config/config.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { stripDisplayTagsAllowEmpty } from '../utils/rendering/displayTags.js'
 import { errorMessage } from '../utils/errors.js'
 import { getBranch, getRemoteUrl } from '../utils/git/git.js'
@@ -42,11 +42,11 @@ import {
   isSyntheticMessage,
 } from '../utils/messages/messages.js'
 import type { PermissionMode } from '../utils/permissions/PermissionMode.js'
-import { getCurrentSessionTitle } from '../utils/sessionStorage.js'
+import { getCurrentSessionTitle } from '../utils/session/sessionStorage.js'
 import {
   extractConversationText,
   generateSessionTitle,
-} from '../utils/sessionTitle.js'
+} from '../utils/session/sessionTitle.js'
 import { generateShortWordSlug } from '../utils/text/words.js'
 import {
   getBridgeAccessToken,

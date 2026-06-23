@@ -1,9 +1,9 @@
 import type { LogOption, SerializedMessage } from '../../types/logs.js'
 import { count } from '../text/array.js'
-import { logForDebugging } from '../debug.js'
-import { getLogDisplayTitle, logError } from '../log.js'
+import { logForDebugging } from '../debug/debug.js'
+import { getLogDisplayTitle, logError } from '../debug/log.js'
 import { getSmallFastModel } from '../model/model.js'
-import { isLiteLog, loadFullLog } from '../sessionStorage.js'
+import { isLiteLog, loadFullLog } from '../session/sessionStorage.js'
 import { sideQuery } from './sideQuery.js'
 import { jsonParse } from '../slowOperations.js'
 

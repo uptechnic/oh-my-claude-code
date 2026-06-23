@@ -35,14 +35,14 @@ import {
   type SubagentContext,
 } from '../utils/agent/agentContext.js'
 import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
-import { logForDebugging } from '../utils/debug.js'
-import { logError } from '../utils/log.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { logError } from '../utils/debug/log.js'
 import { enqueuePendingNotification } from '../utils/messageQueueManager.js'
 import { emitTaskTerminatedSdk } from '../utils/sdkEventQueue.js'
 import {
   getAgentTranscriptPath,
   recordSidechainTranscript,
-} from '../utils/sessionStorage.js'
+} from '../utils/session/sessionStorage.js'
 import {
   evictTaskOutput,
   getTaskOutputPath,

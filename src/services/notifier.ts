@@ -3,7 +3,7 @@ import { getGlobalConfig } from '../utils/config/config.js'
 import { env } from '../utils/platform/env.js'
 import { execFileNoThrow } from '../utils/execFileNoThrow.js'
 import { executeNotificationHooks } from '../utils/hooks/hooks.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,

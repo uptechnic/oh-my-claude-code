@@ -18,13 +18,13 @@ import {
 } from '../../Tool.js'
 import { formatAgentId, generateRequestId } from '../../utils/agent/agentId.js'
 import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   findInProcessTeammateTaskId,
   setAwaitingPlanApproval,
 } from '../../utils/agent/inProcessTeammateHelpers.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   getPlan,
   getPlanFilePath,

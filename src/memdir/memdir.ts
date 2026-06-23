@@ -17,11 +17,11 @@ import {
 } from '../services/analytics/index.js'
 import { GREP_TOOL_NAME } from '../tools/GrepTool/prompt.js'
 import { isReplModeEnabled } from '../tools/REPLTool/constants.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { hasEmbeddedSearchTools } from '../utils/agent/embeddedTools.js'
 import { isEnvTruthy } from '../utils/platform/envUtils.js'
 import { formatFileSize } from '../utils/text/format.js'
-import { getProjectDir } from '../utils/sessionStorage.js'
+import { getProjectDir } from '../utils/session/sessionStorage.js'
 import { getInitialSettings } from '../utils/settings/settings.js'
 import {
   MEMORY_FRONTMATTER_EXAMPLE,

@@ -1,7 +1,7 @@
 import { createHash } from 'crypto'
 import { mkdir, readdir, readFile, stat, unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { isENOENT } from '../errors.js'
 

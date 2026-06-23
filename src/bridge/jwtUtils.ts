@@ -1,6 +1,6 @@
 import { logEvent } from '../services/analytics/index.js'
-import { logForDebugging } from '../utils/debug.js'
-import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from '../utils/debug/diagLogs.js'
 import { errorMessage } from '../utils/errors.js'
 import { jsonParse } from '../utils/slowOperations.js'
 

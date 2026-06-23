@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { HookEvent } from 'src/entrypoints/agentSdkTypes.js'
 import { createCombinedAbortSignal } from '../concurrency/combinedAbortSignal.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { errorMessage } from '../errors.js'
 import { getProxyUrl, shouldBypassProxy } from '../auth/proxy.js'
 // Import as namespace so spyOn works in tests (direct imports bypass spies)

@@ -7,7 +7,7 @@ import {
   parseArgumentNames,
   substituteArguments,
 } from '../argumentSubstitution.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { EFFORT_LEVELS, parseEffortValue } from '../config/effort.js'
 import { isBareMode } from '../platform/envUtils.js'
 import { isENOENT } from '../errors.js'

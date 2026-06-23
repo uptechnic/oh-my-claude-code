@@ -29,19 +29,19 @@ import {
   getSessionProjectDir,
   isSessionPersistenceDisabled,
   switchSession,
-} from '../bootstrap/state.js'
-import { builtInCommandNames } from '../commands.js'
-import { COMMAND_NAME_TAG, TICK_TAG } from '../constants/xml.js'
-import { getFeatureValue_CACHED_MAY_BE_STALE } from '../services/analytics/growthbook.js'
-import * as sessionIngress from '../services/api/sessionIngress.js'
-import { REPL_TOOL_NAME } from '../tools/REPLTool/constants.js'
+} from '../../bootstrap/state.js'
+import { builtInCommandNames } from '../../commands.js'
+import { COMMAND_NAME_TAG, TICK_TAG } from '../../constants/xml.js'
+import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../services/analytics/growthbook.js'
+import * as sessionIngress from '../../services/api/sessionIngress.js'
+import { REPL_TOOL_NAME } from '../../tools/REPLTool/constants.js'
 import {
   type AgentId,
   asAgentId,
   asSessionId,
   type SessionId,
-} from '../types/ids.js'
-import type { AttributionSnapshotMessage } from '../types/logs.js'
+} from '../../types/ids.js'
+import type { AttributionSnapshotMessage } from '../../types/logs.js'
 import {
   type ContentReplacementEntry,
   type ContextCollapseCommitEntry,
@@ -53,7 +53,7 @@ import {
   type SerializedMessage,
   sortLogs,
   type TranscriptMessage,
-} from '../types/logs.js'
+} from '../../types/logs.js'
 import type {
   AssistantMessage,
   AttachmentMessage,
@@ -61,26 +61,26 @@ import type {
   SystemCompactBoundaryMessage,
   SystemMessage,
   UserMessage,
-} from '../types/message.js'
-import type { QueueOperationMessage } from '../types/messageQueueTypes.js'
-import { uniq } from './text/array.js'
-import { registerCleanup } from './lifecycle/cleanupRegistry.js'
+} from '../../types/message.js'
+import type { QueueOperationMessage } from '../../types/messageQueueTypes.js'
+import { uniq } from '../text/array.js'
+import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { updateSessionName } from './concurrentSessions.js'
-import { getCwd } from './platform/cwd.js'
-import { logForDebugging } from './debug.js'
-import { logForDiagnosticsNoPII } from './diagLogs.js'
-import { getClaudeConfigHomeDir, isEnvTruthy } from './platform/envUtils.js'
-import { isFsInaccessible } from './errors.js'
-import type { FileHistorySnapshot } from './files/fileHistory.js'
-import { formatFileSize } from './text/format.js'
-import { getFsImplementation } from './files/fsOperations.js'
-import { getWorktreePaths } from './getWorktreePaths.js'
-import { getBranch } from './git/git.js'
-import { gracefulShutdownSync, isShuttingDown } from './lifecycle/gracefulShutdown.js'
-import { parseJSONL } from './text/json.js'
-import { logError } from './log.js'
-import { extractTag, isCompactBoundaryMessage } from './messages/messages.js'
-import { sanitizePath } from './platform/path.js'
+import { getCwd } from '../platform/cwd.js'
+import { logForDebugging } from '../debug/debug.js'
+import { logForDiagnosticsNoPII } from '../debug/diagLogs.js'
+import { getClaudeConfigHomeDir, isEnvTruthy } from '../platform/envUtils.js'
+import { isFsInaccessible } from '../errors.js'
+import type { FileHistorySnapshot } from '../files/fileHistory.js'
+import { formatFileSize } from '../text/format.js'
+import { getFsImplementation } from '../files/fsOperations.js'
+import { getWorktreePaths } from '../getWorktreePaths.js'
+import { getBranch } from '../git/git.js'
+import { gracefulShutdownSync, isShuttingDown } from '../lifecycle/gracefulShutdown.js'
+import { parseJSONL } from '../text/json.js'
+import { logError } from '../debug/log.js'
+import { extractTag, isCompactBoundaryMessage } from '../messages/messages.js'
+import { sanitizePath } from '../platform/path.js'
 import {
   extractJsonStringField,
   extractLastJsonStringField,
@@ -89,10 +89,10 @@ import {
   readTranscriptForLoad,
   SKIP_PRECOMPACT_THRESHOLD,
 } from './sessionStoragePortable.js'
-import { getSettings_DEPRECATED } from './settings/settings.js'
-import { jsonParse, jsonStringify } from './slowOperations.js'
-import type { ContentReplacementRecord } from './toolResultStorage.js'
-import { validateUuid } from './text/uuid.js'
+import { getSettings_DEPRECATED } from '../settings/settings.js'
+import { jsonParse, jsonStringify } from '../slowOperations.js'
+import type { ContentReplacementRecord } from '../toolResultStorage.js'
+import { validateUuid } from '../text/uuid.js'
 
 // Cache MACRO.VERSION at module level to work around bun --define bug in async contexts
 // See: https://github.com/oven-sh/bun/issues/26168

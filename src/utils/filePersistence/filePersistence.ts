@@ -19,8 +19,8 @@ import {
 } from '../../services/api/filesApi.js'
 import { getCwd } from '../platform/cwd.js'
 import { errorMessage } from '../errors.js'
-import { logError } from '../log.js'
-import { getSessionIngressAuthToken } from '../sessionIngressAuth.js'
+import { logError } from '../debug/log.js'
+import { getSessionIngressAuthToken } from '../session/sessionIngressAuth.js'
 import {
   findModifiedFiles,
   getEnvironmentKind,

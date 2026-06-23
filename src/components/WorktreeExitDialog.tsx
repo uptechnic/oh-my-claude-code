@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { CommandResultDisplay } from 'src/commands.js';
 import { logEvent } from 'src/services/analytics/index.js';
-import { logForDebugging } from 'src/utils/debug.js';
+import { logForDebugging } from 'src/utils/debug/debug.js';
 import { Box, Text } from '../ink.js';
 import { execFileNoThrow } from '../utils/execFileNoThrow.js';
 import { getPlansDirectory } from '../utils/plans.js';
@@ -17,7 +17,7 @@ import { Spinner } from './Spinner.js';
 function recordWorktreeExit(): void {
   /* eslint-disable @typescript-eslint/no-require-imports */
   ;
-  (require('../utils/sessionStorage.js') as typeof import('../utils/sessionStorage.js')).saveWorktreeState(null);
+  (require('../utils/session/sessionStorage.js') as typeof import('../utils/session/sessionStorage.js')).saveWorktreeState(null);
   /* eslint-enable @typescript-eslint/no-require-imports */
 }
 type Props = {

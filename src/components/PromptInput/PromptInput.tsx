@@ -57,7 +57,7 @@ import { count } from '../../utils/text/array.js';
 import type { AutoUpdaterResult } from '../../utils/lifecycle/autoUpdater.js';
 import { Cursor } from '../../utils/Cursor.js';
 import { getGlobalConfig, type PastedContent, saveGlobalConfig } from '../../utils/config/config.js';
-import { logForDebugging } from '../../utils/debug.js';
+import { logForDebugging } from '../../utils/debug/debug.js';
 import { parseDirectMemberMessage, sendDirectMemberMessage } from '../../utils/swarm/directMemberMessage.js';
 import type { EffortLevel } from '../../utils/config/effort.js';
 import { env } from '../../utils/platform/env.js';
@@ -70,7 +70,7 @@ import { getImageFromClipboard, PASTE_THRESHOLD } from '../../utils/media/imageP
 import type { ImageDimensions } from '../../utils/media/imageResizer.js';
 import { cacheImagePath, storeImage } from '../../utils/media/imageStore.js';
 import { isMacosOptionChar, MACOS_OPTION_SPECIAL_CHARS } from '../../utils/ide/keyboardShortcuts.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { isOpus1mMergeEnabled, modelDisplayString } from '../../utils/model/model.js';
 import { setAutoModeActive } from '../../utils/permissions/autoModeState.js';
 import { cyclePermissionMode, getNextPermissionMode } from '../../utils/permissions/getNextPermissionMode.js';

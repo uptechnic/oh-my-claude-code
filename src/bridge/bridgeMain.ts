@@ -12,12 +12,12 @@ import {
   logEventAsync,
 } from '../services/analytics/index.js'
 import { isInBundledMode } from '../utils/config/bundledMode.js'
-import { logForDebugging } from '../utils/debug.js'
-import { logForDiagnosticsNoPII } from '../utils/diagLogs.js'
+import { logForDebugging } from '../utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from '../utils/debug/diagLogs.js'
 import { isEnvTruthy, isInProtectedNamespace } from '../utils/platform/envUtils.js'
 import { errorMessage } from '../utils/errors.js'
 import { truncateToWidth } from '../utils/text/format.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { sleep } from '../utils/concurrency/sleep.js'
 import { createAgentWorktree, removeAgentWorktree } from '../utils/worktree.js'
 import {
@@ -2044,7 +2044,7 @@ export async function bridgeMain(args: string[]): Promise<void> {
 
   // Initialize analytics and error reporting sinks. The bridge bypasses the
   // setup() init flow, so we call initSinks() directly to attach sinks here.
-  const { initSinks } = await import('../utils/sinks.js')
+  const { initSinks } = await import('../utils/debug/sinks.js')
   initSinks()
 
   // Gate-aware validation: --spawn / --capacity / --create-session-in-dir require
@@ -2825,7 +2825,7 @@ export async function runBridgeHeadless(
     '../utils/config.js'
   )
   enableConfigs()
-  const { initSinks } = await import('../utils/sinks.js')
+  const { initSinks } = await import('../utils/debug/sinks.js')
   initSinks()
 
   if (!checkHasTrustDialogAccepted()) {

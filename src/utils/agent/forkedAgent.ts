@@ -25,7 +25,7 @@ import type { AgentDefinition } from '../../tools/AgentTool/loadAgentsDir.js'
 import type { AgentId } from '../../types/ids.js'
 import type { Message } from '../../types/message.js'
 import { createChildAbortController } from '../concurrency/abortController.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { cloneFileStateCache } from '../files/fileStateCache.js'
 import type { REPLHookContext } from '../hooks/postSamplingHooks.js'
 import {
@@ -35,7 +35,7 @@ import {
 } from '../messages/messages.js'
 import { createDenialTrackingState } from '../permissions/denialTracking.js'
 import { parseToolListFromCLI } from '../permissions/permissionSetup.js'
-import { recordSidechainTranscript } from '../sessionStorage.js'
+import { recordSidechainTranscript } from '../session/sessionStorage.js'
 import type { SystemPrompt } from './systemPromptType.js'
 import {
   type ContentReplacementState,

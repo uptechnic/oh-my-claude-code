@@ -3,7 +3,7 @@ import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import { getOrganizationUUID } from '../auth/auth.js'
 import { getClaudeAIOAuthTokens } from '../auth/auth.js'
 import { toError } from '../errors.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { getOAuthHeaders } from './api.js'
 
 export type EnvironmentKind = 'anthropic_cloud' | 'byoc' | 'bridge'

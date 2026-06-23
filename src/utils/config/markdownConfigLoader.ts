@@ -9,7 +9,7 @@ import {
   logEvent,
 } from 'src/services/analytics/index.js'
 import { getProjectRoot } from '../../bootstrap/state.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from '../platform/envUtils.js'
 import { isFsInaccessible } from '../errors.js'
 import { normalizePathForComparison } from '../files/file.js'

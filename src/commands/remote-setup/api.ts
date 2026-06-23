@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 import { fetchEnvironments } from '../../utils/teleport/environments.js'
 

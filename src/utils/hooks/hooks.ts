@@ -14,7 +14,7 @@ import { formatShellPrefixCommand } from '../bash/shellPrefix.js'
 import {
   getHookEnvFilePath,
   invalidateSessionEnvCache,
-} from '../sessionEnvironment.js'
+} from '../session/sessionEnvironment.js'
 import { subprocessEnv } from '../subprocessEnv.js'
 import { getPlatform } from '../platform/platform.js'
 import { findGitBashPath, windowsPathToPosixPath } from '../platform/windowsPaths.js'
@@ -45,7 +45,7 @@ import {
 import {
   getTranscriptPathForSession,
   getAgentTranscriptPath,
-} from '../sessionStorage.js'
+} from '../session/sessionStorage.js'
 import type { AgentId } from '../../types/ids.js'
 import {
   getSettings_DEPRECATED,
@@ -119,15 +119,15 @@ import type {
   SkillHookMatcher,
 } from '../settings/types.js'
 import { getHookDisplayText } from './hooksSettings.js'
-import { logForDebugging } from '../debug.js'
-import { logForDiagnosticsNoPII } from '../diagLogs.js'
+import { logForDebugging } from '../debug/debug.js'
+import { logForDiagnosticsNoPII } from '../debug/diagLogs.js'
 import { firstLineOf } from '../text/stringUtils.js'
 import {
   normalizeLegacyToolName,
   getLegacyToolNames,
   permissionRuleValueFromString,
 } from '../permissions/permissionRuleParser.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { createCombinedAbortSignal } from '../concurrency/combinedAbortSignal.js'
 import type { PermissionResult } from '../permissions/PermissionResult.js'
 import { registerPendingAsyncHook } from './AsyncHookRegistry.js'

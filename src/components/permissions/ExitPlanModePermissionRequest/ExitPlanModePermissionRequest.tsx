@@ -20,7 +20,7 @@ import { calculateContextPercentages, getContextWindowForModel } from '../../../
 import { getExternalEditor } from '../../../utils/ide/editor.js';
 import { getDisplayPath } from '../../../utils/files/file.js';
 import { toIDEDisplayName } from '../../../utils/ide/ide.js';
-import { logError } from '../../../utils/log.js';
+import { logError } from '../../../utils/debug/log.js';
 import { enqueuePendingNotification } from '../../../utils/messageQueueManager.js';
 import { createUserMessage } from '../../../utils/messages/messages.js';
 import { getMainLoopModel, getRuntimeMainLoopModel } from '../../../utils/model/model.js';
@@ -31,7 +31,7 @@ import { isAutoModeGateEnabled, restoreDangerousPermissions, stripDangerousPermi
 import { getPewterLedgerVariant, isPlanModeInterviewPhaseEnabled } from '../../../utils/planModeV2.js';
 import { getPlan, getPlanFilePath } from '../../../utils/plans.js';
 import { editFileInEditor, editPromptInEditor } from '../../../utils/ide/promptEditor.js';
-import { getCurrentSessionTitle, getTranscriptPath, saveAgentName, saveCustomTitle } from '../../../utils/sessionStorage.js';
+import { getCurrentSessionTitle, getTranscriptPath, saveAgentName, saveCustomTitle } from '../../../utils/session/sessionStorage.js';
 import { getSettings_DEPRECATED } from '../../../utils/settings/settings.js';
 import { type OptionWithDescription, Select } from '../../CustomSelect/index.js';
 import { Markdown } from '../../Markdown.js';

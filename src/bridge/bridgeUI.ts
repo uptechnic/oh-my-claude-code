@@ -6,7 +6,7 @@ import {
   BRIDGE_SPINNER_FRAMES,
 } from '../constants/figures.js'
 import { stringWidth } from '../ink/stringWidth.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import {
   buildActiveFooterText,
   buildBridgeConnectUrl,

@@ -1,6 +1,6 @@
 import { spawnSync } from 'child_process'
 import { getIsInteractive } from '../../bootstrap/state.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isEnvDefinedFalsy, isEnvTruthy } from '../platform/envUtils.js'
 import { execFileNoThrow } from '../execFileNoThrow.js'
 

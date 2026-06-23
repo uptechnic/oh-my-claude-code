@@ -2,8 +2,8 @@ import { feature } from 'bun:bundle'
 import type { UUID } from 'crypto'
 import { relative } from 'path'
 import { getCwd } from 'src/utils/platform/cwd.js'
-import { addInvokedSkill } from '../bootstrap/state.js'
-import { asSessionId } from '../types/ids.js'
+import { addInvokedSkill } from '../../bootstrap/state.js'
+import { asSessionId } from '../../types/ids.js'
 import type {
   AttributionSnapshotMessage,
   ContextCollapseCommitEntry,
@@ -11,19 +11,19 @@ import type {
   LogOption,
   PersistedWorktreeSession,
   SerializedMessage,
-} from '../types/logs.js'
+} from '../../types/logs.js'
 import type {
   Message,
   NormalizedMessage,
   NormalizedUserMessage,
-} from '../types/message.js'
-import { PERMISSION_MODES } from '../types/permissions.js'
-import { suppressNextSkillListing } from './media/attachments.js'
+} from '../../types/message.js'
+import { PERMISSION_MODES } from '../../types/permissions.js'
+import { suppressNextSkillListing } from '../media/attachments.js'
 import {
   copyFileHistoryForResume,
   type FileHistorySnapshot,
-} from './files/fileHistory.js'
-import { logError } from './log.js'
+} from '../files/fileHistory.js'
+import { logError } from '../debug/log.js'
 import {
   createAssistantMessage,
   createUserMessage,
@@ -33,8 +33,8 @@ import {
   isToolUseResultMessage,
   NO_RESPONSE_REQUESTED,
   normalizeMessages,
-} from './messages/messages.js'
-import { copyPlanForResume } from './plans.js'
+} from '../messages/messages.js'
+import { copyPlanForResume } from '../plans.js'
 import { processSessionStartHooks } from './sessionStart.js'
 import {
   buildConversationChain,
@@ -47,7 +47,7 @@ import {
   loadTranscriptFile,
   removeExtraFields,
 } from './sessionStorage.js'
-import type { ContentReplacementRecord } from './toolResultStorage.js'
+import type { ContentReplacementRecord } from '../toolResultStorage.js'
 
 // Dead code elimination: ant-only tool names are conditionally required so
 // their strings don't leak into external builds. Static imports always bundle.
@@ -55,13 +55,13 @@ import type { ContentReplacementRecord } from './toolResultStorage.js'
 const BRIEF_TOOL_NAME: string | null =
   feature('KAIROS') || feature('KAIROS_BRIEF')
     ? (
-        require('../tools/BriefTool/prompt.js') as typeof import('../tools/BriefTool/prompt.js')
+        require('../../tools/BriefTool/prompt.js') as typeof import('../../tools/BriefTool/prompt.js')
       ).BRIEF_TOOL_NAME
     : null
 const LEGACY_BRIEF_TOOL_NAME: string | null =
   feature('KAIROS') || feature('KAIROS_BRIEF')
     ? (
-        require('../tools/BriefTool/prompt.js') as typeof import('../tools/BriefTool/prompt.js')
+        require('../../tools/BriefTool/prompt.js') as typeof import('../../tools/BriefTool/prompt.js')
       ).LEGACY_BRIEF_TOOL_NAME
     : null
 const SEND_USER_FILE_TOOL_NAME: string | null = feature('KAIROS')

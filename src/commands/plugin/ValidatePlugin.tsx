@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { Box, Text } from '../../ink.js';
 import { errorMessage } from '../../utils/errors.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { validateManifest } from '../../utils/plugins/validatePlugin.js';
 import { plural } from '../../utils/text/stringUtils.js';
 type Props = {

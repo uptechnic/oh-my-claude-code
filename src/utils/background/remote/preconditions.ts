@@ -8,7 +8,7 @@ import {
   isClaudeAISubscriber,
 } from '../../auth/auth.js'
 import { getCwd } from '../../platform/cwd.js'
-import { logForDebugging } from '../../debug.js'
+import { logForDebugging } from '../../debug/debug.js'
 import { detectCurrentRepository } from '../../detectRepository.js'
 import { errorMessage } from '../../errors.js'
 import { findGitRoot, getIsClean } from '../../git/git.js'

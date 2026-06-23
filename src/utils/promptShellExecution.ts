@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import type { Tool, ToolUseContext } from '../Tool.js'
 import { BashTool } from '../tools/BashTool/BashTool.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { errorMessage, MalformedCommandError, ShellError } from './errors.js'
 import type { FrontmatterShell } from './text/frontmatterParser.js'
 import { createAssistantMessage } from './messages/messages.js'

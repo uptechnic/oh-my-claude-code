@@ -18,7 +18,7 @@ import {
   getSessionId,
 } from '../../bootstrap/state.js'
 import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
-import { isDebugToStdErr, logForDebugging } from '../../utils/debug.js'
+import { isDebugToStdErr, logForDebugging } from '../../utils/debug/debug.js'
 import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 
 /**

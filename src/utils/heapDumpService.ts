@@ -15,11 +15,11 @@ import {
 } from 'v8'
 import { getSessionId } from '../bootstrap/state.js'
 import { logEvent } from '../services/analytics/index.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { toError } from './errors.js'
 import { getDesktopPath } from './files/file.js'
 import { getFsImplementation } from './files/fsOperations.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 import { jsonStringify } from './slowOperations.js'
 
 export type HeapDumpResult = {

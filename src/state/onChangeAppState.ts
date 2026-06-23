@@ -4,7 +4,7 @@ import {
 } from '../utils/auth/auth.js'
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config/config.js'
 import { toError } from '../utils/errors.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { applyConfigEnvironmentVariables } from '../utils/config/managedEnv.js'
 import {
   permissionModeFromString,
@@ -14,7 +14,7 @@ import {
   notifyPermissionModeChanged,
   notifySessionMetadataChanged,
   type SessionExternalMetadata,
-} from '../utils/sessionState.js'
+} from '../utils/session/sessionState.js'
 import { updateSettingsForSource } from '../utils/settings/settings.js'
 import type { AppState } from './AppStateStore.js'
 

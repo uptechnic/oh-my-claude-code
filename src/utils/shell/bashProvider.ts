@@ -12,10 +12,10 @@ import {
   rewriteWindowsNullRedirect,
   shouldAddStdinRedirect,
 } from '../bash/shellQuoting.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getPlatform } from '../platform/platform.js'
-import { getSessionEnvironmentScript } from '../sessionEnvironment.js'
-import { getSessionEnvVars } from '../sessionEnvVars.js'
+import { getSessionEnvironmentScript } from '../session/sessionEnvironment.js'
+import { getSessionEnvVars } from '../session/sessionEnvVars.js'
 import {
   ensureSocketInitialized,
   getClaudeTmuxEnv,

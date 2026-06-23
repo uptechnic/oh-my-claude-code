@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
 import { getAuthHeaders } from '../../utils/api/http.js'
 import { getBaseApiUrl } from '../../utils/api/apiBaseUrl.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { getClaudeCodeUserAgent } from '../../utils/platform/userAgent.js'
 
 /**

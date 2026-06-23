@@ -6,7 +6,7 @@ import type { CommandResultDisplay } from 'src/commands.js';
 import { logEvent } from 'src/services/analytics/index.js';
 import { StatusIcon } from '../components/design-system/StatusIcon.js';
 import { Box, render, Text } from '../ink.js';
-import { logForDebugging } from '../utils/debug.js';
+import { logForDebugging } from '../utils/debug/debug.js';
 import { env } from '../utils/platform/env.js';
 import { errorMessage } from '../utils/errors.js';
 import { checkInstall, cleanupNpmInstallations, cleanupShellAliases, installLatest } from '../utils/nativeInstaller/index.js';

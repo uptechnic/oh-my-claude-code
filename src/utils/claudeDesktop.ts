@@ -7,7 +7,7 @@ import {
 } from '../services/mcp/types.js'
 import { getErrnoCode } from './errors.js'
 import { safeParseJSON } from './text/json.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 import { getPlatform, SUPPORTED_PLATFORMS } from './platform/platform.js'
 
 export async function getClaudeDesktopConfigPath(): Promise<string> {

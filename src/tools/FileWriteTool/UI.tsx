@@ -19,7 +19,7 @@ import type { ProgressMessage } from '../../types/message.js';
 import { getCwd } from '../../utils/platform/cwd.js';
 import { getPatchForDisplay } from '../../utils/diff.js';
 import { getDisplayPath } from '../../utils/files/file.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { getPlansDirectory } from '../../utils/plans.js';
 import { openForScan, readCapped } from '../../utils/ide/readEditContext.js';
 import type { Output } from './FileWriteTool.js';

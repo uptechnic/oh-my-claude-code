@@ -6,8 +6,8 @@ import {
   isClaudeAISubscriber,
 } from '../../utils/auth/auth.js'
 import { getGlobalConfig, saveGlobalConfig } from '../../utils/config/config.js'
-import { logForDebugging } from '../../utils/debug.js'
-import { logError } from '../../utils/log.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
+import { logError } from '../../utils/debug/log.js'
 import { isEssentialTrafficOnly } from '../../utils/config/privacyLevel.js'
 import { getOAuthHeaders, prepareApiRequest } from '../../utils/teleport/api.js'
 import type {

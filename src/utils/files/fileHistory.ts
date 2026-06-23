@@ -21,12 +21,12 @@ import { notifyVscodeFileUpdated } from 'src/services/mcp/vscodeSdkMcp.js'
 import type { LogOption } from 'src/types/logs.js'
 import { inspect } from 'util'
 import { getGlobalConfig } from '../config/config.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from '../platform/envUtils.js'
 import { getErrnoCode, isENOENT } from '../errors.js'
 import { pathExists } from './file.js'
-import { logError } from '../log.js'
-import { recordFileHistorySnapshot } from '../sessionStorage.js'
+import { logError } from '../debug/log.js'
+import { recordFileHistorySnapshot } from '../session/sessionStorage.js'
 
 type BackupFileName = string | null // The null value means the file does not exist in this version
 

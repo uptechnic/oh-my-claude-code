@@ -62,7 +62,7 @@ import {
 } from '../../utils/auth/auth.js'
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
 import { detectCodeIndexingFromMcpServerName } from '../../utils/ide/codeIndexing.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { isEnvDefinedFalsy, isEnvTruthy } from '../../utils/platform/envUtils.js'
 import {
   errorMessage,
@@ -71,7 +71,7 @@ import {
 import { getMCPUserAgent } from '../../utils/api/http.js'
 import { maybeNotifyIDEConnected } from '../../utils/ide/ide.js'
 import { maybeResizeAndDownsampleImageBuffer } from '../../utils/media/imageResizer.js'
-import { logMCPDebug, logMCPError } from '../../utils/log.js'
+import { logMCPDebug, logMCPError } from '../../utils/debug/log.js'
 import {
   getBinaryBlobSavedMessage,
   getFormatDescription,
@@ -93,7 +93,7 @@ import {
   getWebSocketProxyUrl,
 } from '../../utils/auth/proxy.js'
 import { recursivelySanitizeUnicode } from '../../utils/sanitization.js'
-import { getSessionIngressAuthToken } from '../../utils/sessionIngressAuth.js'
+import { getSessionIngressAuthToken } from '../../utils/session/sessionIngressAuth.js'
 import { subprocessEnv } from '../../utils/subprocessEnv.js'
 import {
   isPersistError,

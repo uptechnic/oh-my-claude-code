@@ -17,7 +17,7 @@ import { isBuiltinPluginId } from '../../plugins/builtinPlugins.js'
 import type { LoadedPlugin, PluginManifest } from '../../types/plugin.js'
 import { isENOENT, toError } from '../../utils/errors.js'
 import { getFsImplementation } from '../../utils/files/fsOperations.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   clearAllCaches,
   markPluginVersionOrphaned,

@@ -6,7 +6,7 @@ import { ASK_USER_QUESTION_TOOL_NAME } from '../../tools/AskUserQuestionTool/pro
 import { REMOTE_TRIGGER_TOOL_NAME } from '../../tools/RemoteTriggerTool/prompt.js'
 import { getClaudeAIOAuthTokens } from '../../utils/auth/auth.js'
 import { checkRepoForRemoteAccess } from '../../utils/background/remote/preconditions.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   detectCurrentRepositoryWithHost,
   parseGitRemote,

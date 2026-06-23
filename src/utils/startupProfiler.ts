@@ -15,7 +15,7 @@ import {
   type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS,
   logEvent,
 } from '../services/analytics/index.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { getClaudeConfigHomeDir, isEnvTruthy } from './platform/envUtils.js'
 import { getFsImplementation } from './files/fsOperations.js'
 import { formatMs, formatTimelineLine, getPerformance } from './profilerBase.js'

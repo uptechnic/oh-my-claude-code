@@ -16,7 +16,7 @@ import {
   isTeamMemoryEnabled,
 } from '../../memdir/teamMemPaths.js'
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { errorMessage } from '../../utils/errors.js'
 import { getGithubRepo } from '../../utils/git/git.js'
 import {

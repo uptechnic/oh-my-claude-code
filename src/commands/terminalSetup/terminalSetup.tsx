@@ -17,7 +17,7 @@ import { env } from '../../utils/platform/env.js';
 import { isFsInaccessible } from '../../utils/errors.js';
 import { execFileNoThrow } from '../../utils/execFileNoThrow.js';
 import { addItemToJSONCArray, safeParseJSONC } from '../../utils/text/json.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import { getPlatform } from '../../utils/platform/platform.js';
 import { jsonParse, jsonStringify } from '../../utils/slowOperations.js';
 const EOL = '\n';

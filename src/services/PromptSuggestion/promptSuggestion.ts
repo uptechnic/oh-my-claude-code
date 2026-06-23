@@ -11,7 +11,7 @@ import {
   runForkedAgent,
 } from '../../utils/agent/forkedAgent.js'
 import type { REPLHookContext } from '../../utils/hooks/postSamplingHooks.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import {
   createUserMessage,
   getLastAssistantMessage,

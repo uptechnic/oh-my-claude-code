@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 
 const SKILL_MD_RE = /^skill\.md$/i

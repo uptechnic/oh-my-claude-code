@@ -19,7 +19,7 @@ import {
 } from '../types/textInputTypes.js'
 import { createAbortController } from './concurrency/abortController.js'
 import type { PastedContent } from './config/config.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import type { EffortValue } from './config/effort.js'
 import type { FileHistoryState } from './files/fileHistory.js'
 import { fileHistoryEnabled, fileHistoryMakeSnapshot } from './files/fileHistory.js'

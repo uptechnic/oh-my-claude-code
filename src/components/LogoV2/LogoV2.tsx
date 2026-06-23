@@ -13,7 +13,7 @@ import { createRecentActivityFeed, createWhatsNewFeed, createProjectOnboardingFe
 import { getGlobalConfig, saveGlobalConfig } from 'src/utils/config/config.js';
 import { resolveThemeSetting } from 'src/utils/rendering/systemTheme.js';
 import { getInitialSettings } from 'src/utils/settings/settings.js';
-import { isDebugMode, isDebugToStdErr, getDebugLogPath } from 'src/utils/debug.js';
+import { isDebugMode, isDebugToStdErr, getDebugLogPath } from 'src/utils/debug/debug.js';
 import { useEffect, useState } from 'react';
 import { getSteps, shouldShowProjectOnboarding, incrementProjectOnboardingSeenCount } from '../../projectOnboardingState.js';
 import { CondensedLogo } from './CondensedLogo.js';

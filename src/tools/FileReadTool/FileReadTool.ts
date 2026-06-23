@@ -49,7 +49,7 @@ import {
   maybeResizeAndDownsampleImageBuffer,
 } from '../../utils/media/imageResizer.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { isAutoMemFile } from '../../utils/memoryFileDetection.js'
 import { createUserMessage } from '../../utils/messages/messages.js'
 import { getCanonicalName, getMainLoopModel } from '../../utils/model/model.js'

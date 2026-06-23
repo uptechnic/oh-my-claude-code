@@ -14,7 +14,7 @@
  */
 import { type ChildProcess, spawn } from 'child_process'
 import { registerCleanup } from '../utils/lifecycle/cleanupRegistry.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 
 // Caffeinate timeout in seconds. Process auto-exits after this duration.
 // We restart it before expiry to maintain continuous sleep prevention.

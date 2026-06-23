@@ -43,7 +43,7 @@ import type {
 } from '../../types/message.js'
 import { createAbortController } from '../../utils/concurrency/abortController.js'
 import { count, uniq } from '../../utils/text/array.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   createCacheSafeParams,
   runForkedAgent,

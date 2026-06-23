@@ -3,7 +3,7 @@ import type { BetaMessageParam as MessageParam } from '@anthropic-ai/sdk/resourc
 // to defer ~279KB of AWS SDK code until a Bedrock call is actually made
 import type { Attachment } from '../utils/media/attachments.js'
 import { getModelBetas } from '../utils/config/betas.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { normalizeAttachmentForAPI } from '../utils/messages/messages.js'
 import {
 

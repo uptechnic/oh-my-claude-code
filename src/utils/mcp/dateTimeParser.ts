@@ -1,5 +1,5 @@
 import { queryHaiku } from '../../services/api/claude.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { extractTextContent } from '../messages/messages.js'
 import { asSystemPrompt } from '../agent/systemPromptType.js'
 

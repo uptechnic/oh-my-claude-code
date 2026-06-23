@@ -21,11 +21,11 @@
 import { mkdir, readdir, readFile, unlink, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { z } from 'zod/v4'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { getErrnoCode } from '../errors.js'
 import { lazySchema } from '../lazySchema.js'
 import * as lockfile from '../files/lockfile.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import type { PermissionUpdate } from '../permissions/PermissionUpdateSchema.js'
 import { jsonParse, jsonStringify } from '../slowOperations.js'
 import {

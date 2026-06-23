@@ -18,7 +18,7 @@ import {
 } from '../auth/auth.js'
 import { isInBundledMode } from './bundledMode.js'
 import { getGlobalConfig, saveGlobalConfig } from './config.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isEnvTruthy } from '../platform/envUtils.js'
 import {
   getDefaultMainLoopModelSetting,

@@ -16,7 +16,7 @@ import type {
 import type { PastedContent } from './config/config.js'
 import { extractTextContent } from './messages/messages.js'
 import { objectGroupBy } from './text/objectGroupBy.js'
-import { recordQueueOperation } from './sessionStorage.js'
+import { recordQueueOperation } from './session/sessionStorage.js'
 import { createSignal } from './platform/signal.js'
 
 export type SetAppState = (f: (prev: AppState) => AppState) => void

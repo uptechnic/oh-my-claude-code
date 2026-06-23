@@ -13,7 +13,7 @@ import { ScrollChromeContext } from './FullscreenLayout.js';
 
 // Rows of breathing room above the target when we scrollTo.
 const HEADROOM = 3;
-import { logForDebugging } from '../utils/debug.js';
+import { logForDebugging } from '../utils/debug/debug.js';
 import { sleep } from '../utils/concurrency/sleep.js';
 import { renderableSearchText } from '../utils/transcriptSearch.js';
 import { isNavigableMessage, type MessageActionsNav, type MessageActionsState, type NavigableMessage, stripSystemReminders, toolCallOf } from './messageActions.js';

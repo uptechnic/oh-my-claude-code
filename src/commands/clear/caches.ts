@@ -30,7 +30,7 @@ import { resetGetMemoryFilesCache } from '../../utils/config/claudemd.js'
 import { clearRepositoryCaches } from '../../utils/detectRepository.js'
 import { clearResolveGitDirCache } from '../../utils/git/gitFilesystem.js'
 import { clearStoredImagePaths } from '../../utils/media/imageStore.js'
-import { clearSessionEnvVars } from '../../utils/sessionEnvVars.js'
+import { clearSessionEnvVars } from '../../utils/session/sessionEnvVars.js'
 
 /**
  * Clear all session-related caches.

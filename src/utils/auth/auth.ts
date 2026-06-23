@@ -51,7 +51,7 @@ import {
   getGlobalConfig,
   saveGlobalConfig,
 } from '../config/config.js'
-import { logAntError, logForDebugging } from '../debug.js'
+import { logAntError, logForDebugging } from '../debug/debug.js'
 import {
   getClaudeConfigHomeDir,
   isBareMode,
@@ -60,7 +60,7 @@ import {
 } from '../platform/envUtils.js'
 import { errorMessage } from '../errors.js'
 import { execSyncWithDefaults_DEPRECATED } from '../execFileNoThrow.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import {
   clearLegacyApiKeyPrefetch,
   getLegacyApiKeyPrefetchResult,

@@ -20,11 +20,11 @@ import {
   removeSessionCronTasks,
 } from '../../bootstrap/state.js'
 import { computeNextCronRun, parseCronExpression } from './cron.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isFsInaccessible } from '../errors.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { safeParseJSON } from '../text/json.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { jsonStringify } from '../slowOperations.js'
 
 export type CronTask = {

@@ -13,7 +13,7 @@ import { createAbortController } from '../concurrency/abortController.js'
 import { count } from '../text/array.js'
 import { getCwd } from '../platform/cwd.js'
 import { toError } from '../errors.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import {
   createUserMessage,
   extractTag,

@@ -9,9 +9,9 @@
 import type { UUID } from 'crypto'
 import { open as fsOpen, readdir, realpath, stat } from 'fs/promises'
 import { join } from 'path'
-import { getClaudeConfigHomeDir } from './platform/envUtils.js'
-import { getWorktreePathsPortable } from './getWorktreePathsPortable.js'
-import { djb2Hash } from './text/hash.js'
+import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
+import { getWorktreePathsPortable } from '../getWorktreePathsPortable.js'
+import { djb2Hash } from '../text/hash.js'
 
 /** Size of the head/tail buffer for lite metadata reads. */
 export const LITE_READ_BUF_SIZE = 65536

@@ -12,7 +12,7 @@ import type {
 import {
   getTranscriptPath,
   saveAgentColor,
-} from '../../utils/sessionStorage.js'
+} from '../../utils/session/sessionStorage.js'
 import { isTeammate } from '../../utils/swarm/teammate.js'
 
 const RESET_ALIASES = ['default', 'reset', 'none', 'gray', 'grey'] as const

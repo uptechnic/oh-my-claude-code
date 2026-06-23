@@ -1,5 +1,5 @@
 import { getCwd } from './platform/cwd.js'
-import { logForDebugging } from './debug.js'
+import { logForDebugging } from './debug/debug.js'
 import { getRemoteUrl } from './git/git.js'
 
 export type ParsedRepository = {

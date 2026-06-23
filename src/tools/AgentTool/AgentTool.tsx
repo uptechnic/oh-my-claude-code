@@ -18,7 +18,7 @@ import { asAgentId } from '../../types/ids.js';
 import { runWithAgentContext } from '../../utils/agent/agentContext.js';
 import { isAgentSwarmsEnabled } from '../../utils/agent/agentSwarmsEnabled.js';
 import { getCwd, runWithCwdOverride } from '../../utils/platform/cwd.js';
-import { logForDebugging } from '../../utils/debug.js';
+import { logForDebugging } from '../../utils/debug/debug.js';
 import { isEnvTruthy } from '../../utils/platform/envUtils.js';
 import { AbortError, errorMessage, toError } from '../../utils/errors.js';
 import type { CacheSafeParams } from '../../utils/agent/forkedAgent.js';
@@ -29,7 +29,7 @@ import { permissionModeSchema } from '../../utils/permissions/PermissionMode.js'
 import type { PermissionResult } from '../../utils/permissions/PermissionResult.js';
 import { filterDeniedAgents, getDenyRuleForAgent } from '../../utils/permissions/permissions.js';
 import { enqueueSdkEvent } from '../../utils/sdkEventQueue.js';
-import { writeAgentMetadata } from '../../utils/sessionStorage.js';
+import { writeAgentMetadata } from '../../utils/session/sessionStorage.js';
 import { sleep } from '../../utils/concurrency/sleep.js';
 import { buildEffectiveSystemPrompt } from '../../utils/agent/systemPrompt.js';
 import { asSystemPrompt } from '../../utils/agent/systemPromptType.js';

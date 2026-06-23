@@ -147,7 +147,7 @@ async function main(): Promise<void> {
     enableConfigs();
     const {
       initSinks
-    } = await import('../utils/sinks.js');
+    } = await import('../utils/debug/sinks.js');
     initSinks();
     const {
       daemonMain

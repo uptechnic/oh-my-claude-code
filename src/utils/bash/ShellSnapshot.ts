@@ -6,7 +6,7 @@ import { join } from 'path'
 import { logEvent } from 'src/services/analytics/index.js'
 import { registerCleanup } from '../lifecycle/cleanupRegistry.js'
 import { getCwd } from '../platform/cwd.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import {
   embeddedSearchToolsBinaryPath,
   hasEmbeddedSearchTools,
@@ -14,7 +14,7 @@ import {
 import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { pathExists } from '../files/file.js'
 import { getFsImplementation } from '../files/fsOperations.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { getPlatform } from '../platform/platform.js'
 import { ripgrepCommand } from '../ripgrep.js'
 import { subprocessEnv } from '../subprocessEnv.js'

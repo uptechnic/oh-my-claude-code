@@ -71,7 +71,7 @@ import { resolveAppliedEffort } from '../../utils/config/effort.js'
 import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { errorMessage } from '../../utils/errors.js'
 import { computeFingerprintFromMessages } from '../../utils/fingerprint.js'
-import { captureAPIRequest, logError } from '../../utils/log.js'
+import { captureAPIRequest, logError } from '../../utils/debug/log.js'
 import {
   createAssistantAPIErrorMessage,
   createUserMessage,
@@ -162,8 +162,8 @@ import {
   shouldUseGlobalCacheScope,
 } from 'src/utils/config/betas.js'
 import { getMaxThinkingTokensForModel } from 'src/utils/context.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { logForDiagnosticsNoPII } from 'src/utils/diagLogs.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from 'src/utils/debug/diagLogs.js'
 import { type EffortValue, modelSupportsEffort } from 'src/utils/config/effort.js'
 import {
   isFastModeAvailable,
@@ -204,7 +204,7 @@ import {
 import {
   startSessionActivity,
   stopSessionActivity,
-} from '../../utils/sessionActivity.js'
+} from '../../utils/session/sessionActivity.js'
 import { jsonStringify } from '../../utils/slowOperations.js'
 import {
   isBetaTracingEnabled,

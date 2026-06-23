@@ -23,7 +23,7 @@ import type { LogOption } from '../types/logs.js'
 import { getClaudeConfigHomeDir } from '../utils/platform/envUtils.js'
 import { toError } from '../utils/errors.js'
 import { execFileNoThrow } from '../utils/execFileNoThrow.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { extractTextContent } from '../utils/messages/messages.js'
 import { getDefaultOpusModel } from '../utils/model/model.js'
 import {
@@ -31,7 +31,7 @@ import {
   getSessionFilesWithMtime,
   getSessionIdFromLog,
   loadAllLogsFromSessionFile,
-} from '../utils/sessionStorage.js'
+} from '../utils/session/sessionStorage.js'
 import { jsonParse, jsonStringify } from '../utils/slowOperations.js'
 import { countCharInString } from '../utils/text/stringUtils.js'
 import { asSystemPrompt } from '../utils/agent/systemPromptType.js'

@@ -1,5 +1,5 @@
 import { execa } from 'execa'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { memoizeWithLRU } from '../concurrency/memoize.js'
 import { getCachedPowerShellPath } from '../shell/powershellDetection.js'
 import { jsonParse } from '../slowOperations.js'

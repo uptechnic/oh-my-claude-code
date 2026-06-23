@@ -15,7 +15,7 @@ import {
 import type { ToolUseContext } from '../../Tool.js'
 import { buildTool, type ToolDef } from '../../Tool.js'
 import { getCwd } from '../../utils/platform/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { countLinesChanged, getPatchForDisplay } from '../../utils/diff.js'
 import { isEnvTruthy } from '../../utils/platform/envUtils.js'
 import { isENOENT } from '../../utils/errors.js'
@@ -32,7 +32,7 @@ import {
   type ToolUseDiff,
 } from '../../utils/git/gitDiff.js'
 import { lazySchema } from '../../utils/lazySchema.js'
-import { logError } from '../../utils/log.js'
+import { logError } from '../../utils/debug/log.js'
 import { expandPath } from '../../utils/platform/path.js'
 import {
   checkWritePermissionForTool,

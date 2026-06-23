@@ -5,7 +5,7 @@ import { getCurrentProjectConfig, saveCurrentProjectConfig } from './config/conf
 import { env } from './platform/env.js'
 import { execFileNoThrowWithCwd } from './execFileNoThrow.js'
 import { getIsGit, gitExe } from './git/git.js'
-import { logError } from './log.js'
+import { logError } from './debug/log.js'
 import { getGitEmail } from './user.js'
 
 // Patterns that mark a file as non-core (auto-generated, dependency, or config).

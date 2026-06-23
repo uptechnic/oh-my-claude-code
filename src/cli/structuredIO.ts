@@ -22,8 +22,8 @@ import type {
 import type { CanUseToolFn } from 'src/hooks/useCanUseTool.js'
 import type { Tool, ToolUseContext } from 'src/Tool.js'
 import { type HookCallback, hookJSONOutputSchema } from 'src/types/hooks.js'
-import { logForDebugging } from 'src/utils/debug.js'
-import { logForDiagnosticsNoPII } from 'src/utils/diagLogs.js'
+import { logForDebugging } from 'src/utils/debug/debug.js'
+import { logForDiagnosticsNoPII } from 'src/utils/debug/diagLogs.js'
 import { AbortError } from 'src/utils/errors.js'
 import {
   type Output as PermissionToolOutput,
@@ -49,7 +49,7 @@ import {
   notifySessionStateChanged,
   type RequiresActionDetails,
   type SessionExternalMetadata,
-} from '../utils/sessionState.js'
+} from '../utils/session/sessionState.js'
 import { jsonParse } from '../utils/slowOperations.js'
 import { Stream } from '../utils/concurrency/stream.js'
 import { ndjsonSafeStringify } from './ndjsonSafeStringify.js'

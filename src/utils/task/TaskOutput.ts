@@ -1,6 +1,6 @@
 import { unlink } from 'fs/promises'
 import { CircularBuffer } from '../CircularBuffer.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { readFileRange, tailFile } from '../files/fsOperations.js'
 import { getMaxOutputLength } from '../shell/outputLimits.js'
 import { safeJoinLines } from '../text/stringUtils.js'

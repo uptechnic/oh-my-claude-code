@@ -14,10 +14,10 @@
  */
 
 import { dirname, join } from 'path'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { errorMessage, isENOENT, toError } from '../errors.js'
 import { getFsImplementation } from '../files/fsOperations.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import {
   jsonParse,
   jsonStringify,

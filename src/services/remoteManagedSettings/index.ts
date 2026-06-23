@@ -22,7 +22,7 @@ import {
   getClaudeAIOAuthTokens,
 } from '../../utils/auth/auth.js'
 import { registerCleanup } from '../../utils/lifecycle/cleanupRegistry.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import { classifyAxiosError, getErrnoCode } from '../../utils/errors.js'
 import { settingsChangeDetector } from '../../utils/settings/changeDetector.js'
 import {

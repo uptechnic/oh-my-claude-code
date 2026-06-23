@@ -26,7 +26,7 @@ import {
   hasAccessToIDEExtensionDiffFeature,
 } from '../utils/ide/ide.js'
 import { WindowsToWSLConverter } from '../utils/ide/idePathConversion.js'
-import { logError } from '../utils/log.js'
+import { logError } from '../utils/debug/log.js'
 import { getPlatform } from '../utils/platform/platform.js'
 
 type Props = {

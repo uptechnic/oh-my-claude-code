@@ -3,7 +3,7 @@ import { basename, dirname, join, sep } from 'path'
 import type { SuggestionItem } from 'src/components/PromptInput/PromptInputFooterSuggestions.js'
 import { getCwd } from 'src/utils/platform/cwd.js'
 import { getFsImplementation } from 'src/utils/files/fsOperations.js'
-import { logError } from 'src/utils/log.js'
+import { logError } from 'src/utils/debug/log.js'
 import { expandPath } from 'src/utils/platform/path.js'
 // Types
 export type DirectoryEntry = {

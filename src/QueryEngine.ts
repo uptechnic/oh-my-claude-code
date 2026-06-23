@@ -58,7 +58,7 @@ import {
 } from './utils/files/fileStateCache.js'
 import { headlessProfilerCheckpoint } from './utils/headlessProfiler.js'
 import { registerStructuredOutputEnforcement } from './utils/hooks/hookHelpers.js'
-import { getInMemoryErrors } from './utils/log.js'
+import { getInMemoryErrors } from './utils/debug/log.js'
 import { countToolCalls, SYNTHETIC_MESSAGES } from './utils/messages/messages.js'
 import {
   getMainLoopModel,
@@ -74,7 +74,7 @@ import { setCwd } from './utils/Shell.js'
 import {
   flushSessionStorage,
   recordTranscript,
-} from './utils/sessionStorage.js'
+} from './utils/session/sessionStorage.js'
 import { asSystemPrompt } from './utils/agent/systemPromptType.js'
 import { resolveThemeSetting } from './utils/rendering/systemTheme.js'
 import {

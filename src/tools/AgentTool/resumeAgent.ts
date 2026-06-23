@@ -9,7 +9,7 @@ import { assembleToolPool } from '../../tools.js'
 import { asAgentId } from '../../types/ids.js'
 import { runWithAgentContext } from '../../utils/agent/agentContext.js'
 import { runWithCwdOverride } from '../../utils/platform/cwd.js'
-import { logForDebugging } from '../../utils/debug.js'
+import { logForDebugging } from '../../utils/debug/debug.js'
 import {
   createUserMessage,
   filterOrphanedThinkingOnlyMessages,
@@ -21,7 +21,7 @@ import { getQuerySourceForAgent } from '../../utils/promptCategory.js'
 import {
   getAgentTranscript,
   readAgentMetadata,
-} from '../../utils/sessionStorage.js'
+} from '../../utils/session/sessionStorage.js'
 import { buildEffectiveSystemPrompt } from '../../utils/agent/systemPrompt.js'
 import type { SystemPrompt } from '../../utils/agent/systemPromptType.js'
 import { getTaskOutputPath } from '../../utils/task/diskOutput.js'

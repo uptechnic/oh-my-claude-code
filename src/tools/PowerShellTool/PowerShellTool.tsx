@@ -18,7 +18,7 @@ import { isEnvTruthy } from '../../utils/platform/envUtils.js';
 import { errorMessage as getErrorMessage, ShellError } from '../../utils/errors.js';
 import { truncate } from '../../utils/text/format.js';
 import { lazySchema } from '../../utils/lazySchema.js';
-import { logError } from '../../utils/log.js';
+import { logError } from '../../utils/debug/log.js';
 import type { PermissionResult } from '../../utils/permissions/PermissionResult.js';
 import { getPlatform } from '../../utils/platform/platform.js';
 import { maybeRecordPluginHint } from '../../utils/plugins/hintRecommendation.js';

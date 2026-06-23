@@ -9,14 +9,14 @@ import {
   logEvent,
 } from 'src/services/analytics/index.js'
 import { type ReleaseChannel, saveGlobalConfig } from '../config/config.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { env } from '../platform/env.js'
 import { getClaudeConfigHomeDir } from '../platform/envUtils.js'
 import { ClaudeError, getErrnoCode, isENOENT } from '../errors.js'
 import { execFileNoThrowWithCwd } from '../execFileNoThrow.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { gracefulShutdownSync } from './gracefulShutdown.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { gte, lt } from '../text/semver.js'
 import { getInitialSettings } from '../settings/settings.js'
 import {

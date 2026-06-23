@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getBaseApiUrl } from 'src/utils/api/apiBaseUrl.js'
 import type { SDKMessage } from '../entrypoints/agentSdkTypes.js'
-import { logForDebugging } from '../utils/debug.js'
+import { logForDebugging } from '../utils/debug/debug.js'
 import { getOAuthHeaders, prepareApiRequest } from '../utils/teleport/api.js'
 
 export const HISTORY_PAGE_SIZE = 100

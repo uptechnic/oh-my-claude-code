@@ -58,7 +58,7 @@ import type {
   PluginLoadResult,
   PluginManifest,
 } from '../../types/plugin.js'
-import { logForDebugging } from '../debug.js'
+import { logForDebugging } from '../debug/debug.js'
 import { isEnvTruthy } from '../platform/envUtils.js'
 import {
   errorMessage,
@@ -72,7 +72,7 @@ import { pathExists } from '../files/file.js'
 import { getFsImplementation } from '../files/fsOperations.js'
 import { gitExe } from '../git/git.js'
 import { lazySchema } from '../lazySchema.js'
-import { logError } from '../log.js'
+import { logError } from '../debug/log.js'
 import { getSettings_DEPRECATED } from '../settings/settings.js'
 import {
   clearPluginSettingsBase,
