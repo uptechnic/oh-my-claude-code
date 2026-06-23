@@ -1166,7 +1166,7 @@ async function* queryModel(
   // Header differs by provider: 1P/Foundry use advanced-tool-use, Vertex/Bedrock use tool-search-tool
   // For Bedrock, this header must go in extraBodyParams, not the betas array
   const toolSearchHeader = useToolSearch ? getToolSearchBetaHeader() : null
-  if (toolSearchHeader && getAPIProvider() !== 'bedrock') {
+  if (toolSearchHeader) {
     if (!betas.includes(toolSearchHeader)) {
       betas.push(toolSearchHeader)
     }
