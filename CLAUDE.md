@@ -44,8 +44,11 @@ const voiceCommand = feature('VOICE_MODE')
   : null
 ```
 
-- All flags default to `false`. Enable via `FEATURE_FLAGS` env var (comma-separated).
-- A dev-time shim lives at [plugins/bunBundleDev.ts](plugins/bunBundleDev.ts), preloaded via `bunfig.toml`.
+- All flags default to `false`. Enable via `FEATURE_FLAGS` env var (comma-separated):
+  ```bash
+  FEATURE_FLAGS=PROACTIVE,VOICE_MODE bun run dev
+  ```
+- A dev-time shim lives at [plugins/bunBundleDev.ts](plugins/bunBundleDev.ts), preloaded via `bunfig.toml`. The shim is **dev only** — `bun:bundle` is a build-time feature. In production builds (`bun run build`), macros are injected via `--define` in the build script.
 - Notable flags: `PROACTIVE`, `KAIROS`, `BRIDGE_MODE`, `DAEMON`, `VOICE_MODE`, `AGENT_TRIGGERS`, `MONITOR_TOOL`, `BG_SESSIONS`, `TEMPLATES`, `BYOC_ENVIRONMENT_RUNNER`, `CHICAGO_MCP`, `DUMP_SYSTEM_PROMPT`, `COMMIT_ATTRIBUTION`, `CONTEXT_COLLAPSE`.
 
 ## Build Macros
@@ -65,6 +68,16 @@ Defined in [bunfig.toml](bunfig.toml) and injected via Bun's `--define` (also re
 - **[src/coordinator/](src/coordinator/)** — Multi-agent orchestration. `TeamCreateTool`/`TeamDeleteTool` for team-level parallel work.
 - **[src/tasks/](src/tasks/)** — Task types: `LocalMainSessionTask`, `LocalShellTask`, `LocalWorkflowTask`, `LocalAgentTask`, `InProcessTeammateTask`, `DreamTask`, `MonitorMcpTask`, `RemoteAgentTask`.
 - **[src/hooks/toolPermission/](src/hooks/toolPermission/)** — Permission system: every tool invocation checks permissions. Modes: `default`, `plan`, `bypassPermissions`, `auto`. Uses bash/shell classifiers and dangerous-pattern detection.
+
+## Key Environment Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `CLAUDE_CODE_ENTRYPOINT` | Route to different entrypoints: `cli`, `sdk-cli`, `mcp`, `local-agent`, `claude-desktop`, `claude-vscode` |
+| `CLAUDE_CODE_REMOTE` | Signals remote/CCR container environment |
+| `CLAUDE_CODE_USE_BEDROCK` | Enable AWS Bedrock provider |
+| `CLAUDE_CODE_USE_VERTEX` | Enable GCP Vertex AI provider |
+| `FEATURE_FLAGS` | Comma-separated feature flags (see Feature Flags section) |
 
 ## Stubs
 
